@@ -20,6 +20,12 @@ BasePage
             onTriggered: {
                 listView.selectAll();
             }
+            
+	        shortcuts: [
+	            Shortcut {
+	                key: qsTr("A") + Retranslate.onLanguageChanged
+	            }
+	        ]
         },
         
 		InvokeActionItem {
@@ -48,6 +54,12 @@ BasePage
 
                 iai.data = result
             }
+            
+	        shortcuts: [
+	            SystemShortcut {
+	                type: SystemShortcuts.Forward
+	            }
+	        ]
             
             ActionBar.placement: ActionBarPlacement.OnBar
         }

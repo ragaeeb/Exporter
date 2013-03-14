@@ -60,6 +60,12 @@ NavigationPane
 	                listView.multiSelectHandler.active = true
 	                listView.selectAll();
 	            }
+	            
+	            shortcuts: [
+	                Shortcut {
+	                    key: qsTr("A") + Retranslate.onLanguageChanged
+	                }
+	            ]
 	        }
         ]
         
@@ -113,6 +119,16 @@ NavigationPane
 	                filePicker.conversationIds = conversationIds
 	                filePicker.open()
 	            }
+	            
+	            shortcuts: [
+	                SystemShortcut {
+	                    type: SystemShortcuts.JumpToTop
+	                },
+	                
+	                SystemShortcut {
+	                    type: SystemShortcuts.JumpToBottom
+	                }
+	            ]
 	
 	            listItemComponents:
 	            [
@@ -135,12 +151,18 @@ NavigationPane
 						                onTriggered: {
 							                control.ListItem.view.doExport([ListItemData.conversationId])
 						                }
+						                
+	                                    shortcuts: [
+	                                        SystemShortcut {
+	                                            type: SystemShortcuts.CreateNew
+	                                        }
+	                                    ]
 						            }
     	                        }
     	                    ]
 	                        
 	                        title: ListItemData.name
-	                        description: ListItemData.number == "+16132206739" ? "+14042221034" : ListItemData.number
+	                        description: ListItemData.number
 	                        status: ListItemData.messageCount
 	                        imageSource: ListItemData.smallPhotoFilepath.length > 0 ? ListItemData.smallPhotoFilepath : "file:///usr/share/icons/tmb_contact.png"
 	                    }
@@ -176,6 +198,12 @@ NavigationPane
 			                enabled: false
 			                title: qsTr("Export TXT")
 			                imageSource: "file:///usr/share/icons/ic_forward.png"
+			                
+	                        shortcuts: [
+	                            SystemShortcut {
+	                                type: SystemShortcuts.CreateNew
+	                            }
+	                        ]
 			                
 			                onTriggered: {
 				                var selectedIndices = listView.selectionList()
