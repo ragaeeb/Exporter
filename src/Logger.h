@@ -4,7 +4,9 @@
 //#define DEBUG 1
 
 #ifdef DEBUG
-#define LOGGER(a) qDebug() << a;
+#include <QDebug>
+
+#define LOGGER(a) qDebug() << __TIME__ << __FILE__ << __LINE__ << __FUNCTION__ << a;
 #else
 #define LOGGER(a)
 #endif

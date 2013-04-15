@@ -37,6 +37,8 @@ void ExportSMS::run()
     MessageService ms;
     MessageFilter filter;
 
+    bool doubleSpace = settings.value("doubleSpace").toInt() == 1;
+
 	for (int i = 0; i < m_keys.size(); i++)
 	{
 		Conversation conversation = ms.conversation(m_accountId, m_keys[i]);
@@ -77,6 +79,10 @@ void ExportSMS::run()
 				   }
 
 				   formattedConversation += suffix +"\r\n";
+
+				   if (doubleSpace) {
+					   formattedConversation += "\r\n";
+				   }
 			   }
 			}
 
@@ -94,7 +100,9 @@ void ExportSMS::run()
     	om = QIODevice::WriteOnly;
     }
 
-	for (int i = 0; i < keys.size(); i++)
+    int total = keys.size();
+
+	for (int i = 0; i < total; i++)
 	{
 	   QString key = keys[i];
 	   QFile outputFile( QObject::tr("%1/%2.txt").arg(outputPath).arg(key) );
@@ -115,6 +123,8 @@ void ExportSMS::run()
 	   } else {
 		   LOGGER("Could not open " << key << "for writing!");
 	   }
+
+	   emit progress( (double)i/total * 100 );
 	}
 
     emit exportCompleted();

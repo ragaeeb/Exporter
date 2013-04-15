@@ -7,14 +7,12 @@
 
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/Application>
-#include <bb/cascades/ArrayDataModel>
 #include <bb/cascades/QmlDocument>
 
 #include <bb/pim/message/MessageFilter>
 #include <bb/pim/message/MessageService>
 
 #include <bb/system/SystemProgressDialog>
-#include <bb/system/SystemToast>
 
 namespace exportui {
 
@@ -22,26 +20,34 @@ using namespace bb::cascades;
 using namespace bb::system;
 using namespace bb::pim::message;
 
-ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
-		QObject(app), m_toast(NULL), m_progress(NULL)
+ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml"), m_progress(NULL), m_adm(this)
 {
-	if ( getValueFor("animations").isNull() ) { // first run
-		LOGGER("Exporter()::First run!");
-		saveValueFor("animations", 1);
-		saveValueFor("userName", tr("You") );
-		saveValueFor("timeFormat", 0);
-		saveValueFor("duplicateAction", 0);
-		saveValueFor("output", "/accounts/1000/removable/sdcard/documents");
+	INIT_SETTING("animations", 1);
+	INIT_SETTING( "userName", tr("You") );
+	INIT_SETTING("timeFormat", 0);
+	INIT_SETTING("duplicateAction", 0);
+	INIT_SETTING("separator", 1);
+	INIT_SETTING("doubleSpace", 0);
+
+	if ( m_persistance.getValueFor("output").isNull() ) { // first run
+		QString sdDirectory("/accounts/1000/removable/sdcard/documents");
+
+		if ( !QDir(sdDirectory).exists() ) {
+			sdDirectory = "/accounts/1000/shared/documents";
+		}
+
+		m_persistance.saveValueFor("output", sdDirectory);
 	}
 
     QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
     qml->setContextProperty("app", this);
+    qml->setContextProperty("persist", &m_persistance);
 
-    m_root = qml->createRootObject<AbstractPane>();
-    app->setScene(m_root);
+    AbstractPane* root = qml->createRootObject<AbstractPane>();
+    app->setScene(root);
 
 	ImportSMS* sms = new ImportSMS();
-	connect( sms, SIGNAL( importCompleted(qint64 const&, QVariantList const&) ), this, SLOT( onImportCompleted(qint64 const&, QVariantList const&) ) );
+	connect( sms, SIGNAL( importCompleted(qint64, QVariantList const&) ), this, SLOT( onImportCompleted(qint64, QVariantList const&) ) );
 	startThread(sms);
 }
 
@@ -51,13 +57,15 @@ void ApplicationUI::create(bb::cascades::Application *app) {
 }
 
 
-void ApplicationUI::onImportCompleted(qint64 const& accountId, QVariantList const& qvl)
+void ApplicationUI::onImportCompleted(qint64 accountId, QVariantList const& qvl)
 {
 	m_accountId = accountId;
+	m_adm.append(qvl);
 
-	ArrayDataModel* adm = m_root->findChild<ArrayDataModel*>("dataModel");
-	adm->clear();
-	adm->append(qvl);
+	if ( m_persistance.getValueFor("arabicWarningShown").toInt() == 0 ) {
+		m_persistance.showToast( tr("Note that currently there is a bug with the BB10 share framework where arabic texts cannot be shared. To get around this for now you can use the copy action instead of share. These conversations however can still be persisted to the file system using this app."), tr("OK") );
+		m_persistance.saveValueFor("arabicWarningShown", 1);
+	}
 }
 
 
@@ -89,14 +97,8 @@ QVariantList ApplicationUI::getMessagesFor(QString const& conversationKey)
 
 void ApplicationUI::onExportCompleted()
 {
-	if (m_toast == NULL) {
-		m_toast = new SystemToast(this);
-	}
-
-	m_toast->setBody( tr("Export complete") );
+	m_persistance.showToast( tr("Export complete") );
 	m_progress->cancel();
-
-	m_toast->show();
 }
 
 
@@ -104,7 +106,7 @@ void ApplicationUI::exportSMS(QStringList const& conversationIds)
 {
 	ExportSMS* sms = new ExportSMS(conversationIds, m_accountId);
 	connect( sms, SIGNAL( exportCompleted() ), this, SLOT( onExportCompleted() ) );
-	connect( sms, SIGNAL( progress(int const&) ), this, SLOT( onProgressChanged(int const&) ) );
+	connect( sms, SIGNAL( progress(int) ), this, SLOT( onProgressChanged(int) ) );
 
 	if (m_progress == NULL) {
 		m_progress = new SystemProgressDialog(this);
@@ -118,7 +120,7 @@ void ApplicationUI::exportSMS(QStringList const& conversationIds)
 }
 
 
-void ApplicationUI::onProgressChanged(int const& progress) {
+void ApplicationUI::onProgressChanged(int progress) {
 	m_progress->setProgress(progress);
 }
 
@@ -132,20 +134,13 @@ void ApplicationUI::startThread(QRunnable* qr)
 }
 
 
-QVariant ApplicationUI::getValueFor(QString const &objectName)
-{
-    QVariant value( m_settings.value(objectName) );
-
-	LOGGER("getValueFor()" << objectName << value);
-
-    return value;
+QVariant ApplicationUI::getDataModel() {
+	return QVariant::fromValue(&m_adm);
 }
 
 
-void ApplicationUI::saveValueFor(QString const& objectName, QVariant const& inputValue)
-{
-	LOGGER("saveValueFor()" << objectName << inputValue);
-	m_settings.setValue(objectName, inputValue);
+ApplicationUI::~ApplicationUI() {
+	m_adm.setParent(NULL);
 }
 
 }

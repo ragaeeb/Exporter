@@ -17,7 +17,7 @@ signals:
 	 * @param qvl A list of QVariantMap objects. Each entry has a key for the conversation ID, and a name of the contact it is
 	 * associated with.
 	 */
-	void importCompleted(qint64 const& accountId, QVariantList const& qvl);
+	void importCompleted(qint64 accountId, QVariantList const& qvl);
 
 public:
 	void run();

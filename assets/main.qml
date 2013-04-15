@@ -60,12 +60,6 @@ NavigationPane
 	                listView.multiSelectHandler.active = true
 	                listView.selectAll();
 	            }
-	            
-	            shortcuts: [
-	                Shortcut {
-	                    key: qsTr("A") + Retranslate.onLanguageChanged
-	                }
-	            ]
 	        }
         ]
         
@@ -95,7 +89,7 @@ NavigationPane
 	            
 		        onCreationCompleted:
 		        {
-		            if ( app.getValueFor("animations") == 1 ) {
+		            if ( persist.getValueFor("animations") == 1 ) {
 		                fadeInTransition.play()
 		            }
 		        }
@@ -115,20 +109,10 @@ NavigationPane
 	            
 	            function doExport(conversationIds)
 	            {
-	                filePicker.directories = [ app.getValueFor("output"), "/accounts/1000/shared/documents"]
+	                filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
 	                filePicker.conversationIds = conversationIds
 	                filePicker.open()
 	            }
-	            
-	            shortcuts: [
-	                SystemShortcut {
-	                    type: SystemShortcuts.JumpToTop
-	                },
-	                
-	                SystemShortcut {
-	                    type: SystemShortcuts.JumpToBottom
-	                }
-	            ]
 	
 	            listItemComponents:
 	            [
@@ -151,20 +135,14 @@ NavigationPane
 						                onTriggered: {
 							                control.ListItem.view.doExport([ListItemData.conversationId])
 						                }
-						                
-	                                    shortcuts: [
-	                                        SystemShortcut {
-	                                            type: SystemShortcuts.CreateNew
-	                                        }
-	                                    ]
 						            }
     	                        }
     	                    ]
 	                        
-	                        title: ListItemData.name
-	                        description: ListItemData.number
+	                        title: ListItemData.name ? ListItemData.name : ListItemData.number
+                            description: ListItemData.number
 	                        status: ListItemData.messageCount
-	                        imageSource: ListItemData.smallPhotoFilepath.length > 0 ? ListItemData.smallPhotoFilepath : "file:///usr/share/icons/tmb_contact.png"
+	                        imageSource: ListItemData.smallPhotoFilepath.length > 0 ? "file://"+ListItemData.smallPhotoFilepath : "file:///usr/share/icons/tmb_contact.png"
 	                    }
 	                }
 	            ]
@@ -180,7 +158,7 @@ NavigationPane
 		                
 		                onFileSelected : {
 					        var result = selectedFiles[0]
-							app.saveValueFor("output", result)
+							persist.saveValueFor("output", result)
 							
 							app.exportSMS(conversationIds)
 		                }
@@ -194,16 +172,10 @@ NavigationPane
 			            ActionItem {
 			                property variant filePicker
 			                
-			                id: exportAction
+			                id: multiExportAction
 			                enabled: false
 			                title: qsTr("Export TXT")
 			                imageSource: "file:///usr/share/icons/ic_forward.png"
-			                
-	                        shortcuts: [
-	                            SystemShortcut {
-	                                type: SystemShortcuts.CreateNew
-	                            }
-	                        ]
 			                
 			                onTriggered: {
 				                var selectedIndices = listView.selectionList()
@@ -227,10 +199,7 @@ NavigationPane
                     status: qsTr("None selected")
                 }
 	            
-	            dataModel: ArrayDataModel {
-	                objectName: "dataModel"
-	                id: theDataModel
-	            }
+	            dataModel: app.getDataModel()
 	            
 	            layoutProperties: StackLayoutProperties {
 	                spaceQuota: 1
@@ -239,7 +208,7 @@ NavigationPane
                 onSelectionChanged: {
                     var n = selectionList().length
                     multiSelectHandler.status = qsTr("%1 elements selected").arg(n)
-                    exportAction.enabled = n > 0
+                    multiExportAction.enabled = n > 0
                 }
                 
 			    onTriggered: {

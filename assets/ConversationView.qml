@@ -11,6 +11,27 @@ BasePage
         theDataModel.append(messages)
     }
     
+    function concatenate()
+    {
+        var selectedIndices = listView.selectionList()
+        var result = ""
+        var doubleSpace = persist.getValueFor("doubleSpace") == 1
+
+        for (var i = 0; i < selectedIndices.length; i ++) {
+            result += listView.render(listView.dataModel.data(selectedIndices[i]))
+
+            if (i < selectedIndices.length - 1) {
+                result += "\n"
+                
+                if (doubleSpace) {
+                    result += "\n"
+                }
+            }
+        }
+        
+        return result
+    }
+    
     actions: [
         ActionItem {
             imageSource: "asset:///images/selectAll.png"
@@ -20,15 +41,22 @@ BasePage
             onTriggered: {
                 listView.selectAll();
             }
-            
-	        shortcuts: [
-	            Shortcut {
-	                key: qsTr("A") + Retranslate.onLanguageChanged
-	            }
-	        ]
         },
-        
-		InvokeActionItem {
+
+        ActionItem {
+            id: copyAction
+            title: qsTr("Copy") + Retranslate.onLanguageChanged
+            imageSource: "asset:///images/ic_copy.png"
+            ActionBar.placement: ActionBarPlacement.OnBar
+            enabled: false
+
+            onTriggered: {
+                var result = concatenate()
+                persist.copyToClipboard(result)
+            }
+        },
+
+        InvokeActionItem {
 		    id: iai
 		    title: qsTr("Share")
 
@@ -40,29 +68,22 @@ BasePage
             enabled: false
             
             onTriggered: {
-                var selectedIndices = listView.selectionList()
-                var result = ""
-
-                for (var i = 0; i < selectedIndices.length; i++)
-                {
-                    result += listView.render( listView.dataModel.data(selectedIndices[i]) )
-                    
-                    if (i < selectedIndices.length-1) {
-                        result += "\n"
-                    }
-                }
-
-                iai.data = result
+                iai.data = concatenate()
             }
             
-	        shortcuts: [
-	            SystemShortcut {
-	                type: SystemShortcuts.Forward
-	            }
-	        ]
-            
             ActionBar.placement: ActionBarPlacement.OnBar
-        }
+        },
+
+		ActionItem {
+			title: qsTr("Range Select") + Retranslate.onLanguageChanged
+			imageSource: "file:///usr/share/icons/bb_action_moveother.png"
+			enabled: !listView.rangeSelect
+			onTriggered: {
+			    persist.showToast( qsTr("This mode allows you to select a range of messages.\n\nTap the first message, then tap the last message and all of the ones in between will then be selected."), qsTr("OK") )
+			    listView.first = listView.last = undefined
+                listView.rangeSelect = true
+            }
+      	}
     ]
     
     contentContainer: Container
@@ -90,7 +111,7 @@ BasePage
             
 	        onCreationCompleted:
 	        {
-	            if ( app.getValueFor("animations") == 1 ) {
+	            if ( persist.getValueFor("animations") == 1 ) {
 	                fadeInTransition.play()
 	            }
 	        }
@@ -104,11 +125,14 @@ BasePage
         }
         
 		ListView {
-	        id: listView
+            property alias background: back
+            property variant first
+            property variant last
+            property bool rangeSelect: false
+
+            id: listView
 	        objectName: "listView"
-	        property alias background: back
-	        property variant application: app
-	        
+
             attachedObjects: [
 		        ImagePaintDefinition {
 		            id: back
@@ -116,14 +140,10 @@ BasePage
 		        }
             ]
             
-            onSelectionChanged: {
-                exportAction.enabled = iai.enabled = selectionList().length > 0
-            }
-            
             function render(data)
             {
 			    var timeFormat = "MMM d/yy, hh:mm:ss";
-			    var timeSetting = app.getValueFor("timeFormat")
+			    var timeSetting = persist.getValueFor("timeFormat")
 			    
 			    if (timeSetting == 1) {
 			        timeFormat = "hh:mm:ss"
@@ -132,7 +152,7 @@ BasePage
 			    }
                 
                 var time = Qt.formatDateTime(data.time, timeFormat)
-                var name = data.inbound ? data.sender : app.getValueFor("userName")
+                var name = data.inbound ? data.sender : persist.getValueFor("userName")
                 var text = data.text
                 
                 if (timeSetting == 2) {
@@ -144,6 +164,25 @@ BasePage
             
             dataModel: ArrayDataModel {
                 id: theDataModel
+            }
+            
+            onSelectionChanged: {
+                if (rangeSelect)
+                {
+                    if (!first) {
+                        first = listView.selected()
+                    } else if (!last) {
+                        last = selectionList()[selectionList().length - 1]
+
+                        for (var i = first[0] + 1; i < last[0]; i ++) {
+                            listView.select([i], true)
+                        }
+                        
+                        rangeSelect = false
+                    }
+                }
+
+                copyAction.enabled = iai.enabled = selectionList().length > 0
             }
 		
 		    listItemComponents: [
@@ -172,6 +211,14 @@ BasePage
 		                    multiline: true
 		                    verticalAlignment: VerticalAlignment.Center
 		                }
+		                
+		                contextActions: [
+		                    ActionSet {
+		                        ActionItem {
+		                            title: qsTr("Copy") + Retranslate.onLanguageChanged
+		                        }
+		                    }
+		                ]
 		            }
 		        }
 		    ]
