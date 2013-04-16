@@ -38,7 +38,7 @@ void Persistance::copyToClipboard(QString const& text)
 	Clipboard clipboard;
 	clipboard.clear();
 
-	clipboard.insert( "text/plain", text.toUtf8() );
+	clipboard.insert( "text/plain", convertToUtf8(text) );
 
 	showToast( tr("Copied: %1 to clipboard").arg(text) );
 }
@@ -51,8 +51,8 @@ void Persistance::finished(bb::system::SystemUiResult::Type value)
 }
 
 
-QString Persistance::convertToUtf8(QString const& text) {
-	return QString::fromUtf8( text.toUtf8().constData() );
+QByteArray Persistance::convertToUtf8(QString const& text) {
+	return text.toUtf8();
 }
 
 

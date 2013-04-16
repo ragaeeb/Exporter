@@ -68,7 +68,7 @@ BasePage
             enabled: false
             
             onTriggered: {
-                iai.data = concatenate()
+                iai.data = persist.convertToUtf8( concatenate() )
             }
             
             ActionBar.placement: ActionBarPlacement.OnBar
@@ -139,6 +139,11 @@ BasePage
 		            imageSource: "asset:///images/listitem.amd"
 		        }
             ]
+            
+            function copyToClipboard(data)
+            {
+                persist.copyToClipboard( render(data) )
+            }
             
             function render(data)
             {
@@ -216,7 +221,12 @@ BasePage
 		                    ActionSet {
 		                        ActionItem {
 		                            title: qsTr("Copy") + Retranslate.onLanguageChanged
-		                        }
+                                    imageSource: "asset:///images/ic_copy.png"
+                                    
+                                    onTriggered: {
+                                        listItemRoot.ListItem.view.copyToClipboard(ListItemData)
+                                    }
+                                }
 		                    }
 		                ]
 		            }

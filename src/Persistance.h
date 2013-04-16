@@ -41,7 +41,7 @@ public:
     Q_INVOKABLE void saveValueFor(QString const& objectName, QVariant const& inputValue);
     Q_INVOKABLE void copyToClipboard(QString const& text);
     Q_INVOKABLE void showToast(QString const& text, QString const& buttonLabel=QString());
-    Q_INVOKABLE static QString convertToUtf8(QString const& text);
+    Q_INVOKABLE static QByteArray convertToUtf8(QString const& text);
 };
 
 } /* namespace canadainc */
