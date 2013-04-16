@@ -61,11 +61,6 @@ void ApplicationUI::onImportCompleted(qint64 accountId, QVariantList const& qvl)
 {
 	m_accountId = accountId;
 	m_adm.append(qvl);
-
-	if ( m_persistance.getValueFor("arabicWarningShown").toInt() == 0 ) {
-		m_persistance.showToast( tr("Note that currently there is a bug with the BB10 share framework where arabic texts cannot be shared. To get around this for now you can use the copy action instead of share. These conversations however can still be persisted to the file system using this app."), tr("OK") );
-		m_persistance.saveValueFor("arabicWarningShown", 1);
-	}
 }
 
 
