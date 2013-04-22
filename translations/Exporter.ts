@@ -37,7 +37,7 @@ Tap the first message, then tap the last message and all of the ones in between 
     </message>
     <message>
         <location filename="../assets/ConversationView.qml" line="48"/>
-        <location filename="../assets/ConversationView.qml" line="218"/>
+        <location filename="../assets/ConversationView.qml" line="223"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -46,7 +46,9 @@ Tap the first message, then tap the last message and all of the ones in between 
     <name>HelpPage</name>
     <message>
         <location filename="../assets/HelpPage.qml" line="34"/>
-        <source>(c) 2013 %1. All Rights Reserved.
+        <source>
+
+(c) 2013 %1. All Rights Reserved.
 %2 %3
 
 Please report all bugs to:
@@ -54,7 +56,9 @@ support@canadainc.org
 
 Ever wanted to forward or share multiple SMS conversations with others (or yourself)? Or ever wanted to persist these messages into the file system? This is where Exporter comes in.
 
-This app makes it really easy to select which conversations you want to share and even allows you to select a subset of the messages that you want to share. You can also select these conversations to be archived into your SD card, a cloud storage account, or any other persistent storage. After selecting the conversations you are free to share it in whichever channel you wish (ie: Facebook, Remember, Email, BBM, SMS, etc.)</source>
+This app makes it really easy to select which conversations you want to share and even allows you to select a subset of the messages that you want to share. You can also select these conversations to be archived into your SD card, a cloud storage account, or any other persistent storage. After selecting the conversations you are free to share it in whichever channel you wish (ie: Facebook, Remember, Email, BBM, SMS, etc.)
+
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -232,22 +236,12 @@ This app makes it really easy to select which conversations you want to share an
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="66"/>
-        <source>Note that currently there is a bug with the BB10 share framework where arabic texts cannot be shared. To get around this for now you can use the copy action instead of share. These conversations however can still be persisted to the file system using this app.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ApplicationUI.cpp" line="66"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ApplicationUI.cpp" line="100"/>
+        <location filename="../src/ApplicationUI.cpp" line="95"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="113"/>
+        <location filename="../src/ApplicationUI.cpp" line="108"/>
         <source>Exporting...</source>
         <translation type="unfinished"></translation>
     </message>
