@@ -3,6 +3,9 @@ import bb.cascades 1.0
 BasePage {
     contentContainer: ScrollView
     {
+        horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
+        
 	    Container
 	    {
 	        leftPadding: 20; topPadding: 20; rightPadding: 20; bottomPadding: 20
