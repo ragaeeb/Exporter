@@ -52,7 +52,7 @@ NavigationPane
     {
         actions: [
 	        ActionItem {
-	            imageSource: "asset:///images/selectAll.png"
+	            imageSource: "images/selectAll.png"
 	            ActionBar.placement: ActionBarPlacement.OnBar
 	            title: qsTr("Select All") + Retranslate.onLanguageChanged
 	            
@@ -77,7 +77,6 @@ NavigationPane
 	            horizontalAlignment: HorizontalAlignment.Fill
 	            verticalAlignment: VerticalAlignment.Fill
 	            textStyle.textAlign: TextAlign.Center
-	            bottomMargin: 65
 	            
 		        animations: [
 		            FadeTransition {
@@ -95,11 +94,8 @@ NavigationPane
 		        }
 	        }
 	        
-	        Container
-	        {
-	            horizontalAlignment: HorizontalAlignment.Fill
-	            preferredHeight: 1
-	            background: Color.LightGray
+	        Divider {
+	            bottomMargin: 0; topMargin: 0;
 	        }
 	        
 	        ListView {
@@ -207,7 +203,7 @@ NavigationPane
 	            
                 onSelectionChanged: {
                     var n = selectionList().length
-                    multiSelectHandler.status = qsTr("%1 elements selected").arg(n)
+                    multiSelectHandler.status = qsTr("%1 conversations selected").arg(n)
                     multiExportAction.enabled = n > 0
                 }
                 

@@ -1,22 +1,25 @@
+#include "precompiled.h"
+
 #include "ExportSMS.h"
 #include "Logger.h"
-
-#include <QFile>
-#include <QSettings>
-
-#include <bb/pim/message/MessageFilter>
-#include <bb/pim/message/MessageService>
 
 namespace exportui {
 
 using namespace bb::pim::message;
+using namespace bb::system;
 
 ExportSMS::ExportSMS(QStringList const& keys, qint64 const& accountId) : m_accountId(accountId), m_keys(keys)
 {
+	m_progress.setState(SystemUiProgressState::Inactive);
 }
 
 void ExportSMS::run()
 {
+	m_progress.setState(SystemUiProgressState::Active);
+	m_progress.setStatusMessage( tr("0% complete...") );
+	m_progress.setProgress(0);
+	m_progress.show();
+
 	QMap<QString, QString> map;
     QSettings settings;
 
@@ -124,10 +127,16 @@ void ExportSMS::run()
 		   LOGGER("Could not open " << key << "for writing!");
 	   }
 
-	   emit progress( (double)i/total * 100 );
+		int progress = (double)i/total * 100;
+		m_progress.setProgress(progress);
+		m_progress.setStatusMessage( tr("%1% complete...").arg(progress) );
+		m_progress.show();
 	}
 
     emit exportCompleted();
+
+	m_progress.cancel();
+	m_progress.setState(SystemUiProgressState::Inactive);
 }
 
 } /* namespace exportui */

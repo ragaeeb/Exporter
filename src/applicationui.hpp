@@ -12,10 +12,6 @@ namespace bb {
 	namespace cascades {
 		class Application;
 	}
-
-	namespace system {
-		class SystemProgressDialog;
-	}
 }
 
 namespace exportui {
@@ -30,7 +26,6 @@ class ApplicationUI : public QObject
 
     Persistance m_persistance;
     LazySceneCover m_cover;
-    SystemProgressDialog* m_progress;
     qint64 m_accountId;
     ArrayDataModel m_adm;
 
@@ -40,7 +35,6 @@ class ApplicationUI : public QObject
 private slots:
     void onExportCompleted();
     void onImportCompleted(qint64 accountId, QVariantList const& qvl);
-    void onProgressChanged(int progress);
 
 public:
     static void create(bb::cascades::Application *app);

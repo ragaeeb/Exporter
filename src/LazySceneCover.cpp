@@ -1,10 +1,7 @@
+#include "precompiled.h"
+
 #include "LazySceneCover.h"
 #include "Logger.h"
-
-#include <bb/cascades/Application>
-#include <bb/cascades/Control>
-#include <bb/cascades/QmlDocument>
-#include <bb/cascades/SceneCover>
 
 namespace canadainc {
 

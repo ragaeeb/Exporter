@@ -5,10 +5,20 @@ BasePage
     property variant contact
     
     onContactChanged: {
-        label.text = qsTr("Conversation with %1").arg(contact.name)
-        var messages = app.getMessagesFor(contact.conversationId)
-        theDataModel.clear()
-        theDataModel.append(messages)
+        label.text = qsTr("Conversation with %1").arg(contact.name);
+        var messages = app.getMessagesFor(contact.conversationId);
+        theDataModel.clear();
+        theDataModel.append(messages);
+    }
+    
+    function onSettingChanged(key) {
+        if (key == "latestFirst" || key == "timeFormat" || key == "userName") {
+            contactChanged(contact);
+        }
+    }
+    
+    onCreationCompleted: {
+        persist.settingChanged.connect(onSettingChanged);
     }
     
     function concatenate()
@@ -34,7 +44,7 @@ BasePage
     
     actions: [
         ActionItem {
-            imageSource: "asset:///images/selectAll.png"
+            imageSource: "images/selectAll.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             title: qsTr("Select All") + Retranslate.onLanguageChanged
             
@@ -46,7 +56,7 @@ BasePage
         ActionItem {
             id: copyAction
             title: qsTr("Copy") + Retranslate.onLanguageChanged
-            imageSource: "asset:///images/ic_copy.png"
+            imageSource: "images/ic_copy.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             enabled: false
 
@@ -99,7 +109,6 @@ BasePage
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             textStyle.textAlign: TextAlign.Center
-            bottomMargin: 65
             
 	        animations: [
 	            FadeTransition {
@@ -117,11 +126,8 @@ BasePage
 	        }
         }
         
-        Container
-        {
-            horizontalAlignment: HorizontalAlignment.Fill
-            preferredHeight: 1
-            background: Color.LightGray
+        Divider {
+            bottomMargin: 0; topMargin: 0;
         }
         
 		ListView {
@@ -136,7 +142,7 @@ BasePage
             attachedObjects: [
 		        ImagePaintDefinition {
 		            id: back
-		            imageSource: "asset:///images/listitem.amd"
+		            imageSource: "images/listitem.amd"
 		        }
             ]
             
@@ -221,7 +227,7 @@ BasePage
 		                    ActionSet {
 		                        ActionItem {
 		                            title: qsTr("Copy") + Retranslate.onLanguageChanged
-                                    imageSource: "asset:///images/ic_copy.png"
+                                    imageSource: "images/ic_copy.png"
                                     
                                     onTriggered: {
                                         listItemRoot.ListItem.view.copyToClipboard(ListItemData)

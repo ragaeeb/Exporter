@@ -1,6 +1,4 @@
-#include <bb/cascades/Application>
-
-#include <bb/cascades/pickers/FilePicker>
+#include "precompiled.h"
 
 #include "applicationui.hpp"
 #include "Logger.h"
