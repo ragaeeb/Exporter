@@ -1,18 +1,27 @@
+#include "precompiled.h"
+
 #include "applicationui.hpp"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
 #include "Logger.h"
 
-#include <QThreadPool>
+namespace {
 
-#include <bb/cascades/AbstractPane>
-#include <bb/cascades/Application>
-#include <bb/cascades/QmlDocument>
+void appendIfValid(bb::pim::message::Message const& m, QVariantList& variants)
+{
+	if ( !m.isDraft() && m.attachmentCount() > 0 && m.attachmentAt(0).mimeType() == "text/plain" )
+	{
+		QVariantMap qvm;
+		qvm.insert( "inbound", m.isInbound() );
+		qvm.insert( "id", m.id() );
+		qvm.insert( "text", QString::fromLocal8Bit( m.attachmentAt(0).data() ) );
+		qvm.insert( "sender", m.sender().displayableName() );
+		qvm.insert( "time", m.serverTimestamp() );
+		variants << qvm;
+	}
+}
 
-#include <bb/pim/message/MessageFilter>
-#include <bb/pim/message/MessageService>
-
-#include <bb/system/SystemProgressDialog>
+}
 
 namespace exportui {
 
@@ -20,14 +29,14 @@ using namespace bb::cascades;
 using namespace bb::system;
 using namespace bb::pim::message;
 
-ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml"), m_progress(NULL), m_adm(this)
+ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml"), m_adm(this)
 {
 	INIT_SETTING("animations", 1);
 	INIT_SETTING( "userName", tr("You") );
 	INIT_SETTING("timeFormat", 0);
 	INIT_SETTING("duplicateAction", 0);
-	INIT_SETTING("separator", 1);
 	INIT_SETTING("doubleSpace", 0);
+	INIT_SETTING("latestFirst", 1);
 
 	if ( m_persistance.getValueFor("output").isNull() ) { // first run
 		QString sdDirectory("/accounts/1000/removable/sdcard/documents");
@@ -70,19 +79,14 @@ QVariantList ApplicationUI::getMessagesFor(QString const& conversationKey)
 	QList<Message> messages = messageService.messagesInConversation( m_accountId, conversationKey, MessageFilter() );
 	QVariantList variants;
 
-	for (int i = 0; i < messages.size(); i++)
+	if ( m_persistance.getValueFor("latestFirst") == 0 )
 	{
-		Message m = messages[i];
-
-		if ( !m.isDraft() && m.attachmentCount() > 0 && m.attachmentAt(0).mimeType() == "text/plain" )
-		{
-			QVariantMap qvm;
-			qvm.insert( "inbound", m.isInbound() );
-			qvm.insert( "id", m.id() );
-			qvm.insert( "text", QString::fromLocal8Bit( m.attachmentAt(0).data() ) );
-			qvm.insert( "sender", m.sender().displayableName() );
-			qvm.insert( "time", m.serverTimestamp() );
-			variants << qvm;
+		for (int i = 0; i < messages.size(); i++) {
+			appendIfValid(messages[i], variants);
+		}
+	} else {
+		for (int i = messages.size()-1; i >= 0; i--) {
+			appendIfValid(messages[i], variants);
 		}
 	}
 
@@ -90,10 +94,8 @@ QVariantList ApplicationUI::getMessagesFor(QString const& conversationKey)
 }
 
 
-void ApplicationUI::onExportCompleted()
-{
+void ApplicationUI::onExportCompleted() {
 	m_persistance.showToast( tr("Export complete") );
-	m_progress->cancel();
 }
 
 
@@ -101,22 +103,8 @@ void ApplicationUI::exportSMS(QStringList const& conversationIds)
 {
 	ExportSMS* sms = new ExportSMS(conversationIds, m_accountId);
 	connect( sms, SIGNAL( exportCompleted() ), this, SLOT( onExportCompleted() ) );
-	connect( sms, SIGNAL( progress(int) ), this, SLOT( onProgressChanged(int) ) );
-
-	if (m_progress == NULL) {
-		m_progress = new SystemProgressDialog(this);
-		m_progress->setTitle( tr("Exporting...") );
-	}
-
-	m_progress->setProgress(0);
-	m_progress->show();
 
 	startThread(sms);
-}
-
-
-void ApplicationUI::onProgressChanged(int progress) {
-	m_progress->setProgress(progress);
 }
 
 

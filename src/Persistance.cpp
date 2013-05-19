@@ -1,8 +1,7 @@
-#include "Persistance.h"
-#include "Logger.h"
+#include "precompiled.h"
 
-#include <bb/system/Clipboard>
-#include <bb/system/SystemToast>
+#include "Persistance.h"
+#include "Logger.h">
 
 namespace canadainc {
 
@@ -69,9 +68,23 @@ QVariant Persistance::getValueFor(const QString &objectName)
 void Persistance::saveValueFor(const QString &objectName, const QVariant &inputValue)
 {
 	LOGGER("saveValueFor: " << objectName << inputValue);
-	m_settings.setValue(objectName, inputValue);
 
-	emit settingChanged(objectName);
+	if ( m_settings.value(objectName) != inputValue ) {
+		m_settings.setValue(objectName, inputValue);
+		emit settingChanged(objectName);
+	} else {
+		LOGGER("Duplicate value, ignoring");
+	}
+}
+
+
+void Persistance::remove(QString const& key) {
+	m_settings.remove(key);
+}
+
+
+void Persistance::clear() {
+	m_settings.clear();
 }
 
 

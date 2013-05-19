@@ -2,14 +2,17 @@
 #define IMPORTSMS_H_
 
 #include <QRunnable>
-#include <QObject>
 #include <QVariantList>
+
+#include <bb/system/SystemProgressToast>
 
 namespace exportui {
 
 class ImportSMS : public QObject, public QRunnable
 {
 	Q_OBJECT
+
+	bb::system::SystemProgressToast m_progress;
 
 signals:
 	/**
@@ -20,6 +23,7 @@ signals:
 	void importCompleted(qint64 accountId, QVariantList const& qvl);
 
 public:
+	ImportSMS();
 	void run();
 };
 

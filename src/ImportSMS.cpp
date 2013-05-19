@@ -1,11 +1,7 @@
+#include "precompiled.h"
+
 #include "ImportSMS.h"
 #include "Logger.h"
-
-#include <bb/pim/contacts/ContactService.hpp>
-
-#include <bb/pim/account/AccountService>
-#include <bb/pim/message/MessageFilter>
-#include <bb/pim/message/MessageService>
 
 using namespace bb::pim::account;
 using namespace bb::pim::contacts;
@@ -31,13 +27,24 @@ bool lessThan(const Conversation &c1, const Conversation &c2)
 
 namespace exportui {
 
+using namespace bb::system;
+
+ImportSMS::ImportSMS() {
+	m_progress.setState(SystemUiProgressState::Inactive);
+}
+
 void ImportSMS::run()
 {
 	LOGGER("ImportSMS::run()");
 
+	m_progress.setState(SystemUiProgressState::Active);
+	m_progress.setStatusMessage( tr("0% complete...") );
+	m_progress.setProgress(0);
+	m_progress.show();
+
     AccountService as;
     QList<Account> accounts = as.accounts(Service::Messages, "sms-mms");
-    AccountKey accountKey;
+    AccountKey accountKey = 0;
 
     if ( !accounts.isEmpty() ) {
     	accountKey = accounts[0].id();
@@ -50,7 +57,9 @@ void ImportSMS::run()
 	ContactService cs;
 	QVariantList qvl;
 
-	for (int i = 0; i < conversations.size(); i++)
+	int total = conversations.size();
+
+	for (int i = 0; i < total; i++)
 	{
 		Conversation c = conversations[i];
 
@@ -68,10 +77,18 @@ void ImportSMS::run()
 
 			qvl.append(qvm);
 		}
+
+		int progress = (double)i/total * 100;
+		m_progress.setProgress(progress);
+		m_progress.setStatusMessage( tr("%1% complete...").arg(progress) );
+		m_progress.show();
 	}
 
 	LOGGER( "Elements generated:" << qvl.size() );
 	emit importCompleted(accountKey, qvl);
+
+	m_progress.cancel();
+	m_progress.setState(SystemUiProgressState::Inactive);
 }
 
 } /* namespace secret */

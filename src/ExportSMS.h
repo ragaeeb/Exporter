@@ -1,9 +1,10 @@
 #ifndef EXPORTSMS_H_
 #define EXPORTSMS_H_
 
-#include <QObject>
 #include <QRunnable>
 #include <QStringList>
+
+#include <bb/system/SystemProgressToast>
 
 namespace exportui {
 
@@ -13,10 +14,10 @@ class ExportSMS : public QObject, public QRunnable
 
 	qint64 m_accountId;
 	QStringList m_keys;
+	bb::system::SystemProgressToast m_progress;
 
 signals:
 	void exportCompleted();
-	void progress(int progress);
 
 public:
 	ExportSMS(QStringList const& keys, qint64 const& accountId);

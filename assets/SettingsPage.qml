@@ -19,10 +19,10 @@ BasePage {
 	        		persist.saveValueFor("animations", checked ? 1 : 0)
 	        		
 	        		if (checked) {
-	        		    infoText.text = qsTr("Controls will be animated whenever they are loaded.")
-	        		} else {
-	        		    infoText.text = qsTr("Controls will be snapped into position without animations.")
-	        		}
+	        		    infoText.text = qsTr("Controls will be animated whenever they are loaded.") + Retranslate.onLanguageChanged;
+                    } else {
+	        		    infoText.text = qsTr("Controls will be snapped into position without animations.") + Retranslate.onLanguageChanged;
+                    }
 	            }
 	        }
 	        
@@ -75,18 +75,18 @@ BasePage {
 	                persist.saveValueFor("timeFormat", selectedIndex);
 	                
 	                if (selectedIndex == 2) {
-	                    infoText.text = qsTr("The time will not be appended to the messages.")
-	                } else if (selectedIndex == 0) {
-	                    infoText.text = qsTr("The time will will be appended in front of the messages with a format like Jan 4/13 10:15:03.")
-	                } else {
-	                    infoText.text = qsTr("The time will will be appended in front of the messages with a format like 10:15:03.")
-	                }
+	                    infoText.text = qsTr("The time will not be appended to the messages.") + Retranslate.onLanguageChanged;
+                    } else if (selectedIndex == 0) {
+	                    infoText.text = qsTr("The time will will be appended in front of the messages with a format like Jan 4/13 10:15:03.") + Retranslate.onLanguageChanged;
+                    } else {
+	                    infoText.text = qsTr("The time will will be appended in front of the messages with a format like 10:15:03.") + Retranslate.onLanguageChanged;
+                    }
 	            }
 	        }
 	        
 	        Label {
-	            text: qsTr("Your name shows up as:");
-	            textStyle.fontSize: FontSize.XSmall
+	            text: qsTr("Your name shows up as:") + Retranslate.onLanguageChanged;
+                textStyle.fontSize: FontSize.XSmall
 	            textStyle.textAlign: TextAlign.Center
 	        }
 	        
@@ -95,8 +95,8 @@ BasePage {
 	
 	            onTextChanged: {
 	                persist.saveValueFor("userName", text);
-	                infoText.text = qsTr("In the output, messages you sent will be prefixed by: %1").arg(text)
-	            }
+	                infoText.text = qsTr("In the output, messages you sent will be prefixed by: %1").arg(text) + Retranslate.onLanguageChanged
+                }
 	
 	            text: persist.getValueFor("userName")
 	            
@@ -107,21 +107,38 @@ BasePage {
 	        {
 	            topPadding: 20
 
-                title: qsTr("Double-space")
+                title: qsTr("Double-space") + Retranslate.onLanguageChanged
                 toggle.checked: persist.getValueFor("doubleSpace") == 1
 
                 toggle.onCheckedChanged: {
                     persist.saveValueFor("doubleSpace", checked ? 1 : 0)
 
                     if (checked) {
-                        infoText.text = qsTr("Each message will be double-spaced for better readability.")
+                        infoText.text = qsTr("Each message will be double-spaced for better readability.") + Retranslate.onLanguageChanged
                     } else {
-                        infoText.text = qsTr("Each message will be single-spaced.")
+                        infoText.text = qsTr("Each message will be single-spaced.") + Retranslate.onLanguageChanged
                     }
                 }
             }
-	        
-	        Label {
+
+            SettingPair {
+                topPadding: 20
+
+                title: qsTr("Latest Message First") + Retranslate.onLanguageChanged;
+                toggle.checked: persist.getValueFor("latestFirst") == 1
+
+                toggle.onCheckedChanged: {
+                    persist.saveValueFor("latestFirst", checked ? 1 : 0)
+
+                    if (checked) {
+                        infoText.text = qsTr("Messages will be ordered from most recent to least recent.");
+                    } else {
+                        infoText.text = qsTr("Messages will be ordered from oldest to newest .");
+                    }
+                }
+            }
+
+            Label {
 	            topMargin: 40
 	            id: infoText
 	            multiline: true
