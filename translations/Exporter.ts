@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>BugReportPage</name>
+    <message>
+        <location filename="../assets/BugReportPage.qml" line="8"/>
+        <source>Bug Report</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConversationView</name>
     <message>
         <location filename="../assets/ConversationView.qml" line="8"/>
@@ -267,38 +275,43 @@ This app makes it really easy to select which conversations you want to share an
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="57"/>
+        <location filename="../assets/main.qml" line="33"/>
+        <source>Bug Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="71"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="74"/>
+        <location filename="../assets/main.qml" line="88"/>
         <source>Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="121"/>
+        <location filename="../assets/main.qml" line="135"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="125"/>
-        <location filename="../assets/main.qml" line="168"/>
+        <location filename="../assets/main.qml" line="139"/>
+        <location filename="../assets/main.qml" line="182"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="149"/>
+        <location filename="../assets/main.qml" line="163"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="190"/>
+        <location filename="../assets/main.qml" line="204"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="201"/>
+        <location filename="../assets/main.qml" line="215"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>
