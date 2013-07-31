@@ -2,7 +2,7 @@ import bb.cascades 1.0
 
 Page {
     property alias contentContainer: contentContainer.controls
-    property alias titleContainer: titleBar
+    property alias titleContainer: titleBarControl
 
     Container
     {
@@ -16,7 +16,7 @@ Page {
         background: back.imagePaint
         
 		Container {
-		    id: titleBar
+		    id: titleBarControl
 		    layout: DockLayout {}
 		
 		    horizontalAlignment: HorizontalAlignment.Fill
@@ -99,7 +99,6 @@ Page {
             
             id: contentContainer
             objectName: "contentContainer"
-            background: titleBar.background
             
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
