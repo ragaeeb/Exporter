@@ -231,19 +231,6 @@ This app makes it really easy to select which conversations you want to share an
     </message>
 </context>
 <context>
-    <name>canadainc::Persistance</name>
-    <message>
-        <location filename="../src/Persistance.cpp" line="27"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Persistance.cpp" line="42"/>
-        <source>Copied: %1 to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>exportui::ApplicationUI</name>
     <message>
         <location filename="../src/ApplicationUI.cpp" line="35"/>
@@ -311,7 +298,7 @@ This app makes it really easy to select which conversations you want to share an
     </message>
     <message>
         <location filename="../assets/main.qml" line="128"/>
-        <location filename="../assets/main.qml" line="173"/>
+        <location filename="../assets/main.qml" line="171"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
@@ -321,12 +308,12 @@ This app makes it really easy to select which conversations you want to share an
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="195"/>
+        <location filename="../assets/main.qml" line="193"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="206"/>
+        <location filename="../assets/main.qml" line="204"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>

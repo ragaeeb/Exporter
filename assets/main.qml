@@ -166,8 +166,6 @@ NavigationPane
                 multiSelectHandler {
                     actions: [
 			            ActionItem {
-			                property variant filePicker
-			                
 			                id: multiExportAction
 			                enabled: false
 			                title: qsTr("Export TXT")
