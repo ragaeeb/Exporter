@@ -1,6 +1,7 @@
 import bb.cascades 1.0
 
-BasePage {
+BasePage
+{
     contentContainer: ScrollView
     {
         horizontalAlignment: HorizontalAlignment.Fill
@@ -10,21 +11,6 @@ BasePage {
 	    {
 	        leftPadding: 20; topPadding: 20; rightPadding: 20; bottomPadding: 20
 	        verticalAlignment: VerticalAlignment.Fill
-	        
-	        SettingPair {
-	            title: qsTr("Animations")
-	        	toggle.checked: persist.getValueFor("animations") == 1
-	    
-	            toggle.onCheckedChanged: {
-	        		persist.saveValueFor("animations", checked ? 1 : 0)
-	        		
-	        		if (checked) {
-	        		    infoText.text = qsTr("Controls will be animated whenever they are loaded.") + Retranslate.onLanguageChanged;
-                    } else {
-	        		    infoText.text = qsTr("Controls will be snapped into position without animations.") + Retranslate.onLanguageChanged;
-                    }
-	            }
-	        }
 	        
 	        DropDown {
 	            title: qsTr("Duplicate File Behaviour") + Retranslate.onLanguageChanged
@@ -106,13 +92,10 @@ BasePage {
 	        SettingPair
 	        {
 	            topPadding: 20
-
+                key: "doubleSpace"
                 title: qsTr("Double-space") + Retranslate.onLanguageChanged
-                toggle.checked: persist.getValueFor("doubleSpace") == 1
 
                 toggle.onCheckedChanged: {
-                    persist.saveValueFor("doubleSpace", checked ? 1 : 0)
-
                     if (checked) {
                         infoText.text = qsTr("Each message will be double-spaced for better readability.") + Retranslate.onLanguageChanged
                     } else {
@@ -125,11 +108,9 @@ BasePage {
                 topPadding: 20
 
                 title: qsTr("Latest Message First") + Retranslate.onLanguageChanged;
-                toggle.checked: persist.getValueFor("latestFirst") == 1
+                key: "latestFirst"
 
                 toggle.onCheckedChanged: {
-                    persist.saveValueFor("latestFirst", checked ? 1 : 0)
-
                     if (checked) {
                         infoText.text = qsTr("Messages will be ordered from most recent to least recent.");
                     } else {
