@@ -86,11 +86,8 @@ NavigationPane
 		            }
 		        ]
 	            
-		        onCreationCompleted:
-		        {
-		            if ( persist.getValueFor("animations") == 1 ) {
-		                fadeInTransition.play()
-		            }
+		        onCreationCompleted: {
+                    fadeInTransition.play();
 		        }
 	        }
 	        

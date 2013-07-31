@@ -31,7 +31,6 @@ using namespace bb::pim::message;
 
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml"), m_adm(this)
 {
-	INIT_SETTING("animations", 1);
 	INIT_SETTING( "userName", tr("You") );
 	INIT_SETTING("timeFormat", 0);
 	INIT_SETTING("duplicateAction", 0);
