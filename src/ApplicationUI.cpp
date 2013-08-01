@@ -3,31 +3,16 @@
 #include "applicationui.hpp"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
+#include "IOUtils.h"
+#include "MessageImporter.h"
 #include "Logger.h"
-
-namespace {
-
-void appendIfValid(bb::pim::message::Message const& m, QVariantList& variants)
-{
-	if ( !m.isDraft() && m.attachmentCount() > 0 && m.attachmentAt(0).mimeType() == "text/plain" )
-	{
-		QVariantMap qvm;
-		qvm.insert( "inbound", m.isInbound() );
-		qvm.insert( "id", m.id() );
-		qvm.insert( "text", QString::fromLocal8Bit( m.attachmentAt(0).data() ) );
-		qvm.insert( "sender", m.sender().displayableName() );
-		qvm.insert( "time", m.serverTimestamp() );
-		variants << qvm;
-	}
-}
-
-}
 
 namespace exportui {
 
 using namespace bb::cascades;
 using namespace bb::system;
 using namespace bb::pim::message;
+using namespace canadainc;
 
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml"), m_adm(this)
 {
@@ -72,24 +57,17 @@ void ApplicationUI::onImportCompleted(qint64 accountId, QVariantList const& qvl)
 }
 
 
-QVariantList ApplicationUI::getMessagesFor(QString const& conversationKey)
+void ApplicationUI::getMessagesFor(QString const& conversationKey)
 {
-	MessageService messageService;
-	QList<Message> messages = messageService.messagesInConversation( m_accountId, conversationKey, MessageFilter() );
-	QVariantList variants;
+	 MessageImporter* ai = new MessageImporter(m_accountId, false);
+	 ai->setUserAlias( m_persistance.getValueFor("userName").toString() );
+	 ai->setConversation(conversationKey);
+	 ai->setLatestFirst( m_persistance.getValueFor("latestFirst") == 0 );
 
-	if ( m_persistance.getValueFor("latestFirst") == 0 )
-	{
-		for (int i = 0; i < messages.size(); i++) {
-			appendIfValid(messages[i], variants);
-		}
-	} else {
-		for (int i = messages.size()-1; i >= 0; i--) {
-			appendIfValid(messages[i], variants);
-		}
-	}
+	 connect( ai, SIGNAL( importCompleted(QVariantList const&) ), this, SIGNAL( messagesImported(QVariantList const&) ) );
+	 connect( ai, SIGNAL( progress(int, int) ), this, SIGNAL( loadProgress(int, int) ) );
 
-	return variants;
+	 IOUtils::startThread(ai);
 }
 
 

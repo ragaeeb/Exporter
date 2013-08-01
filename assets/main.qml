@@ -117,8 +117,8 @@ NavigationPane
 	            function doExport(conversationIds)
 	            {
 	                filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
-	                filePicker.conversationIds = conversationIds
-	                filePicker.open()
+	                filePicker.conversationIds = conversationIds;
+	                filePicker.open();
 	            }
 	
 	            listItemComponents:
@@ -137,7 +137,7 @@ NavigationPane
 						            ActionItem {
 						                id: exportAction
 						                title: qsTr("Export TXT")
-						                imageSource: "file:///usr/share/icons/ic_forward.png"
+						                imageSource: "images/ic_export.png"
 						                
 						                onTriggered: {
 							                control.ListItem.view.doExport([ListItemData.conversationId])
@@ -149,7 +149,7 @@ NavigationPane
 	                        title: ListItemData.name ? ListItemData.name : ListItemData.number
                             description: ListItemData.number
 	                        status: ListItemData.messageCount
-	                        imageSource: ListItemData.smallPhotoFilepath.length > 0 ? "file://"+ListItemData.smallPhotoFilepath : "file:///usr/share/icons/tmb_contact.png"
+	                        imageSource: ListItemData.smallPhotoFilepath.length > 0 ? "file://"+ListItemData.smallPhotoFilepath : "images/ic_user.png"
 	                    }
 	                }
 	            ]
@@ -180,24 +180,24 @@ NavigationPane
 			                id: multiExportAction
 			                enabled: false
 			                title: qsTr("Export TXT")
-			                imageSource: "file:///usr/share/icons/ic_forward.png"
+			                imageSource: "images/ic_export.png"
 			                
 			                onTriggered: {
-				                var selectedIndices = listView.selectionList()
-				                var result = []
+				                var selectedIndices = listView.selectionList();
+				                var result = [];
 				
 				                for (var i = 0; i < selectedIndices.length; i++) {
-				                    result.push( listView.dataModel.data(selectedIndices[i]).conversationId )
+				                    result.push( listView.dataModel.data(selectedIndices[i]).conversationId );
 				                }
 				                
-				                listView.doExport(result)
+				                listView.doExport(result);
 			                }
 			            }
                     ]
                     
                     onActiveChanged: {
                         if (!active) {
-                            listView.clearSelection()
+                            listView.clearSelection();
                         }
                     }
              
@@ -211,15 +211,15 @@ NavigationPane
 	            }
 	            
                 onSelectionChanged: {
-                    var n = selectionList().length
-                    multiSelectHandler.status = qsTr("%1 conversations selected").arg(n)
-                    multiExportAction.enabled = n > 0
+                    var n = selectionList().length;
+                    multiSelectHandler.status = qsTr("%1 conversations selected").arg(n);
+                    multiExportAction.enabled = n > 0;
                 }
                 
 			    onTriggered: {
 			        definition.source = "ConversationView.qml"
-	                var page = definition.createObject()
-	                page.contact = dataModel.data(indexPath)
+	                var page = definition.createObject();
+	                page.contact = dataModel.data(indexPath);
 	                navigationPane.push(page);
 			    }
 	        }

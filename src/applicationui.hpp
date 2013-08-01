@@ -32,6 +32,11 @@ class ApplicationUI : public QObject
     ApplicationUI(bb::cascades::Application *app);
     void startThread(QRunnable* qr);
 
+Q_SIGNALS:
+	void accountsImported(QVariantList const& qvl);
+	void messagesImported(QVariantList const& qvl);
+	void loadProgress(int current, int total);
+
 private slots:
     void onExportCompleted();
     void onImportCompleted(qint64 accountId, QVariantList const& qvl);
@@ -40,7 +45,7 @@ public:
     static void create(bb::cascades::Application *app);
     ~ApplicationUI();
 
-    Q_INVOKABLE QVariantList getMessagesFor(QString const& conversationKey);
+    Q_INVOKABLE void getMessagesFor(QString const& conversationKey);
     Q_INVOKABLE void exportSMS(QStringList const& conversationIds);
     Q_INVOKABLE QVariant getDataModel();
 };

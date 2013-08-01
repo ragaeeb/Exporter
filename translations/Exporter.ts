@@ -12,40 +12,40 @@
 <context>
     <name>ConversationView</name>
     <message>
-        <location filename="../assets/ConversationView.qml" line="8"/>
+        <location filename="../assets/ConversationView.qml" line="30"/>
         <source>Conversation with %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="49"/>
+        <location filename="../assets/ConversationView.qml" line="32"/>
+        <source>There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ConversationView.qml" line="68"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="71"/>
+        <location filename="../assets/ConversationView.qml" line="90"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="88"/>
-        <source>Range Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/ConversationView.qml" line="92"/>
-        <source>This mode allows you to select a range of messages.
+        <location filename="../assets/ConversationView.qml" line="100"/>
+        <source>Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.
 
-Tap the first message, then tap the last message and all of the ones in between will then be selected.</source>
+Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="92"/>
+        <location filename="../assets/ConversationView.qml" line="100"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="58"/>
-        <location filename="../assets/ConversationView.qml" line="226"/>
+        <location filename="../assets/ConversationView.qml" line="77"/>
+        <location filename="../assets/ConversationView.qml" line="224"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -224,14 +224,34 @@ This app makes it really easy to select which conversations you want to share an
     </message>
 </context>
 <context>
+    <name>StaticRangeSelector</name>
+    <message>
+        <location filename="../assets/StaticRangeSelector.qml" line="37"/>
+        <source>Range Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/StaticRangeSelector.qml" line="41"/>
+        <source>This mode allows you to select a range of messages.
+
+Tap the first message, then tap the last message and all of the ones in between will then be selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/StaticRangeSelector.qml" line="41"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="34"/>
+        <location filename="../src/ApplicationUI.cpp" line="19"/>
         <source>You</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="97"/>
+        <location filename="../src/ApplicationUI.cpp" line="75"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
