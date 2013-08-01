@@ -5,8 +5,8 @@
 #include "ContactUtil.h"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
-#include "IOUtils.h"
 #include "InvocationUtils.h"
+#include "IOUtils.h"
 #include "Logger.h"
 #include "MessageImporter.h"
 
@@ -19,20 +19,57 @@ using namespace canadainc;
 
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml")
 {
+	switch ( m_invokeManager.startupMode() )
+	{
+	case ApplicationStartupMode::LaunchApplication:
+		initRoot();
+		break;
+
+	case ApplicationStartupMode::InvokeCard:
+		connect( &m_invokeManager, SIGNAL( invoked(bb::system::InvokeRequest const&) ), this, SLOT( invoked(bb::system::InvokeRequest const&) ) );
+		break;
+
+	default:
+		exit(0);
+		break;
+	}
+}
+
+
+QObject* ApplicationUI::initRoot(QString const& qmlSource)
+{
 	qmlRegisterType<bb::cascades::pickers::FilePicker>("CustomComponent", 1, 0, "FilePicker");
 	qmlRegisterUncreatableType<bb::cascades::pickers::FileType>("CustomComponent", 1, 0, "FileType", "Can't instantiate");
 	qmlRegisterUncreatableType<bb::cascades::pickers::FilePickerMode>("CustomComponent", 1, 0, "FilePickerMode", "Can't instantiate");
 
-    QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
+    QmlDocument *qml = QmlDocument::create( QString("asset:///%1").arg(qmlSource) ).parent(this);
     qml->setContextProperty("app", this);
     qml->setContextProperty("persist", &m_persistance);
 
     AbstractPane* root = qml->createRootObject<AbstractPane>();
-    app->setScene(root);
+    Application::instance()->setScene(root);
 
 	connect( this, SIGNAL( initialize() ), this, SLOT( init() ), Qt::QueuedConnection ); // async startup
 
 	emit initialize();
+
+	return root;
+}
+
+
+void ApplicationUI::invoked(bb::system::InvokeRequest const& request)
+{
+	QObject* root = initRoot("InvokedPage.qml");
+
+	QString text = QString::fromUtf8( request.data().data() );
+	root->setProperty("data", text);
+
+	connect( root, SIGNAL( finished() ), this, SLOT( cardFinished() ) );
+}
+
+
+void ApplicationUI::cardFinished() {
+	m_invokeManager.sendCardDone( CardDoneMessage() );
 }
 
 
@@ -106,6 +143,11 @@ void ApplicationUI::exportSMS(QStringList const& conversationIds, qint64 account
 	connect( sms, SIGNAL( exportCompleted() ), this, SLOT( onExportCompleted() ) );
 
 	IOUtils::startThread(sms);
+}
+
+
+void ApplicationUI::saveTextData(QString const& file, QString const& data) {
+	IOUtils::writeTextFile(file, data);
 }
 
 
