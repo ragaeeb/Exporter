@@ -23,10 +23,6 @@ Q_DECL_EXPORT int main(int argc, char **argv)
 	qInstallMsgHandler(redirectedMessageOutput);
 #endif
 
-	qmlRegisterType<bb::cascades::pickers::FilePicker>("CustomComponent", 1, 0, "FilePicker");
-	qmlRegisterUncreatableType<bb::cascades::pickers::FileType>("CustomComponent", 1, 0, "FileType", "Can't instantiate");
-	qmlRegisterUncreatableType<bb::cascades::pickers::FilePickerMode>("CustomComponent", 1, 0, "FilePickerMode", "Can't instantiate");
-
     Application app(argc, argv);
     ApplicationUI::create(&app);
 
