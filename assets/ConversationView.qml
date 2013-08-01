@@ -3,22 +3,41 @@ import bb.cascades 1.0
 BasePage
 {
     property variant contact
+    property int timeSetting
+    property string userName
     
-    onContactChanged: {
-        label.text = qsTr("Conversation with %1").arg(contact.name);
-        var messages = app.getMessagesFor(contact.conversationId);
-        theDataModel.clear();
-        theDataModel.append(messages);
+    onContactChanged:
+    {
+        userName = persist.getValueFor("userName");
+        timeSetting = persist.getValueFor("timeFormat");
+
+        app.getMessagesFor(contact.conversationId);
     }
     
-    function onSettingChanged(key) {
+    function onSettingChanged(key)
+    {
         if (key == "latestFirst" || key == "timeFormat" || key == "userName") {
             contactChanged(contact);
         }
     }
     
+    function onMessagesImported(results)
+    {
+        theDataModel.clear();
+        
+        if (results.length > 0) {
+            theDataModel.append(results);
+            label.text = qsTr("Conversation with %1").arg(contact.name);
+        } else {
+            label.text = qsTr("There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?") + Retranslate.onLanguageChanged
+        }
+    }
+    
     onCreationCompleted: {
         persist.settingChanged.connect(onSettingChanged);
+        addAction(rangeSelector.rangeSelectAction);
+        
+        app.messagesImported.connect(onMessagesImported);
     }
     
     function concatenate()
@@ -61,14 +80,14 @@ BasePage
             enabled: false
 
             onTriggered: {
-                var result = concatenate()
-                persist.copyToClipboard(result)
+                var result = concatenate();
+                persist.copyToClipboard(result);
             }
         },
 
         InvokeActionItem {
 		    id: iai
-		    title: qsTr("Share")
+		    title: qsTr("Share") + Retranslate.onLanguageChanged
 
             query {
                 mimeType: "text/plain"
@@ -78,22 +97,12 @@ BasePage
             enabled: false
             
             onTriggered: {
-                iai.data = persist.convertToUtf8( concatenate() )
+                persist.showBlockingToast( qsTr("Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.\n\nUse the Range Selector if the message gets truncated."), qsTr("OK") );
+                iai.data = persist.convertToUtf8( concatenate() );
             }
             
             ActionBar.placement: ActionBarPlacement.OnBar
-        },
-
-		ActionItem {
-			title: qsTr("Range Select") + Retranslate.onLanguageChanged
-			imageSource: "file:///usr/share/icons/bb_action_moveother.png"
-			enabled: !listView.rangeSelect
-			onTriggered: {
-			    persist.showToast( qsTr("This mode allows you to select a range of messages.\n\nTap the first message, then tap the last message and all of the ones in between will then be selected."), qsTr("OK") )
-			    listView.first = listView.last = undefined
-                listView.rangeSelect = true
-            }
-      	}
+        }
     ]
     
     contentContainer: Container
@@ -123,15 +132,19 @@ BasePage
 	        }
         }
         
+        ProgressDelegate
+        {
+            onCreationCompleted: {
+                app.loadProgress.connect(onProgressChanged);
+            }
+        }
+        
         Divider {
             bottomMargin: 0; topMargin: 0;
         }
         
 		ListView {
             property alias background: back
-            property variant first
-            property variant last
-            property bool rangeSelect: false
 
             id: listView
 	        objectName: "listView"
@@ -140,18 +153,20 @@ BasePage
 		        ImagePaintDefinition {
 		            id: back
 		            imageSource: "images/listitem.amd"
-		        }
+		        },
+		        
+		        StaticRangeSelector {
+		            id: rangeSelector
+              	}
             ]
             
-            function copyToClipboard(data)
-            {
+            function copyToClipboard(data) {
                 persist.copyToClipboard( render(data) )
             }
             
             function render(data)
             {
 			    var timeFormat = "MMM d/yy, hh:mm:ss";
-			    var timeSetting = persist.getValueFor("timeFormat")
 			    
 			    if (timeSetting == 1) {
 			        timeFormat = "hh:mm:ss"
@@ -159,9 +174,9 @@ BasePage
 			        timeFormat = ""
 			    }
                 
-                var time = Qt.formatDateTime(data.time, timeFormat)
-                var name = data.inbound ? data.sender : persist.getValueFor("userName")
-                var text = data.text
+                var time = Qt.formatDateTime(data.time, timeFormat);
+                var name = data.inbound ? data.sender : userName;
+                var text = data.text;
                 
                 if (timeSetting == 2) {
                     return name+": "+text
@@ -175,21 +190,6 @@ BasePage
             }
             
             onSelectionChanged: {
-                if (rangeSelect)
-                {
-                    if (!first) {
-                        first = listView.selected()
-                    } else if (!last) {
-                        last = selectionList()[selectionList().length - 1]
-
-                        for (var i = first[0] + 1; i < last[0]; i ++) {
-                            listView.select([i], true)
-                        }
-                        
-                        rangeSelect = false
-                    }
-                }
-
                 copyAction.enabled = iai.enabled = selectionList().length > 0
             }
 		
@@ -213,9 +213,7 @@ BasePage
 		                
 		                Label {
 		                    id: messageLabel
-		                    text: {
-							    listItemRoot.ListItem.view.render(ListItemData)
-		                    }
+                            text: listItemRoot.ListItem.view.render(ListItemData)
 		                    multiline: true
 		                    verticalAlignment: VerticalAlignment.Center
 		                }
@@ -237,7 +235,7 @@ BasePage
 		    ]
 		    
 		    onTriggered: {
-		        toggleSelection(indexPath)
+		        toggleSelection(indexPath);
 		    }
 		
 		    horizontalAlignment: HorizontalAlignment.Fill
