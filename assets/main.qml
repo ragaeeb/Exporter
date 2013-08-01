@@ -71,7 +71,7 @@ NavigationPane
 	            title: qsTr("Select All") + Retranslate.onLanguageChanged
 	            
 	            onTriggered: {
-	                listView.multiSelectHandler.active = true
+	                listView.multiSelectHandler.active = true;
 	                listView.selectAll();
 	            }
 	        }
@@ -84,7 +84,15 @@ NavigationPane
 	        topPadding: 20
 	        horizontalAlignment: HorizontalAlignment.Fill
 	        
+            ProgressDelegate
+            {
+                onCreationCompleted: {
+                    app.conversationLoadProgress.connect(onProgressChanged);
+                }
+            }
+	        
 	        Label {
+	            id: instructions
 	            text: qsTr("Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.")
 	            textStyle.fontSize: FontSize.XSmall
 	            multiline: true
@@ -114,12 +122,41 @@ NavigationPane
 	            horizontalAlignment: HorizontalAlignment.Fill
 	            verticalAlignment: VerticalAlignment.Fill
 	            
+	            leadingVisual: AccountsDropDown
+	            {
+	                id: accountsDropDown
+	                selectedAccountId: 23
+	                
+	                onAccountsLoaded: {
+	                    if (numAccounts == 0) {
+                            instructions.text = qsTr("No accounts found. Are you sure you gave the app the permissions it needs?");
+	                    }
+                    }
+	                
+	                onSelectedValueChanged: {
+                        app.getConversationsFor(selectedValue);
+                    }
+                }
+	            
 	            function doExport(conversationIds)
 	            {
 	                filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
 	                filePicker.conversationIds = conversationIds;
 	                filePicker.open();
 	            }
+	            
+	            function onConversationsImported(conversations)
+	            {
+	                adm.clear();
+	                adm.append(conversations);
+
+                    scrollToPosition(0, ScrollAnimation.None);
+                    scroll(-100, ScrollAnimation.Smooth);
+	            }
+	            
+	            onCreationCompleted: {
+                    app.conversationsImported.connect(onConversationsImported);
+                }
 	
 	            listItemComponents:
 	            [
@@ -167,7 +204,7 @@ NavigationPane
 					        var result = selectedFiles[0]
 							persist.saveValueFor("output", result)
 							
-							app.exportSMS(conversationIds)
+                            app.exportSMS(conversationIds, accountsDropDown.selectedValue)
 		                }
 					}
                 ]
@@ -201,24 +238,27 @@ NavigationPane
                         }
                     }
              
-                    status: qsTr("None selected")
+                    status: qsTr("None selected") + Retranslate.onLanguageChanged
                 }
-	            
-	            dataModel: app.getDataModel()
-	            
+
+	            dataModel: ArrayDataModel {
+	                id: adm
+                }
+
 	            layoutProperties: StackLayoutProperties {
 	                spaceQuota: 1
 	            }
-	            
+
                 onSelectionChanged: {
                     var n = selectionList().length;
                     multiSelectHandler.status = qsTr("%1 conversations selected").arg(n);
                     multiExportAction.enabled = n > 0;
                 }
-                
+
 			    onTriggered: {
 			        definition.source = "ConversationView.qml"
 	                var page = definition.createObject();
+                    page.accountId = accountsDropDown.selectedValue;
 	                page.contact = dataModel.data(indexPath);
 	                navigationPane.push(page);
 			    }

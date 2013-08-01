@@ -12,54 +12,55 @@ BasePage
 	        leftPadding: 20; topPadding: 20; rightPadding: 20; bottomPadding: 20
 	        verticalAlignment: VerticalAlignment.Fill
 	        
-	        DropDown {
+            PersistDropDown
+            {
 	            title: qsTr("Duplicate File Behaviour") + Retranslate.onLanguageChanged
-	            horizontalAlignment: HorizontalAlignment.Fill
+                key: "duplicateAction"
 	
 	            Option {
 	                text: qsTr("Append") + Retranslate.onLanguageChanged
 	                description: qsTr("If a file already exists, then export to the tail of the file.") + Retranslate.onLanguageChanged
-	                selected: persist.getValueFor("duplicateAction") == 0
+                    imageSource: "images/ic_append.png"
+	                value: 0
 	            }
 	
 	            Option {
 	                text: qsTr("Overwrite") + Retranslate.onLanguageChanged
 	                description: qsTr("If a file already exists, then overwrite it with the new information") + Retranslate.onLanguageChanged
-	                selected: persist.getValueFor("duplicateAction") == 1
-	            }
-	
-	            onSelectedIndexChanged: {
-	                persist.saveValueFor("duplicateAction", selectedIndex);
+	                imageSource: "images/ic_overwrite.png"
+                    value: 1
 	            }
 	        }
 	        
-	        DropDown {
+	        PersistDropDown
+	        {
 	            title: qsTr("Message Time Format") + Retranslate.onLanguageChanged
-	            horizontalAlignment: HorizontalAlignment.Fill
+	            key: "timeFormat"
 	
 	            Option {
 	                text: qsTr("Date & Time") + Retranslate.onLanguageChanged
 	                description: qsTr("ie: Jan 4/13 10:15:03") + Retranslate.onLocaleOrLanguageChanged
-	                selected: persist.getValueFor("timeFormat") == 0
+	                imageSource: "images/ic_calendar.png"
+	                value: 0
 	            }
 	
 	            Option {
 	                text: qsTr("Time Only") + Retranslate.onLanguageChanged
 	                description: qsTr("ie: 10:15:03") + Retranslate.onLocaleOrLanguageChanged
-	                selected: persist.getValueFor("timeFormat") == 1
+	                imageSource: "images/ic_clock.png"
+                    value: 1
 	            }
 	
 	            Option {
 	                text: qsTr("Off") + Retranslate.onLanguageChanged
 	                description: qsTr("No date or time will be shown on messages.") + Retranslate.onLanguageChanged
-	                selected: persist.getValueFor("timeFormat") == 2
+	                imageSource: "images/ic_off.png"
+                    value: 2
 	            }
 	
 	            bottomMargin: 60
 	
 	            onSelectedIndexChanged: {
-	                persist.saveValueFor("timeFormat", selectedIndex);
-	                
 	                if (selectedIndex == 2) {
 	                    infoText.text = qsTr("The time will not be appended to the messages.") + Retranslate.onLanguageChanged;
                     } else if (selectedIndex == 0) {
