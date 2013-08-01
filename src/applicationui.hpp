@@ -1,8 +1,6 @@
 #ifndef ApplicationUI_HPP_
 #define ApplicationUI_HPP_
 
-#include <bb/cascades/ArrayDataModel>
-
 #include "LazySceneCover.h"
 #include "Persistance.h"
 
@@ -26,8 +24,6 @@ class ApplicationUI : public QObject
 
     Persistance m_persistance;
     LazySceneCover m_cover;
-    qint64 m_accountId;
-    ArrayDataModel m_adm;
 
     ApplicationUI(bb::cascades::Application *app);
     void startThread(QRunnable* qr);
@@ -35,19 +31,21 @@ class ApplicationUI : public QObject
 Q_SIGNALS:
 	void accountsImported(QVariantList const& qvl);
 	void messagesImported(QVariantList const& qvl);
+	void conversationsImported(QVariantList const& qvl);
 	void loadProgress(int current, int total);
+	void conversationLoadProgress(int current, int total);
 
 private slots:
     void onExportCompleted();
-    void onImportCompleted(qint64 accountId, QVariantList const& qvl);
 
 public:
     static void create(bb::cascades::Application *app);
     ~ApplicationUI();
 
-    Q_INVOKABLE void getMessagesFor(QString const& conversationKey);
-    Q_INVOKABLE void exportSMS(QStringList const& conversationIds);
-    Q_INVOKABLE QVariant getDataModel();
+    Q_INVOKABLE void loadAccounts();
+    Q_INVOKABLE void getMessagesFor(QString const& conversationKey, qint64 accountId);
+    Q_INVOKABLE void getConversationsFor(qint64 accountId);
+    Q_INVOKABLE void exportSMS(QStringList const& conversationIds, qint64 accountId);
 };
 
 }

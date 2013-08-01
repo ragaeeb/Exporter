@@ -29,29 +29,16 @@ namespace exportui {
 
 using namespace bb::system;
 
-ImportSMS::ImportSMS() {
-	m_progress.setState(SystemUiProgressState::Inactive);
+ImportSMS::ImportSMS(qint64 accountId) : m_accountId(accountId)
+{
 }
 
 void ImportSMS::run()
 {
 	LOGGER("ImportSMS::run()");
 
-	m_progress.setState(SystemUiProgressState::Active);
-	m_progress.setStatusMessage( tr("0% complete...") );
-	m_progress.setProgress(0);
-	m_progress.show();
-
-    AccountService as;
-    QList<Account> accounts = as.accounts(Service::Messages, "sms-mms");
-    AccountKey accountKey = 0;
-
-    if ( !accounts.isEmpty() ) {
-    	accountKey = accounts[0].id();
-    }
-
     MessageService ms;
-	QList<Conversation> conversations = ms.conversations( accountKey, MessageFilter() );
+	QList<Conversation> conversations = ms.conversations( m_accountId, MessageFilter() );
 	qSort( conversations.begin(), conversations.end(), lessThan );
 
 	ContactService cs;
@@ -78,17 +65,13 @@ void ImportSMS::run()
 			qvl.append(qvm);
 		}
 
-		int progress = (double)i/total * 100;
-		m_progress.setProgress(progress);
-		m_progress.setStatusMessage( tr("%1% complete...").arg(progress) );
-		m_progress.show();
+		emit progress(i, total);
 	}
 
-	LOGGER( "Elements generated:" << qvl.size() );
-	emit importCompleted(accountKey, qvl);
+	emit progress(total, total);
 
-	m_progress.cancel();
-	m_progress.setState(SystemUiProgressState::Inactive);
+	LOGGER( "Elements generated:" << qvl.size() );
+	emit importCompleted(qvl);
 }
 
 } /* namespace secret */

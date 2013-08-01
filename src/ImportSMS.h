@@ -4,15 +4,13 @@
 #include <QRunnable>
 #include <QVariantList>
 
-#include <bb/system/SystemProgressToast>
-
 namespace exportui {
 
 class ImportSMS : public QObject, public QRunnable
 {
 	Q_OBJECT
 
-	bb::system::SystemProgressToast m_progress;
+	qint64 m_accountId;
 
 signals:
 	/**
@@ -20,10 +18,11 @@ signals:
 	 * @param qvl A list of QVariantMap objects. Each entry has a key for the conversation ID, and a name of the contact it is
 	 * associated with.
 	 */
-	void importCompleted(qint64 accountId, QVariantList const& qvl);
+	void importCompleted(QVariantList const& qvl);
+	void progress(int current, int total);
 
 public:
-	ImportSMS();
+	ImportSMS(qint64 accountId);
 	void run();
 };
 

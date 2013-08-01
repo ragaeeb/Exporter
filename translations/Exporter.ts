@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>AccountsDropDown</name>
+    <message>
+        <location filename="../assets/AccountsDropDown.qml" line="6"/>
+        <source>Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AccountsDropDown.qml" line="31"/>
+        <source>Did not find any accounts. Maybe the app does not have the permissions it needs...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BugReportPage</name>
     <message>
         <location filename="../assets/BugReportPage.qml" line="8"/>
@@ -12,40 +25,40 @@
 <context>
     <name>ConversationView</name>
     <message>
-        <location filename="../assets/ConversationView.qml" line="30"/>
+        <location filename="../assets/ConversationView.qml" line="31"/>
         <source>Conversation with %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="32"/>
+        <location filename="../assets/ConversationView.qml" line="33"/>
         <source>There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="68"/>
+        <location filename="../assets/ConversationView.qml" line="69"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="90"/>
+        <location filename="../assets/ConversationView.qml" line="91"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="100"/>
+        <location filename="../assets/ConversationView.qml" line="101"/>
         <source>Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.
 
 Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="100"/>
+        <location filename="../assets/ConversationView.qml" line="101"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="77"/>
-        <location filename="../assets/ConversationView.qml" line="224"/>
+        <location filename="../assets/ConversationView.qml" line="78"/>
+        <location filename="../assets/ConversationView.qml" line="225"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -103,27 +116,27 @@ This app makes it really easy to select which conversations you want to share an
 <context>
     <name>SettingsPage</name>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="16"/>
+        <location filename="../assets/SettingsPage.qml" line="17"/>
         <source>Duplicate File Behaviour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="20"/>
+        <location filename="../assets/SettingsPage.qml" line="21"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="21"/>
+        <location filename="../assets/SettingsPage.qml" line="22"/>
         <source>If a file already exists, then export to the tail of the file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="26"/>
+        <location filename="../assets/SettingsPage.qml" line="28"/>
         <source>Overwrite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="27"/>
+        <location filename="../assets/SettingsPage.qml" line="29"/>
         <source>If a file already exists, then overwrite it with the new information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -143,82 +156,82 @@ This app makes it really easy to select which conversations you want to share an
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="47"/>
+        <location filename="../assets/SettingsPage.qml" line="48"/>
         <source>Time Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="48"/>
+        <location filename="../assets/SettingsPage.qml" line="49"/>
         <source>ie: 10:15:03</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="53"/>
+        <location filename="../assets/SettingsPage.qml" line="55"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="54"/>
+        <location filename="../assets/SettingsPage.qml" line="56"/>
         <source>No date or time will be shown on messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="64"/>
+        <location filename="../assets/SettingsPage.qml" line="65"/>
         <source>The time will not be appended to the messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="66"/>
+        <location filename="../assets/SettingsPage.qml" line="67"/>
         <source>The time will will be appended in front of the messages with a format like Jan 4/13 10:15:03.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="68"/>
+        <location filename="../assets/SettingsPage.qml" line="69"/>
         <source>The time will will be appended in front of the messages with a format like 10:15:03.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="74"/>
+        <location filename="../assets/SettingsPage.qml" line="75"/>
         <source>Your name shows up as:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="80"/>
+        <location filename="../assets/SettingsPage.qml" line="81"/>
         <source>The name that shows for messages you sent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="84"/>
+        <location filename="../assets/SettingsPage.qml" line="85"/>
         <source>In the output, messages you sent will be prefixed by: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="96"/>
+        <location filename="../assets/SettingsPage.qml" line="97"/>
         <source>Double-space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="100"/>
+        <location filename="../assets/SettingsPage.qml" line="101"/>
         <source>Each message will be double-spaced for better readability.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="102"/>
+        <location filename="../assets/SettingsPage.qml" line="103"/>
         <source>Each message will be single-spaced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="110"/>
+        <location filename="../assets/SettingsPage.qml" line="111"/>
         <source>Latest Message First</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="115"/>
+        <location filename="../assets/SettingsPage.qml" line="116"/>
         <source>Messages will be ordered from most recent to least recent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="117"/>
+        <location filename="../assets/SettingsPage.qml" line="118"/>
         <source>Messages will be ordered from oldest to newest .</source>
         <translation type="unfinished"></translation>
     </message>
@@ -246,12 +259,12 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="19"/>
+        <location filename="../src/ApplicationUI.cpp" line="20"/>
         <source>You</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="75"/>
+        <location filename="../src/ApplicationUI.cpp" line="74"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -280,19 +293,6 @@ Tap the first message, then tap the last message and all of the ones in between 
     </message>
 </context>
 <context>
-    <name>exportui::ImportSMS</name>
-    <message>
-        <location filename="../src/ImportSMS.cpp" line="41"/>
-        <source>0% complete...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ImportSMS.cpp" line="83"/>
-        <source>%1% complete...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>main</name>
     <message>
         <location filename="../assets/main.qml" line="33"/>
@@ -305,33 +305,38 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="88"/>
+        <location filename="../assets/main.qml" line="96"/>
         <source>Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="135"/>
+        <location filename="../assets/main.qml" line="132"/>
+        <source>No accounts found. Are you sure you gave the app the permissions it needs?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="172"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="139"/>
-        <location filename="../assets/main.qml" line="182"/>
+        <location filename="../assets/main.qml" line="176"/>
+        <location filename="../assets/main.qml" line="219"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="163"/>
+        <location filename="../assets/main.qml" line="200"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="204"/>
+        <location filename="../assets/main.qml" line="241"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="215"/>
+        <location filename="../assets/main.qml" line="254"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2,6 +2,7 @@ import bb.cascades 1.0
 
 BasePage
 {
+    property variant accountId
     property variant contact
     property int timeSetting
     property string userName
@@ -11,7 +12,7 @@ BasePage
         userName = persist.getValueFor("userName");
         timeSetting = persist.getValueFor("timeFormat");
 
-        app.getMessagesFor(contact.conversationId);
+        app.getMessagesFor(contact.conversationId, accountId);
     }
     
     function onSettingChanged(key)

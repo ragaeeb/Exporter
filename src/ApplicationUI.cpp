@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "applicationui.hpp"
+#include "AccountImporter.h"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
 #include "IOUtils.h"
@@ -14,7 +15,7 @@ using namespace bb::system;
 using namespace bb::pim::message;
 using namespace canadainc;
 
-ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml"), m_adm(this)
+ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml")
 {
 	INIT_SETTING( "userName", tr("You") );
 	INIT_SETTING("timeFormat", 0);
@@ -38,10 +39,6 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_c
 
     AbstractPane* root = qml->createRootObject<AbstractPane>();
     app->setScene(root);
-
-	ImportSMS* sms = new ImportSMS();
-	connect( sms, SIGNAL( importCompleted(qint64, QVariantList const&) ), this, SLOT( onImportCompleted(qint64, QVariantList const&) ) );
-	startThread(sms);
 }
 
 
@@ -50,16 +47,18 @@ void ApplicationUI::create(bb::cascades::Application *app) {
 }
 
 
-void ApplicationUI::onImportCompleted(qint64 accountId, QVariantList const& qvl)
+void ApplicationUI::getConversationsFor(qint64 accountId)
 {
-	m_accountId = accountId;
-	m_adm.append(qvl);
+	ImportSMS* sms = new ImportSMS(accountId);
+	connect( sms, SIGNAL( importCompleted(QVariantList const&) ), this, SIGNAL( conversationsImported(QVariantList const&) ) );
+	connect( sms, SIGNAL( progress(int, int) ), this, SIGNAL( conversationLoadProgress(int, int) ) );
+	IOUtils::startThread(sms);
 }
 
 
-void ApplicationUI::getMessagesFor(QString const& conversationKey)
+void ApplicationUI::getMessagesFor(QString const& conversationKey, qint64 accountId)
 {
-	 MessageImporter* ai = new MessageImporter(m_accountId, false);
+	 MessageImporter* ai = new MessageImporter(accountId, false);
 	 ai->setUserAlias( m_persistance.getValueFor("userName").toString() );
 	 ai->setConversation(conversationKey);
 	 ai->setLatestFirst( m_persistance.getValueFor("latestFirst") == 0 );
@@ -76,31 +75,25 @@ void ApplicationUI::onExportCompleted() {
 }
 
 
-void ApplicationUI::exportSMS(QStringList const& conversationIds)
+void ApplicationUI::exportSMS(QStringList const& conversationIds, qint64 accountId)
 {
-	ExportSMS* sms = new ExportSMS(conversationIds, m_accountId);
+	ExportSMS* sms = new ExportSMS(conversationIds, accountId);
 	connect( sms, SIGNAL( exportCompleted() ), this, SLOT( onExportCompleted() ) );
 
-	startThread(sms);
+	IOUtils::startThread(sms);
 }
 
 
-void ApplicationUI::startThread(QRunnable* qr)
+void ApplicationUI::loadAccounts()
 {
-	qr->setAutoDelete(true);
-
-	QThreadPool *threadPool = QThreadPool::globalInstance();
-	threadPool->start(qr);
+	AccountImporter* ai = new AccountImporter();
+	connect( ai, SIGNAL( importCompleted(QVariantList const&) ), this, SIGNAL( accountsImported(QVariantList const&) ) );
+	IOUtils::startThread(ai);
 }
 
 
-QVariant ApplicationUI::getDataModel() {
-	return QVariant::fromValue(&m_adm);
-}
-
-
-ApplicationUI::~ApplicationUI() {
-	m_adm.setParent(NULL);
+ApplicationUI::~ApplicationUI()
+{
 }
 
 }
