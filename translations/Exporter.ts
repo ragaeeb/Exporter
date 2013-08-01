@@ -58,7 +58,7 @@ Use the Range Selector if the message gets truncated.</source>
     </message>
     <message>
         <location filename="../assets/ConversationView.qml" line="78"/>
-        <location filename="../assets/ConversationView.qml" line="225"/>
+        <location filename="../assets/ConversationView.qml" line="231"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -259,12 +259,27 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="20"/>
+        <location filename="../src/ApplicationUI.cpp" line="41"/>
         <source>You</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="74"/>
+        <location filename="../src/ApplicationUI.cpp" line="58"/>
+        <source>Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ApplicationUI.cpp" line="61"/>
+        <source>Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ApplicationUI.cpp" line="64"/>
+        <source>Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ApplicationUI.cpp" line="99"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -300,43 +315,43 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="71"/>
+        <location filename="../assets/main.qml" line="72"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="96"/>
+        <location filename="../assets/main.qml" line="98"/>
         <source>Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="132"/>
+        <location filename="../assets/main.qml" line="134"/>
         <source>No accounts found. Are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="172"/>
+        <location filename="../assets/main.qml" line="176"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="176"/>
-        <location filename="../assets/main.qml" line="219"/>
+        <location filename="../assets/main.qml" line="180"/>
+        <location filename="../assets/main.qml" line="223"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="200"/>
+        <location filename="../assets/main.qml" line="204"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="241"/>
+        <location filename="../assets/main.qml" line="245"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="254"/>
+        <location filename="../assets/main.qml" line="258"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>

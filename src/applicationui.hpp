@@ -29,6 +29,7 @@ class ApplicationUI : public QObject
     void startThread(QRunnable* qr);
 
 Q_SIGNALS:
+	void initialize();
 	void accountsImported(QVariantList const& qvl);
 	void messagesImported(QVariantList const& qvl);
 	void conversationsImported(QVariantList const& qvl);
@@ -37,6 +38,7 @@ Q_SIGNALS:
 
 private slots:
     void onExportCompleted();
+    void init();
 
 public:
     static void create(bb::cascades::Application *app);

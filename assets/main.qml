@@ -66,9 +66,11 @@ NavigationPane
     {
         actions: [
 	        ActionItem {
+	            id: selectAllAction
 	            imageSource: "images/selectAll.png"
 	            ActionBar.placement: ActionBarPlacement.OnBar
 	            title: qsTr("Select All") + Retranslate.onLanguageChanged
+	            enabled: false
 	            
 	            onTriggered: {
 	                listView.multiSelectHandler.active = true;
@@ -149,6 +151,8 @@ NavigationPane
 	            {
 	                adm.clear();
 	                adm.append(conversations);
+	                
+                    selectAllAction.enabled = conversations.length > 0;
 
                     scrollToPosition(0, ScrollAnimation.None);
                     scroll(-100, ScrollAnimation.Smooth);

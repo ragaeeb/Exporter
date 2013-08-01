@@ -2,11 +2,13 @@
 
 #include "applicationui.hpp"
 #include "AccountImporter.h"
+#include "ContactUtil.h"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
 #include "IOUtils.h"
-#include "MessageImporter.h"
+#include "InvocationUtils.h"
 #include "Logger.h"
+#include "MessageImporter.h"
 
 namespace exportui {
 
@@ -17,13 +19,33 @@ using namespace canadainc;
 
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml")
 {
+	qmlRegisterType<bb::cascades::pickers::FilePicker>("CustomComponent", 1, 0, "FilePicker");
+	qmlRegisterUncreatableType<bb::cascades::pickers::FileType>("CustomComponent", 1, 0, "FileType", "Can't instantiate");
+	qmlRegisterUncreatableType<bb::cascades::pickers::FilePickerMode>("CustomComponent", 1, 0, "FilePickerMode", "Can't instantiate");
+
+    QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
+    qml->setContextProperty("app", this);
+    qml->setContextProperty("persist", &m_persistance);
+
+    AbstractPane* root = qml->createRootObject<AbstractPane>();
+    app->setScene(root);
+
+	connect( this, SIGNAL( initialize() ), this, SLOT( init() ), Qt::QueuedConnection ); // async startup
+
+	emit initialize();
+}
+
+
+void ApplicationUI::init()
+{
 	INIT_SETTING( "userName", tr("You") );
 	INIT_SETTING("timeFormat", 0);
 	INIT_SETTING("duplicateAction", 0);
 	INIT_SETTING("doubleSpace", 0);
 	INIT_SETTING("latestFirst", 1);
 
-	if ( m_persistance.getValueFor("output").isNull() ) { // first run
+	if ( m_persistance.getValueFor("output").isNull() ) // first run
+	{
 		QString sdDirectory("/accounts/1000/removable/sdcard/documents");
 
 		if ( !QDir(sdDirectory).exists() ) {
@@ -33,12 +55,15 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_c
 		m_persistance.saveValueFor("output", sdDirectory);
 	}
 
-    QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
-    qml->setContextProperty("app", this);
-    qml->setContextProperty("persist", &m_persistance);
+	bool permissionOK = InvocationUtils::validateEmailSMSAccess( tr("Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
 
-    AbstractPane* root = qml->createRootObject<AbstractPane>();
-    app->setScene(root);
+	if (permissionOK) {
+		permissionOK = InvocationUtils::validateSharedFolderAccess( tr("Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.") );
+
+		if (permissionOK) {
+			ContactUtil::validateContactsAccess( tr("Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
+		}
+	}
 }
 
 
