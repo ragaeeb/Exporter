@@ -6,6 +6,7 @@ DropDown
     title: qsTr("Account") + Retranslate.onLanguageChanged
     property variant selectedAccountId
     signal accountsLoaded(int numAccounts);
+    horizontalAlignment: HorizontalAlignment.Fill
     
     function onAccountsImported(results)
     {
