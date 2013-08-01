@@ -46,7 +46,7 @@
 
     <!-- Description, displayed in the BlackBerry Tablet OS application installer.
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
-    <description>Allows the user to save their SMS messages onto the device file system, SD card, or cloud storage. Also allows sharing of entire SMS conversations via BBM, Remember, WhatsApp, Email, Facebook, LinkedIn, etc.</description>
+    <description>Allows the user to save their SMS/Email messages onto the device file system, SD card, or cloud storage. Also allows sharing of entire SMS/Email conversations via BBM, Remember, WhatsApp, Email, Facebook, LinkedIn, etc. You can also export any plain-text data to the file system via this app.</description>
 
     <!-- Copyright information. Optional. -->
     <!-- <copyright></copyright> -->
