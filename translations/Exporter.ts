@@ -9,7 +9,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AccountsDropDown.qml" line="31"/>
+        <location filename="../assets/AccountsDropDown.qml" line="32"/>
         <source>Did not find any accounts. Maybe the app does not have the permissions it needs...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -75,9 +75,11 @@ Use the Range Selector if the message gets truncated.</source>
 Please report all bugs to:
 support@canadainc.org
 
-Ever wanted to forward or share multiple SMS conversations with others (or yourself)? Or ever wanted to persist these messages into the file system? This is where Exporter comes in.
+Ever wanted to forward or share multiple SMS or Email conversations with others (or yourself)? Or ever wanted to persist these messages into the file system? This is where Exporter comes in.
 
 This app makes it really easy to select which conversations you want to share and even allows you to select a subset of the messages that you want to share. You can also select these conversations to be archived into your SD card, a cloud storage account, or any other persistent storage. After selecting the conversations you are free to share it in whichever channel you wish (ie: Facebook, Remember, Email, BBM, SMS, etc.)
+
+The great thing is that the app gives you access to nearly all your accounts to export messages from. This includes emails, SMS, PIN messages, etc. Exporter is also registered as in BB10&apos;s invocation framework and this means that any plain-text information can easily be saved to your file system when you use a Share action!
 
 </source>
         <translation type="unfinished"></translation>
