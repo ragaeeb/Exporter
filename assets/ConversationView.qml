@@ -145,16 +145,22 @@ BasePage
         }
         
 		ListView {
-            property alias background: back
+            property alias backgroundIncoming: backIncoming
+            property alias backgroundOutgoing: backOutgoing
 
             id: listView
 	        objectName: "listView"
 
             attachedObjects: [
 		        ImagePaintDefinition {
-		            id: back
+		            id: backIncoming
 		            imageSource: "images/listitem.amd"
 		        },
+		        
+                ImagePaintDefinition {
+                    id: backOutgoing
+                    imageSource: "images/ic_bubble.amd"
+                },
 		        
 		        StaticRangeSelector {
 		            id: rangeSelector
@@ -206,9 +212,9 @@ BasePage
 		                    opacity = selected ? 1 : 0.5
 		                }
 		                
-		                leftPadding: 40; bottomPadding: 30; topPadding: 20
+		                leftPadding: 40; bottomPadding: 30; topPadding: 20; rightPadding: 20
 		                
-		                background: ListItem.view.background.imagePaint
+                        background: ListItemData.inbound ? ListItem.view.backgroundIncoming.imagePaint : ListItem.view.backgroundOutgoing.imagePaint
 		                horizontalAlignment: HorizontalAlignment.Fill
 		                preferredWidth: 1280
 		                
