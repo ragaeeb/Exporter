@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "ExportSMS.h"
+#include "IOUtils.h"
 #include "Logger.h"
 
 namespace exportui {
@@ -96,36 +97,13 @@ void ExportSMS::run()
 	QStringList keys = map.keys();
 	QString outputPath = settings.value("output").toString();
 
-    QIODevice::OpenMode om = QIODevice::WriteOnly | QIODevice::Append;
-
-    int duplicateAction = settings.value("duplicateAction").toInt();
-    if (duplicateAction == 1) {
-    	om = QIODevice::WriteOnly;
-    }
-
+    bool replace = settings.value("duplicateAction").toInt() == 1;
     int total = keys.size();
 
 	for (int i = 0; i < total; i++)
 	{
 	   QString key = keys[i];
-	   QFile outputFile( QObject::tr("%1/%2.txt").arg(outputPath).arg(key) );
-
-	   bool alreadyExists = outputFile.exists() && duplicateAction != 1;
-	   outputFile.open(om);
-
-	   if ( outputFile.isOpen() )
-	   {
-		   QTextStream stream(&outputFile);
-
-		   if (alreadyExists) {
-			   stream << "\r\n\r\n";
-		   }
-
-		   stream << map[key];
-		   outputFile.close();
-	   } else {
-		   LOGGER("Could not open " << key << "for writing!");
-	   }
+	   canadainc::IOUtils::writeTextFile( QString("%1/%2.txt").arg(outputPath).arg(key), map[key], replace );
 
 		int progress = (double)i/total * 100;
 		m_progress.setProgress(progress);

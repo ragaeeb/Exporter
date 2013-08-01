@@ -4,6 +4,8 @@
 #include "LazySceneCover.h"
 #include "Persistance.h"
 
+#include <bb/system/InvokeManager>
+
 class QRunnable;
 
 namespace bb {
@@ -22,11 +24,12 @@ class ApplicationUI : public QObject
 {
     Q_OBJECT
 
+    bb::system::InvokeManager m_invokeManager;
     Persistance m_persistance;
     LazySceneCover m_cover;
 
     ApplicationUI(bb::cascades::Application *app);
-    void startThread(QRunnable* qr);
+    QObject* initRoot(QString const& qml="main.qml");
 
 Q_SIGNALS:
 	void initialize();
@@ -39,6 +42,8 @@ Q_SIGNALS:
 private slots:
     void onExportCompleted();
     void init();
+    void invoked(bb::system::InvokeRequest const& request);
+    void cardFinished();
 
 public:
     static void create(bb::cascades::Application *app);
@@ -48,6 +53,7 @@ public:
     Q_INVOKABLE void getMessagesFor(QString const& conversationKey, qint64 accountId);
     Q_INVOKABLE void getConversationsFor(qint64 accountId);
     Q_INVOKABLE void exportSMS(QStringList const& conversationIds, qint64 accountId);
+    Q_INVOKABLE void saveTextData(QString const& file, QString const& data);
 };
 
 }

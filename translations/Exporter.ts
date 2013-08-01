@@ -84,32 +84,45 @@ This app makes it really easy to select which conversations you want to share an
     </message>
 </context>
 <context>
+    <name>InvokedPage</name>
+    <message>
+        <location filename="../assets/InvokedPage.qml" line="21"/>
+        <source>Enter Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/InvokedPage.qml" line="31"/>
+        <source>Successfully saved file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/InvokedPage.qml" line="31"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="61"/>
+        <location filename="../src/ExportSMS.cpp" line="62"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="64"/>
+        <location filename="../src/ExportSMS.cpp" line="65"/>
         <source>%1
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="79"/>
+        <location filename="../src/ExportSMS.cpp" line="80"/>
         <source>%1: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="81"/>
+        <location filename="../src/ExportSMS.cpp" line="82"/>
         <source>%1 - %2: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ExportSMS.cpp" line="111"/>
-        <source>%1/%2.txt</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -259,27 +272,27 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="41"/>
+        <location filename="../src/ApplicationUI.cpp" line="83"/>
         <source>You</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="58"/>
+        <location filename="../src/ApplicationUI.cpp" line="100"/>
         <source>Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="61"/>
+        <location filename="../src/ApplicationUI.cpp" line="103"/>
         <source>Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="64"/>
+        <location filename="../src/ApplicationUI.cpp" line="106"/>
         <source>Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="99"/>
+        <location filename="../src/ApplicationUI.cpp" line="141"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -287,22 +300,22 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ExportSMS</name>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="19"/>
+        <location filename="../src/ExportSMS.cpp" line="20"/>
         <source>0% complete...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="26"/>
+        <location filename="../src/ExportSMS.cpp" line="27"/>
         <source>MMM d/yy, hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="31"/>
+        <location filename="../src/ExportSMS.cpp" line="32"/>
         <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="132"/>
+        <location filename="../src/ExportSMS.cpp" line="110"/>
         <source>%1% complete...</source>
         <translation type="unfinished"></translation>
     </message>
