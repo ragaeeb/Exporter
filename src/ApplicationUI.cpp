@@ -123,7 +123,7 @@ void ApplicationUI::getMessagesFor(QString const& conversationKey, qint64 accoun
 	 MessageImporter* ai = new MessageImporter(accountId, false);
 	 ai->setUserAlias( m_persistance.getValueFor("userName").toString() );
 	 ai->setConversation(conversationKey);
-	 ai->setLatestFirst( m_persistance.getValueFor("latestFirst") == 0 );
+	 ai->setLatestFirst( m_persistance.getValueFor("latestFirst") == 1 );
 
 	 connect( ai, SIGNAL( importCompleted(QVariantList const&) ), this, SIGNAL( messagesImported(QVariantList const&) ) );
 	 connect( ai, SIGNAL( progress(int, int) ), this, SIGNAL( loadProgress(int, int) ) );
