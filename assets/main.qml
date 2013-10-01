@@ -133,6 +133,37 @@ NavigationPane
 	                    {
 	                        id: control
 	                        
+                            scaleX: 0.8
+                            scaleY: 0.8
+                            opacity: 0
+                            animations: [
+                                ParallelAnimation
+                                {
+                                    id: showAnim
+                                    ScaleTransition
+                                    {
+                                        fromX: 0.8
+                                        toX: 1
+                                        fromY: 0.8
+                                        toY: 1
+                                        duration: 800
+                                        easingCurve: StockCurve.ElasticOut
+                                    }
+
+                                    FadeTransition {
+                                        fromOpacity: 0
+                                        toOpacity: 1
+                                        duration: 200
+                                    }
+ 
+                                    delay: control.ListItem.indexInSection * 100
+                                }
+                            ]
+                            
+                            onCreationCompleted: {
+                                showAnim.play();
+                            }
+	                        
     	                    contextActions: [
     	                        ActionSet {
     	                            title: ListItemData.name

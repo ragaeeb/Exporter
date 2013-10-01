@@ -211,6 +211,26 @@ BasePage
 		                property bool selected: ListItem.selected
 		                opacity: 0.5
 		                
+                        scaleX: 0.8
+                        scaleY: 0.8
+                        animations: [
+                            ScaleTransition
+                            {
+                                id: showAnim
+                                fromX: 0.8
+                                toX: 1
+                                fromY: 0.8
+                                toY: 1
+                                duration: 800
+                                easingCurve: StockCurve.ElasticOut
+                                delay: listItemRoot.ListItem.indexInSection * 100
+                            }
+                        ]
+                        
+                        onCreationCompleted: {
+                            showAnim.play();
+                        }
+		                
 		                onSelectedChanged: {
 		                    opacity = selected ? 1 : 0.5
 		                }
