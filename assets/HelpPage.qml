@@ -17,11 +17,11 @@ BasePage
     {
         leftPadding: 20; rightPadding: 20
 
-        horizontalAlignment: HorizontalAlignment.Center
+        horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
 
         ScrollView {
-            horizontalAlignment: HorizontalAlignment.Center
+            horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
 
             Label {

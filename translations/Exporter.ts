@@ -2,27 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>AccountsDropDown</name>
-    <message>
-        <location filename="../assets/AccountsDropDown.qml" line="6"/>
-        <source>Account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/AccountsDropDown.qml" line="32"/>
-        <source>Did not find any accounts. Maybe the app does not have the permissions it needs...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BugReportPage</name>
-    <message>
-        <location filename="../assets/BugReportPage.qml" line="8"/>
-        <source>Bug Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ConversationView</name>
     <message>
         <location filename="../assets/ConversationView.qml" line="31"/>
@@ -325,48 +304,43 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="33"/>
-        <source>Bug Reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="72"/>
+        <location filename="../assets/main.qml" line="29"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="98"/>
+        <location filename="../assets/main.qml" line="55"/>
         <source>Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="134"/>
+        <location filename="../assets/main.qml" line="91"/>
         <source>No accounts found. Are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="176"/>
+        <location filename="../assets/main.qml" line="135"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="180"/>
-        <location filename="../assets/main.qml" line="223"/>
+        <location filename="../assets/main.qml" line="139"/>
+        <location filename="../assets/main.qml" line="182"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="204"/>
+        <location filename="../assets/main.qml" line="163"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="245"/>
+        <location filename="../assets/main.qml" line="204"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="258"/>
+        <location filename="../assets/main.qml" line="217"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2,13 +2,13 @@
 
 #include "applicationui.hpp"
 #include "AccountImporter.h"
-#include "ContactUtil.h"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
 #include "InvocationUtils.h"
 #include "IOUtils.h"
 #include "Logger.h"
 #include "MessageImporter.h"
+#include "PimUtil.h"
 
 namespace exportui {
 
@@ -98,7 +98,7 @@ void ApplicationUI::init()
 		permissionOK = InvocationUtils::validateSharedFolderAccess( tr("Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.") );
 
 		if (permissionOK) {
-			ContactUtil::validateContactsAccess( tr("Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
+			PimUtil::validateContactsAccess( tr("Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
 		}
 	}
 }

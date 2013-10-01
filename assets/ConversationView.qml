@@ -6,6 +6,7 @@ BasePage
     property variant contact
     property int timeSetting
     property string userName
+    titleVisible: false
     
     onContactChanged:
     {
@@ -61,6 +62,8 @@ BasePage
         
         return result
     }
+    
+    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     actions: [
         ActionItem {
