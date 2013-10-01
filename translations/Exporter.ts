@@ -37,7 +37,7 @@ Use the Range Selector if the message gets truncated.</source>
     </message>
     <message>
         <location filename="../assets/ConversationView.qml" line="81"/>
-        <location filename="../assets/ConversationView.qml" line="234"/>
+        <location filename="../assets/ConversationView.qml" line="253"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -85,24 +85,22 @@ The great thing is that the app gives you access to nearly all your accounts to 
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="62"/>
+        <location filename="../src/ExportSMS.cpp" line="65"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="65"/>
-        <source>%1
-
-</source>
+        <location filename="../src/ExportSMS.cpp" line="68"/>
+        <source>%1%2%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="80"/>
+        <location filename="../src/ExportSMS.cpp" line="83"/>
         <source>%1: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="82"/>
+        <location filename="../src/ExportSMS.cpp" line="85"/>
         <source>%1 - %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -281,22 +279,22 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ExportSMS</name>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="20"/>
+        <location filename="../src/ExportSMS.cpp" line="23"/>
         <source>0% complete...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="27"/>
+        <location filename="../src/ExportSMS.cpp" line="30"/>
         <source>MMM d/yy, hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="32"/>
+        <location filename="../src/ExportSMS.cpp" line="35"/>
         <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="110"/>
+        <location filename="../src/ExportSMS.cpp" line="113"/>
         <source>%1% complete...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -319,28 +317,28 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="139"/>
+        <location filename="../assets/main.qml" line="170"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="143"/>
-        <location filename="../assets/main.qml" line="186"/>
+        <location filename="../assets/main.qml" line="174"/>
+        <location filename="../assets/main.qml" line="217"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="167"/>
+        <location filename="../assets/main.qml" line="198"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="208"/>
+        <location filename="../assets/main.qml" line="239"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="221"/>
+        <location filename="../assets/main.qml" line="252"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>

@@ -3,11 +3,13 @@
 #include "ExportSMS.h"
 #include "IOUtils.h"
 #include "Logger.h"
+#include "PimUtil.h"
 
 namespace exportui {
 
 using namespace bb::pim::message;
 using namespace bb::system;
+using namespace canadainc;
 
 ExportSMS::ExportSMS(QStringList const& keys, qint64 const& accountId) : m_accountId(accountId), m_keys(keys)
 {
@@ -16,6 +18,7 @@ ExportSMS::ExportSMS(QStringList const& keys, qint64 const& accountId) : m_accou
 
 void ExportSMS::run()
 {
+	static QString spacer = "\r\n";
 	m_progress.setState(SystemUiProgressState::Active);
 	m_progress.setStatusMessage( tr("0% complete...") );
 	m_progress.setProgress(0);
@@ -52,7 +55,7 @@ void ExportSMS::run()
 			MessageContact c = conversation.participants()[0];
 			QString fileName;
 
-			QRegExp alphaNumericFilter = QRegExp( QString::fromUtf8("[-`~!@#$%^&*()_Ñ+=|:;<>ÇÈ,.?/{}\'\"\\\[\\\]\\\\]") );
+			QRegExp alphaNumericFilter = QRegExp( QString::fromUtf8("[-`~!@#$%^&*()_ï¿½+=|:;<>ï¿½ï¿½,.?/{}\'\"\\\[\\\]\\\\]") );
 			QString displayName = c.displayableName().trimmed().remove(alphaNumericFilter);
 			QString address = c.address().trimmed().remove(alphaNumericFilter);
 
@@ -62,17 +65,17 @@ void ExportSMS::run()
 			   fileName = QObject::tr("%1 %2").arg(displayName).arg(address);
 			}
 
-			QString formattedConversation = QObject::tr("%1\r\n\r\n").arg(fileName);
+			QString formattedConversation = QObject::tr("%1%2%2").arg( c.address() ).arg(spacer);
 			QList<Message> messages = ms.messagesInConversation(m_accountId, m_keys[i], filter);
 
 			for (int j = 0; j < messages.size(); j++)
 			{
 			   Message m = messages[j];
 
-			   if ( !m.isDraft() && m.attachmentCount() > 0 && m.attachmentAt(0).mimeType() == "text/plain" )
+			   if ( !m.isDraft() )
 			   {
 				   QString ts = timeFormat.isEmpty() ? "" : m.serverTimestamp().toString(timeFormat);
-				   QString text = QString::fromLocal8Bit( m.attachmentAt(0).data() );
+				   QString text = PimUtil::extractText(m);
 				   QString sender = m.isInbound() ? m.sender().displayableName() : userName;
 				   QString suffix;
 
@@ -82,10 +85,10 @@ void ExportSMS::run()
 					   suffix = QObject::tr("%1 - %2: %3").arg(ts).arg(sender).arg(text);
 				   }
 
-				   formattedConversation += suffix +"\r\n";
+				   formattedConversation += suffix +spacer;
 
 				   if (doubleSpace) {
-					   formattedConversation += "\r\n";
+					   formattedConversation += spacer;
 				   }
 			   }
 			}
@@ -103,7 +106,7 @@ void ExportSMS::run()
 	for (int i = 0; i < total; i++)
 	{
 	   QString key = keys[i];
-	   canadainc::IOUtils::writeTextFile( QString("%1/%2.txt").arg(outputPath).arg(key), map[key], replace );
+	   IOUtils::writeTextFile( QString("%1/%2.txt").arg(outputPath).arg(key), map[key], replace );
 
 		int progress = (double)i/total * 100;
 		m_progress.setProgress(progress);

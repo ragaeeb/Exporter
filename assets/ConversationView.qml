@@ -207,7 +207,6 @@ BasePage
 		        ListItemComponent {
 		            Container {
 		                id: listItemRoot
-		                property bool active: ListItem.active
 		                property bool selected: ListItem.selected
 		                opacity: 0.5
 		                
@@ -222,7 +221,7 @@ BasePage
                                 fromY: 0.8
                                 toY: 1
                                 duration: 800
-                                easingCurve: StockCurve.ElasticOut
+                                easingCurve: StockCurve.DoubleElasticOut
                                 delay: listItemRoot.ListItem.indexInSection * 100
                             }
                         ]
@@ -232,7 +231,7 @@ BasePage
                         }
 		                
 		                onSelectedChanged: {
-		                    opacity = selected ? 1 : 0.5
+		                    opacity = selected ? 1 : 0.5;
 		                }
 		                
 		                leftPadding: 40; bottomPadding: 30; topPadding: 20; rightPadding: 20
