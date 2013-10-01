@@ -11,51 +11,8 @@ NavigationPane
         }
     ]
 
-    Menu.definition: MenuDefinition
-    {
-        settingsAction: SettingsActionItem
-        {
-    	    property variant settingsPage
-            
-            onTriggered:
-            {
-                if (!settingsPage) {
-                    definition.source = "SettingsPage.qml"
-                    settingsPage = definition.createObject()
-                }
-                
-                navigationPane.push(settingsPage);
-            }
-        }
-        
-        actions: [
-            ActionItem {
-                title: qsTr("Bug Reports") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_bugs.png"
-                
-                onTriggered: {
-                    definition.source = "BugReportPage.qml";
-                    var bugReportPage = definition.createObject();
-                    bugReportPage.projectName = "exporter10";
-                    navigationPane.push(bugReportPage);
-                }
-            }
-        ]
-
-        helpAction: HelpActionItem
-        {
-    	    property variant helpPage
-            
-            onTriggered:
-            {
-                if (!helpPage) {
-                    definition.source = "HelpPage.qml"
-                    helpPage = definition.createObject();
-                }
-
-                navigationPane.push(helpPage);
-            }
-        }
+    Menu.definition: CanadaIncMenu {
+        projectName: "exporter10"
     }
 
     onPopTransitionEnded: {
@@ -64,6 +21,8 @@ NavigationPane
     
     BasePage
     {
+        id: rootPage
+        
         actions: [
 	        ActionItem {
 	            id: selectAllAction
@@ -78,6 +37,8 @@ NavigationPane
 	            }
 	        }
         ]
+        
+        actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         
         contentContainer: Container
         {
@@ -132,6 +93,8 @@ NavigationPane
 	                onAccountsLoaded: {
 	                    if (numAccounts == 0) {
                             instructions.text = qsTr("No accounts found. Are you sure you gave the app the permissions it needs?");
+	                    } else {
+                            divider.visible = false;
 	                    }
                     }
 	                
@@ -205,10 +168,10 @@ NavigationPane
 		                filter: ["*.txt"]
 		                
 		                onFileSelected : {
-					        var result = selectedFiles[0]
-							persist.saveValueFor("output", result)
+					        var result = selectedFiles[0];
+							persist.saveValueFor("output", result);
 							
-                            app.exportSMS(conversationIds, accountsDropDown.selectedValue)
+                            app.exportSMS(conversationIds, accountsDropDown.selectedValue);
 		                }
 					}
                 ]
@@ -220,7 +183,7 @@ NavigationPane
 			            ActionItem {
 			                id: multiExportAction
 			                enabled: false
-			                title: qsTr("Export TXT")
+			                title: qsTr("Export TXT") + Retranslate.onLanguageChanged
 			                imageSource: "images/ic_export.png"
 			                
 			                onTriggered: {

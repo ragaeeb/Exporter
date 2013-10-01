@@ -1,8 +1,8 @@
 import bb.cascades 1.0
 
 Page {
+    property alias titleVisible: titleBarControl.visible
     property alias contentContainer: contentContainer.controls
-    property alias titleContainer: titleBarControl
 
     Container
     {
