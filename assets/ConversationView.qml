@@ -30,7 +30,7 @@ BasePage
         
         if (results.length > 0) {
             theDataModel.append(results);
-            label.text = qsTr("Conversation with %1").arg(contact.name);
+            label.text = qsTr("Conversation with %1").arg(contact.name.length > 0 ? contact.name : contact.number);
         } else {
             label.text = qsTr("There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?") + Retranslate.onLanguageChanged
         }
