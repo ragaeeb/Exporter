@@ -95,22 +95,22 @@ The great thing is that the app gives you access to nearly all your accounts to 
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="68"/>
+        <location filename="../src/ExportSMS.cpp" line="69"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="71"/>
+        <location filename="../src/ExportSMS.cpp" line="72"/>
         <source>%1%2%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="86"/>
+        <location filename="../src/ExportSMS.cpp" line="88"/>
         <source>%1: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="88"/>
+        <location filename="../src/ExportSMS.cpp" line="90"/>
         <source>%1 - %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -237,6 +237,21 @@ The great thing is that the app gives you access to nearly all your accounts to 
         <source>Messages will be ordered from oldest to newest .</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="126"/>
+        <source>Use Server Timestamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="131"/>
+        <source>Message timestamps will reflect the time they were stored in the server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="133"/>
+        <source>Message timestamps will reflect the time they were created on the device.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StaticRangeSelector</name>
@@ -271,34 +286,34 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="95"/>
+        <location filename="../src/ApplicationUI.cpp" line="97"/>
         <source>%1
 
 %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="114"/>
+        <location filename="../src/ApplicationUI.cpp" line="116"/>
         <source>You</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="131"/>
+        <location filename="../src/ApplicationUI.cpp" line="134"/>
         <source>Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="135"/>
+        <location filename="../src/ApplicationUI.cpp" line="138"/>
         <source>Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="138"/>
+        <location filename="../src/ApplicationUI.cpp" line="141"/>
         <source>Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="173"/>
+        <location filename="../src/ApplicationUI.cpp" line="177"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -321,7 +336,7 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="116"/>
+        <location filename="../src/ExportSMS.cpp" line="118"/>
         <source>%1% complete...</source>
         <translation type="unfinished"></translation>
     </message>

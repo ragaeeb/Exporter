@@ -10,7 +10,7 @@ using namespace bb::pim::message;
 namespace {
 
 bool lessThan(Conversation const& c1, Conversation const& c2) {
-	return c1.latestMessageId() > c2.latestMessageId();
+	return c1.timeStamp() > c2.timeStamp();
 }
 
 }

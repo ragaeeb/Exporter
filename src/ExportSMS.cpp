@@ -48,6 +48,7 @@ void ExportSMS::run()
     MessageFilter filter;
 
     bool doubleSpace = settings.value("doubleSpace").toInt() == 1;
+    bool useServerTime = settings.value("serverTimestamp").toInt() == 1;
 
 	for (int i = 0; i < m_keys.size(); i++)
 	{
@@ -77,7 +78,8 @@ void ExportSMS::run()
 
 			   if ( !m.isDraft() )
 			   {
-				   QString ts = timeFormat.isEmpty() ? "" : m.serverTimestamp().toString(timeFormat);
+				   QDateTime t = useServerTime ? m.serverTimestamp() : m.deviceTimestamp();
+				   QString ts = timeFormat.isEmpty() ? "" : t.toString(timeFormat);
 				   QString text = PimUtil::extractText(m);
 				   QString sender = m.isInbound() ? m.sender().displayableName() : userName;
 				   QString suffix;

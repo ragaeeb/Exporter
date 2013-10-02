@@ -92,7 +92,9 @@ void ApplicationUI::invoked(bb::system::InvokeRequest const& request)
 	    			break;
 	        }
 
-	    	text = tr("%1\r\n\r\n%2: %3").arg( m.sender().address() ).arg( timeFormat.isEmpty() ? "" : m.serverTimestamp().toString(timeFormat) ).arg( PimUtil::extractText(m) );
+	        QDateTime t = m_persistance.getValueFor("serverTimestamp").toInt() == 1 ? m.serverTimestamp() : m.deviceTimestamp();
+
+	    	text = tr("%1\r\n\r\n%2: %3").arg( m.sender().address() ).arg( timeFormat.isEmpty() ? "" : t.toString(timeFormat) ).arg( PimUtil::extractText(m) );
 	    }
 	} else {
 		text = QString::fromUtf8( request.data().data() );
@@ -116,6 +118,7 @@ void ApplicationUI::init()
 	INIT_SETTING("duplicateAction", 0);
 	INIT_SETTING("doubleSpace", 0);
 	INIT_SETTING("latestFirst", 1);
+	INIT_SETTING("serverTimestamp", 1);
 
 	if ( m_persistance.getValueFor("output").isNull() ) // first run
 	{
@@ -161,6 +164,7 @@ void ApplicationUI::getMessagesFor(QString const& conversationKey, qint64 accoun
 	 ai->setUserAlias( m_persistance.getValueFor("userName").toString() );
 	 ai->setConversation(conversationKey);
 	 ai->setLatestFirst( m_persistance.getValueFor("latestFirst") == 1 );
+	 ai->setUseDeviceTime( m_persistance.getValueFor("serverTimestamp") != 1 );
 
 	 connect( ai, SIGNAL( importCompleted(QVariantList const&) ), this, SIGNAL( messagesImported(QVariantList const&) ) );
 	 connect( ai, SIGNAL( progress(int, int) ), this, SIGNAL( loadProgress(int, int) ) );
