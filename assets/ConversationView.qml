@@ -1,4 +1,5 @@
 import bb.cascades 1.0
+import CustomComponent 1.0
 
 BasePage
 {
@@ -80,13 +81,41 @@ BasePage
             id: copyAction
             title: qsTr("Copy") + Retranslate.onLanguageChanged
             imageSource: "images/ic_copy.png"
-            ActionBar.placement: ActionBarPlacement.OnBar
             enabled: false
 
             onTriggered: {
                 var result = concatenate();
                 persist.copyToClipboard(result);
             }
+        },
+        
+        ActionItem {
+            title: qsTr("Save All") + Retranslate.onLanguageChanged
+            imageSource: "images/ic_save.png"
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            onTriggered: {
+                filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
+                filePicker.open();
+            }
+            
+            attachedObjects: [
+                FilePicker {
+                    property variant conversationIds
+                    
+                    id: filePicker
+                    mode: FilePickerMode.SaverMultiple
+                    title : qsTr("Select Folder") + Retranslate.onLanguageChanged
+                    filter: ["*.txt"]
+
+                    onFileSelected : {
+                        var result = selectedFiles[0];
+                        persist.saveValueFor("output", result);
+                        
+                        app.exportSMS(contact.conversationId, accountId);
+                    }
+                }
+            ]
         },
 
         InvokeActionItem {
