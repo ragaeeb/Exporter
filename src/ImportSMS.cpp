@@ -9,18 +9,8 @@ using namespace bb::pim::message;
 
 namespace {
 
-bool lessThan(const Conversation &c1, const Conversation &c2)
-{
-	QList<MessageContact> c1p = c1.participants();
-	QList<MessageContact> c2p = c2.participants();
-
-	if ( c1p.isEmpty() ) {
-		return true;
-	} else if ( c2p.isEmpty() ) {
-		return false;
-	}
-
-	return c1p[0].displayableName().toLower() < c2p[0].displayableName().toLower();
+bool lessThan(Conversation const& c1, Conversation const& c2) {
+	return c1.latestMessageId() > c2.latestMessageId();
 }
 
 }
