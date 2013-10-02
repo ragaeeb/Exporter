@@ -121,4 +121,13 @@
         <mime-type>text/plain</mime-type>
     </filter>
     </invoke-target>
+    
+	<invoke-target id="com.canadainc.Exporter.save">        
+		<invoke-target-type>card.composer</invoke-target-type>
+		<filter>
+			<action>bb.action.SHARE</action>
+			<mime-type>message/rfc822</mime-type>
+			<property var="uris" value="pim:"/>
+		</filter>
+	</invoke-target>
 </qnx>
