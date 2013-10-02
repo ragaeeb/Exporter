@@ -354,33 +354,33 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="95"/>
+        <location filename="../assets/main.qml" line="96"/>
         <source>No accounts found. Are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="170"/>
+        <location filename="../assets/main.qml" line="171"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="174"/>
-        <location filename="../assets/main.qml" line="217"/>
+        <location filename="../assets/main.qml" line="175"/>
+        <location filename="../assets/main.qml" line="218"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="198"/>
+        <location filename="../assets/main.qml" line="199"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="239"/>
+        <location filename="../assets/main.qml" line="240"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="252"/>
+        <location filename="../assets/main.qml" line="253"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>

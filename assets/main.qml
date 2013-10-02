@@ -62,6 +62,7 @@ NavigationPane
 	            horizontalAlignment: HorizontalAlignment.Fill
 	            verticalAlignment: VerticalAlignment.Fill
 	            textStyle.textAlign: TextAlign.Center
+	            visible: !accountsDropDown.expanded
 	            
 		        animations: [
 		            FadeTransition {
