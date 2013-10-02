@@ -19,25 +19,35 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="94"/>
+        <location filename="../assets/ConversationView.qml" line="92"/>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ConversationView.qml" line="106"/>
+        <source>Select Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ConversationView.qml" line="121"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="104"/>
+        <location filename="../assets/ConversationView.qml" line="131"/>
         <source>Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.
 
 Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="104"/>
+        <location filename="../assets/ConversationView.qml" line="131"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ConversationView.qml" line="81"/>
-        <location filename="../assets/ConversationView.qml" line="253"/>
+        <location filename="../assets/ConversationView.qml" line="280"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
