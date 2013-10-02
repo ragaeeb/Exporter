@@ -8,6 +8,7 @@
 #include "IOUtils.h"
 #include "Logger.h"
 #include "MessageImporter.h"
+#include "MessageManager.h"
 #include "PimUtil.h"
 
 namespace exportui {
@@ -60,8 +61,43 @@ QObject* ApplicationUI::initRoot(QString const& qmlSource)
 void ApplicationUI::invoked(bb::system::InvokeRequest const& request)
 {
 	QObject* root = initRoot("InvokedPage.qml");
+	QString text;
 
-	QString text = QString::fromUtf8( request.data().data() );
+	if ( request.uri().toString().startsWith("pim") )
+	{
+		QStringList tokens = request.uri().toString().split(":");
+	    LOGGER("========= INVOKED DATA" << tokens);
+
+	    if ( tokens.size() > 3 ) {
+	    	qint64 accountId = tokens[2].toLongLong();
+	    	qint64 messageId = tokens[3].toLongLong();
+
+	    	Message m = MessageService().message(accountId, messageId);
+	    	QString name = m.sender().displayableName().trimmed();
+	    	root->setProperty( "defaultName", QString("%1.txt").arg(name) );
+
+	        QString timeFormat = tr("MMM d/yy, hh:mm:ss");
+
+	        switch ( m_persistance.getValueFor("timeFormat").toInt() )
+	        {
+	    		case 1:
+	    			timeFormat = tr("hh:mm:ss");
+	    			break;
+
+	    		case 2:
+	    			timeFormat = "";
+	    			break;
+
+	    		default:
+	    			break;
+	        }
+
+	    	text = tr("%1\r\n\r\n%2: %3").arg( m.sender().address() ).arg( timeFormat.isEmpty() ? "" : m.serverTimestamp().toString(timeFormat) ).arg( PimUtil::extractText(m) );
+	    }
+	} else {
+		text = QString::fromUtf8( request.data().data() );
+	}
+
 	root->setProperty("data", text);
 
 	connect( root, SIGNAL( finished() ), this, SLOT( cardFinished() ) );
@@ -94,7 +130,8 @@ void ApplicationUI::init()
 
 	bool permissionOK = InvocationUtils::validateEmailSMSAccess( tr("Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
 
-	if (permissionOK) {
+	if (permissionOK)
+	{
 		permissionOK = InvocationUtils::validateSharedFolderAccess( tr("Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.") );
 
 		if (permissionOK) {
@@ -147,7 +184,7 @@ void ApplicationUI::exportSMS(QStringList const& conversationIds, qint64 account
 
 
 void ApplicationUI::saveTextData(QString const& file, QString const& data) {
-	IOUtils::writeTextFile(file, data);
+	IOUtils::writeTextFile( file, data, m_persistance.getValueFor("duplicateAction").toInt() == 1 );
 }
 
 

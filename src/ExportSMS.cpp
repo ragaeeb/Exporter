@@ -38,6 +38,9 @@ void ExportSMS::run()
 		case 2:
 			timeFormat = "";
 			break;
+
+		default:
+			break;
     }
 
     QString userName = settings.value("userName").toString();

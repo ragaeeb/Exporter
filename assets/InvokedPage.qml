@@ -5,10 +5,11 @@ BasePage
 {
     signal finished();
     property string data
+    property string defaultName
     
     onDataChanged: {
         var tokens = data.split("\n");
-        filePicker.defaultSaveFileNames = [ tokens[0].substr(0, 40) + ".txt", "Document.txt" ];
+        filePicker.defaultSaveFileNames = [ defaultName.length > 0 ? defaultName : tokens[0].substr(0, 40) + ".txt", "Document.txt" ];
         
         filePicker.open();
     }

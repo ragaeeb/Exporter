@@ -4,50 +4,50 @@
 <context>
     <name>ConversationView</name>
     <message>
-        <location filename="../assets/ConversationView.qml" line="32"/>
+        <location filename="../assets/ConversationView.qml" line="33"/>
         <source>Conversation with %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="34"/>
+        <location filename="../assets/ConversationView.qml" line="35"/>
         <source>There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="72"/>
+        <location filename="../assets/ConversationView.qml" line="73"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="92"/>
+        <location filename="../assets/ConversationView.qml" line="93"/>
         <source>Save All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="106"/>
+        <location filename="../assets/ConversationView.qml" line="108"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="121"/>
+        <location filename="../assets/ConversationView.qml" line="123"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="131"/>
+        <location filename="../assets/ConversationView.qml" line="133"/>
         <source>Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.
 
 Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="131"/>
+        <location filename="../assets/ConversationView.qml" line="133"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="81"/>
-        <location filename="../assets/ConversationView.qml" line="280"/>
+        <location filename="../assets/ConversationView.qml" line="82"/>
+        <location filename="../assets/ConversationView.qml" line="282"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -77,17 +77,17 @@ The great thing is that the app gives you access to nearly all your accounts to 
 <context>
     <name>InvokedPage</name>
     <message>
-        <location filename="../assets/InvokedPage.qml" line="21"/>
+        <location filename="../assets/InvokedPage.qml" line="22"/>
         <source>Enter Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/InvokedPage.qml" line="31"/>
+        <location filename="../assets/InvokedPage.qml" line="32"/>
         <source>Successfully saved file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/InvokedPage.qml" line="31"/>
+        <location filename="../assets/InvokedPage.qml" line="32"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -95,22 +95,22 @@ The great thing is that the app gives you access to nearly all your accounts to 
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="65"/>
+        <location filename="../src/ExportSMS.cpp" line="68"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="68"/>
+        <location filename="../src/ExportSMS.cpp" line="71"/>
         <source>%1%2%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="83"/>
+        <location filename="../src/ExportSMS.cpp" line="86"/>
         <source>%1: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="85"/>
+        <location filename="../src/ExportSMS.cpp" line="88"/>
         <source>%1 - %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -261,27 +261,44 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="78"/>
-        <source>You</source>
+        <location filename="../src/ApplicationUI.cpp" line="79"/>
+        <source>MMM d/yy, hh:mm:ss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ApplicationUI.cpp" line="84"/>
+        <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ApplicationUI.cpp" line="95"/>
+        <source>%1
+
+%2: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ApplicationUI.cpp" line="114"/>
+        <source>You</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ApplicationUI.cpp" line="131"/>
         <source>Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="98"/>
+        <location filename="../src/ApplicationUI.cpp" line="135"/>
         <source>Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="101"/>
+        <location filename="../src/ApplicationUI.cpp" line="138"/>
         <source>Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="136"/>
+        <location filename="../src/ApplicationUI.cpp" line="173"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -304,7 +321,7 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="113"/>
+        <location filename="../src/ExportSMS.cpp" line="116"/>
         <source>%1% complete...</source>
         <translation type="unfinished"></translation>
     </message>
