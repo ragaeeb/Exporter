@@ -119,6 +119,21 @@ BasePage
                     }
                 }
             }
+            
+            SettingPair {
+                topPadding: 20
+                
+                title: qsTr("Use Server Timestamp") + Retranslate.onLanguageChanged;
+                key: "serverTimestamp"
+                
+                toggle.onCheckedChanged: {
+                    if (checked) {
+                        infoText.text = qsTr("Message timestamps will reflect the time they were stored in the server.");
+                    } else {
+                        infoText.text = qsTr("Message timestamps will reflect the time they were created on the device.");
+                    }
+                }
+            }
 
             Label {
 	            topMargin: 40

@@ -19,7 +19,7 @@ BasePage
     
     function onSettingChanged(key)
     {
-        if (key == "latestFirst" || key == "timeFormat" || key == "userName") {
+        if (key == "latestFirst" || key == "timeFormat" || key == "userName" || key == "serverTimestamp") {
             contactChanged(contact);
         }
     }
