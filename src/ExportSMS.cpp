@@ -4,6 +4,7 @@
 #include "IOUtils.h"
 #include "Logger.h"
 #include "PimUtil.h"
+#include "TextUtils.h"
 
 namespace exportui {
 
@@ -59,17 +60,16 @@ void ExportSMS::run()
 			MessageContact c = conversation.participants()[0];
 			QString fileName;
 
-			QRegExp alphaNumericFilter = QRegExp( QString::fromUtf8("[-`~!@#$%^&*()_�+=|:;<>��,.?/{}\'\"\\\[\\\]\\\\]") );
-			QString displayName = c.displayableName().trimmed().remove(alphaNumericFilter);
-			QString address = c.address().trimmed().remove(alphaNumericFilter);
+			QString displayName = TextUtils::sanitize( c.displayableName().trimmed() );
+			QString address = TextUtils::sanitize( c.address().trimmed() );
 
 			if (displayName == address) { // unknown contact
 			   fileName = address;
 			} else {
-			   fileName = QObject::tr("%1 %2").arg(displayName).arg(address);
+			   fileName = QString("%1 %2").arg(displayName).arg(address);
 			}
 
-			QString formattedConversation = QObject::tr("%1%2%2").arg( c.address() ).arg(spacer);
+			QString formattedConversation = QString("%1%2%2").arg( c.address() ).arg(spacer);
 			QList<Message> messages = ms.messagesInConversation(m_accountId, m_keys[i], filter);
 
 			for (int j = 0; j < messages.size(); j++)
@@ -85,9 +85,9 @@ void ExportSMS::run()
 				   QString suffix;
 
 				   if ( ts.isEmpty() ) {
-					   suffix = QObject::tr("%1: %2").arg(sender).arg(text);
+					   suffix = QString("%1: %2").arg(sender).arg(text);
 				   } else {
-					   suffix = QObject::tr("%1 - %2: %3").arg(ts).arg(sender).arg(text);
+					   suffix = QString("%1 - %2: %3").arg(ts).arg(sender).arg(text);
 				   }
 
 				   formattedConversation += suffix +spacer;
