@@ -1,15 +1,20 @@
 import bb.cascades 1.0
 
-BasePage
+Page
 {
-    contentContainer: ScrollView
+    titleBar: TitleBar {
+        title: qsTr("Settings") + Retranslate.onLanguageChanged
+    }
+    
+    ScrollView
     {
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
         
 	    Container
 	    {
-	        leftPadding: 20; topPadding: 20; rightPadding: 20; bottomPadding: 20
+	        leftPadding: 10; topPadding: 10; rightPadding: 10; bottomPadding: 10
+	        horizontalAlignment: HorizontalAlignment.Fill
 	        verticalAlignment: VerticalAlignment.Fill
 	        
             PersistDropDown
@@ -20,14 +25,14 @@ BasePage
 	            Option {
 	                text: qsTr("Append") + Retranslate.onLanguageChanged
 	                description: qsTr("If a file already exists, then export to the tail of the file.") + Retranslate.onLanguageChanged
-                    imageSource: "images/ic_append.png"
+                    imageSource: "images/dropdown/ic_append.png"
 	                value: 0
 	            }
 	
 	            Option {
 	                text: qsTr("Overwrite") + Retranslate.onLanguageChanged
 	                description: qsTr("If a file already exists, then overwrite it with the new information") + Retranslate.onLanguageChanged
-	                imageSource: "images/ic_overwrite.png"
+	                imageSource: "images/dropdown/ic_overwrite.png"
                     value: 1
 	            }
 	        }
@@ -40,21 +45,21 @@ BasePage
 	            Option {
 	                text: qsTr("Date & Time") + Retranslate.onLanguageChanged
 	                description: qsTr("ie: Jan 4/13 10:15:03") + Retranslate.onLocaleOrLanguageChanged
-	                imageSource: "images/ic_calendar.png"
+	                imageSource: "images/dropdown/ic_calendar.png"
 	                value: 0
 	            }
 	
 	            Option {
 	                text: qsTr("Time Only") + Retranslate.onLanguageChanged
 	                description: qsTr("ie: 10:15:03") + Retranslate.onLocaleOrLanguageChanged
-	                imageSource: "images/ic_clock.png"
+	                imageSource: "images/dropdown/ic_clock.png"
                     value: 1
 	            }
 	
 	            Option {
 	                text: qsTr("Off") + Retranslate.onLanguageChanged
 	                description: qsTr("No date or time will be shown on messages.") + Retranslate.onLanguageChanged
-	                imageSource: "images/ic_off.png"
+	                imageSource: "images/dropdown/ic_off.png"
                     value: 2
 	            }
 	

@@ -35,7 +35,7 @@ ActiveTextHandler
         ActionItem {
             id: selectAction
             title: qsTr("Range Select") + Retranslate.onLanguageChanged
-            imageSource: "images/ic_range.png"
+            imageSource: "images/menu/ic_range.png"
             enabled: !root.rangeSelect
             onTriggered: {
                 persist.showToast( qsTr("This mode allows you to select a range of messages.\n\nTap the first message, then tap the last message and all of the ones in between will then be selected."), qsTr("OK") );

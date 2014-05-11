@@ -8,7 +8,6 @@
 #include "IOUtils.h"
 #include "Logger.h"
 #include "MessageImporter.h"
-#include "MessageManager.h"
 #include "PimUtil.h"
 
 namespace exportui {
@@ -131,7 +130,7 @@ void ApplicationUI::init()
 		m_persistance.saveValueFor("output", sdDirectory);
 	}
 
-	bool permissionOK = InvocationUtils::validateEmailSMSAccess( tr("Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
+	bool permissionOK = PimUtil::validateEmailSMSAccess( tr("Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
 
 	if (permissionOK)
 	{
