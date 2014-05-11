@@ -103,9 +103,9 @@
     <asset path="../canadainc/assets/AccountsDropDown.qml">assets/AccountsDropDown.qml</asset>
     <asset path="../canadainc/assets/BugReportPage.qml">assets/BugReportPage.qml</asset>
     <asset path="../canadainc/assets/CanadaIncMenu.qml">assets/CanadaIncMenu.qml</asset>
+    <asset path="../canadainc/assets/PersistCheckBox.qml">assets/PersistCheckBox.qml</asset>
     <asset path="../canadainc/assets/PersistDropDown.qml">assets/PersistDropDown.qml</asset>
     <asset path="../canadainc/assets/ProgressDelegate.qml">assets/ProgressDelegate.qml</asset>
-    <asset path="../canadainc/assets/SettingPair.qml">assets/SettingPair.qml</asset>
     
     <!-- Request permission to execute native code.  Required for native applications. -->
     <permission system="true">run_native</permission>
