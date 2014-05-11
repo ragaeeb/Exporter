@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.2
 import CustomComponent 1.0
 
 NavigationPane
@@ -11,8 +11,11 @@ NavigationPane
         }
     ]
 
-    Menu.definition: CanadaIncMenu {
+    Menu.definition: CanadaIncMenu
+    {
         projectName: "exporter10"
+        bbWorldID: "22552876"
+        showSubmitLogs: true
     }
 
     onPopTransitionEnded: {
@@ -26,7 +29,7 @@ NavigationPane
         actions: [
 	        ActionItem {
 	            id: selectAllAction
-	            imageSource: "images/selectAll.png"
+	            imageSource: "images/menu/selectAll.png"
 	            ActionBar.placement: ActionBarPlacement.OnBar
 	            title: qsTr("Select All") + Retranslate.onLanguageChanged
 	            enabled: false
@@ -173,7 +176,7 @@ NavigationPane
 						            ActionItem {
 						                id: exportAction
 						                title: qsTr("Export TXT")
-						                imageSource: "images/ic_export.png"
+						                imageSource: "images/menu/ic_export.png"
 						                
 						                onTriggered: {
 							                control.ListItem.view.doExport([ListItemData.conversationId])
@@ -216,7 +219,7 @@ NavigationPane
 			                id: multiExportAction
 			                enabled: false
 			                title: qsTr("Export TXT") + Retranslate.onLanguageChanged
-			                imageSource: "images/ic_export.png"
+			                imageSource: "images/menu/ic_export.png"
 			                
 			                onTriggered: {
 				                var selectedIndices = listView.selectionList();

@@ -68,7 +68,7 @@ BasePage
     
     actions: [
         ActionItem {
-            imageSource: "images/selectAll.png"
+            imageSource: "images/menu/selectAll.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             title: qsTr("Select All") + Retranslate.onLanguageChanged
             
@@ -91,7 +91,7 @@ BasePage
         
         ActionItem {
             title: qsTr("Save All") + Retranslate.onLanguageChanged
-            imageSource: "images/ic_save.png"
+            imageSource: "images/menu/ic_save.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered: {
@@ -275,19 +275,6 @@ BasePage
 		                    multiline: true
 		                    verticalAlignment: VerticalAlignment.Center
 		                }
-		                
-		                contextActions: [
-		                    ActionSet {
-		                        ActionItem {
-		                            title: qsTr("Copy") + Retranslate.onLanguageChanged
-                                    imageSource: "images/ic_copy.png"
-                                    
-                                    onTriggered: {
-                                        listItemRoot.ListItem.view.copyToClipboard(ListItemData)
-                                    }
-                                }
-		                    }
-		                ]
 		            }
 		        }
 		    ]
