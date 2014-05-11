@@ -1,7 +1,7 @@
 import bb.cascades 1.0
 import CustomComponent 1.0
 
-BasePage
+Page
 {
     signal finished();
     property string data
@@ -13,6 +13,8 @@ BasePage
         
         filePicker.open();
     }
+    
+    titleBar: ExporterTitleBar {}
     
     attachedObjects: [
         FilePicker

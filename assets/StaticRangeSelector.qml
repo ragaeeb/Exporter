@@ -1,13 +1,23 @@
 import bb.cascades 1.0
 
-ActiveTextHandler
+QtObject
 {
     id: root
     
     property variant first
     property variant last
     property bool rangeSelect: false
-    property alias rangeSelectAction: selectAction
+    property ActionItem rangeSelectAction: ActionItem
+    {
+        title: qsTr("Range Select") + Retranslate.onLanguageChanged
+        imageSource: "images/menu/ic_range.png"
+        enabled: !root.rangeSelect
+        onTriggered: {
+            persist.showToast( qsTr("This mode allows you to select a range of messages.\n\nTap the first message, then tap the last message and all of the ones in between will then be selected."), qsTr("OK") );
+            root.first = root.last = undefined;
+            root.rangeSelect = true;
+        }
+    }
 
     function onSelectionChanged()
     {
@@ -30,18 +40,4 @@ ActiveTextHandler
     onCreationCompleted: {
         parent.selectionChanged.connect(onSelectionChanged);
     }
-    
-    attachedObjects: [
-        ActionItem {
-            id: selectAction
-            title: qsTr("Range Select") + Retranslate.onLanguageChanged
-            imageSource: "images/menu/ic_range.png"
-            enabled: !root.rangeSelect
-            onTriggered: {
-                persist.showToast( qsTr("This mode allows you to select a range of messages.\n\nTap the first message, then tap the last message and all of the ones in between will then be selected."), qsTr("OK") );
-                root.first = root.last = undefined;
-                root.rangeSelect = true
-            }
-        }
-    ]
 }
