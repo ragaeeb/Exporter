@@ -63,7 +63,7 @@ Page
                     value: 2
 	            }
 	
-	            bottomMargin: 60
+	            bottomMargin: 20
 	
 	            onSelectedIndexChanged: {
 	                if (selectedIndex == 2) {
@@ -82,7 +82,8 @@ Page
 	            textStyle.textAlign: TextAlign.Center
 	        }
 	        
-	        TextField {
+	        TextField
+	        {
 	            hintText: qsTr("The name that shows for messages you sent.") + Retranslate.onLanguageChanged
 	
 	            onTextChanged: {
@@ -91,17 +92,16 @@ Page
                 }
 	
 	            text: persist.getValueFor("userName")
-	            
 	            verticalAlignment: VerticalAlignment.Fill
 	        }
 	        
-	        SettingPair
+	        PersistCheckBox
 	        {
-	            topPadding: 20
+                topMargin: 20
                 key: "doubleSpace"
-                title: qsTr("Double-space") + Retranslate.onLanguageChanged
+                text: qsTr("Double-space") + Retranslate.onLanguageChanged
 
-                toggle.onCheckedChanged: {
+                onCheckedChanged: {
                     if (checked) {
                         infoText.text = qsTr("Each message will be double-spaced for better readability.") + Retranslate.onLanguageChanged
                     } else {
@@ -110,13 +110,14 @@ Page
                 }
             }
 
-            SettingPair {
-                topPadding: 20
+            PersistCheckBox
+            {
+                topMargin: 20
 
-                title: qsTr("Latest Message First") + Retranslate.onLanguageChanged;
+                text: qsTr("Latest Message First") + Retranslate.onLanguageChanged;
                 key: "latestFirst"
 
-                toggle.onCheckedChanged: {
+                onCheckedChanged: {
                     if (checked) {
                         infoText.text = qsTr("Messages will be ordered from most recent to least recent.");
                     } else {
@@ -125,13 +126,14 @@ Page
                 }
             }
             
-            SettingPair {
-                topPadding: 20
+            PersistCheckBox
+            {
+                topMargin: 20
                 
-                title: qsTr("Use Server Timestamp") + Retranslate.onLanguageChanged;
+                text: qsTr("Use Server Timestamp") + Retranslate.onLanguageChanged;
                 key: "serverTimestamp"
                 
-                toggle.onCheckedChanged: {
+                onCheckedChanged: {
                     if (checked) {
                         infoText.text = qsTr("Message timestamps will reflect the time they were stored in the server.");
                     } else {

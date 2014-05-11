@@ -206,12 +206,12 @@ The great thing is that the app gives you access to nearly all your accounts to 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="86"/>
+        <location filename="../assets/SettingsPage.qml" line="87"/>
         <source>The name that shows for messages you sent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="90"/>
+        <location filename="../assets/SettingsPage.qml" line="91"/>
         <source>In the output, messages you sent will be prefixed by: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -231,32 +231,32 @@ The great thing is that the app gives you access to nearly all your accounts to 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="116"/>
+        <location filename="../assets/SettingsPage.qml" line="117"/>
         <source>Latest Message First</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="121"/>
+        <location filename="../assets/SettingsPage.qml" line="122"/>
         <source>Messages will be ordered from most recent to least recent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="123"/>
+        <location filename="../assets/SettingsPage.qml" line="124"/>
         <source>Messages will be ordered from oldest to newest .</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="131"/>
+        <location filename="../assets/SettingsPage.qml" line="133"/>
         <source>Use Server Timestamp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="136"/>
+        <location filename="../assets/SettingsPage.qml" line="138"/>
         <source>Message timestamps will reflect the time they were stored in the server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="138"/>
+        <location filename="../assets/SettingsPage.qml" line="140"/>
         <source>Message timestamps will reflect the time they were created on the device.</source>
         <translation type="unfinished"></translation>
     </message>
