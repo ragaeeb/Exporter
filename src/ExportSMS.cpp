@@ -50,6 +50,7 @@ void ExportSMS::run()
 
     bool doubleSpace = settings.value("doubleSpace").toInt() == 1;
     bool useServerTime = settings.value("serverTimestamp").toInt() == 1;
+    bool latestFirst = settings.value("latestFirst").toInt() == 1;
 
 	for (int i = 0; i < m_keys.size(); i++)
 	{
@@ -72,7 +73,9 @@ void ExportSMS::run()
 			QString formattedConversation = QString("%1%2%2").arg( c.address() ).arg(spacer);
 			QList<Message> messages = ms.messagesInConversation(m_accountId, m_keys[i], filter);
 
-			for (int j = 0; j < messages.size(); j++)
+			int totalMessages = messages.size();
+
+			for (int j = latestFirst ? totalMessages-1 : 0; latestFirst ? j >= 0 : j < messages.size(); latestFirst ? j-- : j++)
 			{
 			   Message m = messages[j];
 
@@ -81,6 +84,7 @@ void ExportSMS::run()
 				   QDateTime t = useServerTime ? m.serverTimestamp() : m.deviceTimestamp();
 				   QString ts = timeFormat.isEmpty() ? "" : t.toString(timeFormat);
 				   QString text = PimUtil::extractText(m);
+
 				   QString sender = m.isInbound() ? m.sender().displayableName() : userName;
 				   QString suffix;
 
