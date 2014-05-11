@@ -22,9 +22,11 @@ NavigationPane
         page.destroy();
     }
     
-    BasePage
+    Page
     {
         id: rootPage
+        
+        titleBar: ExporterTitleBar {}
         
         actions: [
 	        ActionItem {
@@ -43,11 +45,19 @@ NavigationPane
         
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         
-        contentContainer: Container
+        Container
         {
-	        leftPadding: 20
-	        rightPadding: 20
-	        topPadding: 20
+            attachedObjects: [
+                ImagePaintDefinition {
+                    id: back
+                    imageSource: "images/background.amd"
+                }
+            ]
+            
+            background: back.imagePaint
+	        leftPadding: 10
+	        rightPadding: 10
+	        topPadding: 10
 	        horizontalAlignment: HorizontalAlignment.Fill
 	        
             ProgressDelegate

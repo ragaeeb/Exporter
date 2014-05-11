@@ -4,49 +4,49 @@
 <context>
     <name>ConversationView</name>
     <message>
-        <location filename="../assets/ConversationView.qml" line="33"/>
+        <location filename="../assets/ConversationView.qml" line="32"/>
         <source>Conversation with %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="35"/>
+        <location filename="../assets/ConversationView.qml" line="34"/>
         <source>There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="73"/>
+        <location filename="../assets/ConversationView.qml" line="72"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="93"/>
+        <location filename="../assets/ConversationView.qml" line="92"/>
         <source>Save All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="108"/>
+        <location filename="../assets/ConversationView.qml" line="107"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="123"/>
+        <location filename="../assets/ConversationView.qml" line="122"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="133"/>
+        <location filename="../assets/ConversationView.qml" line="132"/>
         <source>Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.
 
 Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="133"/>
+        <location filename="../assets/ConversationView.qml" line="132"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="82"/>
+        <location filename="../assets/ConversationView.qml" line="81"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -80,41 +80,18 @@ The great thing is that the app gives you access to nearly all your accounts to 
 <context>
     <name>InvokedPage</name>
     <message>
-        <location filename="../assets/InvokedPage.qml" line="22"/>
+        <location filename="../assets/InvokedPage.qml" line="24"/>
         <source>Enter Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/InvokedPage.qml" line="32"/>
+        <location filename="../assets/InvokedPage.qml" line="34"/>
         <source>Successfully saved file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/InvokedPage.qml" line="32"/>
+        <location filename="../assets/InvokedPage.qml" line="34"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <location filename="../src/ExportSMS.cpp" line="69"/>
-        <source>%1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ExportSMS.cpp" line="72"/>
-        <source>%1%2%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ExportSMS.cpp" line="88"/>
-        <source>%1: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ExportSMS.cpp" line="90"/>
-        <source>%1 - %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -264,19 +241,19 @@ The great thing is that the app gives you access to nearly all your accounts to 
 <context>
     <name>StaticRangeSelector</name>
     <message>
-        <location filename="../assets/StaticRangeSelector.qml" line="37"/>
+        <location filename="../assets/StaticRangeSelector.qml" line="12"/>
         <source>Range Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/StaticRangeSelector.qml" line="41"/>
+        <location filename="../assets/StaticRangeSelector.qml" line="16"/>
         <source>This mode allows you to select a range of messages.
 
 Tap the first message, then tap the last message and all of the ones in between will then be selected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/StaticRangeSelector.qml" line="41"/>
+        <location filename="../assets/StaticRangeSelector.qml" line="16"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -329,17 +306,17 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ExportSMS</name>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="23"/>
+        <location filename="../src/ExportSMS.cpp" line="24"/>
         <source>0% complete...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="30"/>
+        <location filename="../src/ExportSMS.cpp" line="31"/>
         <source>MMM d/yy, hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="35"/>
+        <location filename="../src/ExportSMS.cpp" line="36"/>
         <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
@@ -352,43 +329,43 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="34"/>
+        <location filename="../assets/main.qml" line="36"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="62"/>
+        <location filename="../assets/main.qml" line="72"/>
         <source>Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="99"/>
+        <location filename="../assets/main.qml" line="109"/>
         <source>No accounts found. Are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="174"/>
+        <location filename="../assets/main.qml" line="184"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="178"/>
-        <location filename="../assets/main.qml" line="221"/>
+        <location filename="../assets/main.qml" line="188"/>
+        <location filename="../assets/main.qml" line="231"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="202"/>
+        <location filename="../assets/main.qml" line="212"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="243"/>
+        <location filename="../assets/main.qml" line="253"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="256"/>
+        <location filename="../assets/main.qml" line="266"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>

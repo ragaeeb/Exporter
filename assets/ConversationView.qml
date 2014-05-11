@@ -1,13 +1,12 @@
 import bb.cascades 1.0
 import CustomComponent 1.0
 
-BasePage
+Page
 {
     property variant accountId
     property variant contact
     property int timeSetting
     property string userName
-    titleVisible: false
     
     onContactChanged:
     {
@@ -138,13 +137,13 @@ BasePage
         }
     ]
     
-    contentContainer: Container
+    Container
     {
-        leftPadding: 20
-        rightPadding: 20
-        topPadding: 20
+        leftPadding: 10; rightPadding: 10; topPadding: 10
+        background: back.imagePaint
         
-        Label {
+        Label
+        {
             id: label
             textStyle.fontSize: FontSize.XSmall
             multiline: true
@@ -291,4 +290,11 @@ BasePage
 		    }
 		}
     }
+    
+    attachedObjects: [
+        ImagePaintDefinition {
+            id: back
+            imageSource: "images/background.amd"
+        }
+    ]
 }
