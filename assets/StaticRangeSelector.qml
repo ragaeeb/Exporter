@@ -13,7 +13,7 @@ QtObject
         imageSource: "images/menu/ic_range.png"
         enabled: !root.rangeSelect
         onTriggered: {
-            persist.showToast( qsTr("This mode allows you to select a range of messages.\n\nTap the first message, then tap the last message and all of the ones in between will then be selected."), qsTr("OK") );
+            persist.showToast( qsTr("This mode allows you to select a range of messages.\n\nTap the first message, then tap the last message and all of the ones in between will then be selected."), qsTr("OK"), "asset:///images/menu/ic_range.png" );
             root.first = root.last = undefined;
             root.rangeSelect = true;
         }
