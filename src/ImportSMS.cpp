@@ -35,6 +35,7 @@ void ImportSMS::run()
 	QVariantList qvl;
 
 	int total = conversations.size();
+	QString status = tr("Loading...");
 
 	for (int i = 0; i < total; i++)
 	{
@@ -55,10 +56,10 @@ void ImportSMS::run()
 			qvl.append(qvm);
 		}
 
-		emit progress(i, total);
+		emit progress(i, total, status);
 	}
 
-	emit progress(total, total);
+	emit progress(total, total, status);
 
 	LOGGER( "Elements generated:" << qvl.size() );
 	emit importCompleted(qvl);

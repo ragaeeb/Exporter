@@ -15,6 +15,10 @@ Page
         userName = persist.getValueFor("userName");
         timeSetting = persist.getValueFor("timeFormat");
 
+        definition.source = "ProgressDialog.qml";
+        var progress = definition.createObject();
+        
+        progress.open();
         app.getMessagesFor(contact.conversationId, accountId);
     }
     
@@ -106,6 +110,10 @@ Page
                         var result = selectedFiles[0];
                         persist.saveValueFor("output", result, false);
                         
+                        definition.source = "ProgressDialog.qml";
+                        var progress = definition.createObject();
+                        progress.open();
+                        
                         app.exportSMS(contact.conversationId, accountId, OutputFormat.TXT);
                     }
                 }
@@ -158,13 +166,6 @@ Page
 	        onCreationCompleted: {
                 fadeInTransition.play();
 	        }
-        }
-        
-        ProgressDelegate
-        {
-            onCreationCompleted: {
-                app.loadProgress.connect(onProgressChanged);
-            }
         }
         
         Divider {
@@ -233,7 +234,6 @@ Page
 		                id: listItemRoot
 		                property bool selected: ListItem.selected
 		                opacity: 0.5
-		                
                         scaleX: 0.8
                         scaleY: 0.8
                         animations: [
@@ -246,7 +246,7 @@ Page
                                 toY: 1
                                 duration: 800
                                 easingCurve: StockCurve.DoubleElasticOut
-                                delay: listItemRoot.ListItem.indexInSection * 100
+                                delay: Math.min(listItemRoot.ListItem.indexInSection * 100, 1000)
                             }
                         ]
                         

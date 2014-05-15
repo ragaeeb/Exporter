@@ -38,14 +38,14 @@ Q_SIGNALS:
 	void accountsImported(QVariantList const& qvl);
 	void messagesImported(QVariantList const& qvl);
 	void conversationsImported(QVariantList const& qvl);
-	void loadProgress(int current, int total);
-	void conversationLoadProgress(int current, int total);
+	void loadProgress(int current, int total, QString const& status);
 
 private slots:
     void onExportCompleted();
     void init();
     void invoked(bb::system::InvokeRequest const& request);
     void cardFinished();
+    void onMessageLoadProgress(int current, int total);
 
 public:
     static void create(bb::cascades::Application *app);
