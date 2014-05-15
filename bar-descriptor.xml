@@ -54,8 +54,6 @@
     <!--  Name of author which is used for signing. Must match the developer name of your development certificate. -->
     <author>Canada Inc</author>
     <splashScreens>
-       <image>splash_l_landscape.png</image>
-       <image>splash_l_portrait.png</image>
        <image>splash_n.png</image>
     </splashScreens>
     
@@ -95,8 +93,6 @@
     <asset path="translations" dest="qm">
         <include name="*.qm"/>
     </asset>
-    <asset path="splash_l_landscape.png">splash_l_landscape.png</asset>
-    <asset path="splash_l_portrait.png">splash_l_portrait.png</asset>
     <asset path="splash_n.png">splash_n.png</asset>
     
     <asset path="../canadainc/assets/AboutTitleBar.qml">assets/AboutTitleBar.qml</asset>

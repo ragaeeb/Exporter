@@ -2,7 +2,7 @@ APP_NAME = Exporter
 
 INCLUDEPATH += ../../canadainc/src/
 CONFIG += qt warn_on cascades10
-LIBS += -lbbpim -lbbsystem -lbbcascadespickers -lbb
+LIBS += -lbbpim -lbbsystem -lbbcascadespickers -lbb -lbbplatform
 
 CONFIG(release, debug|release) {
     DESTDIR = o.le-v7
