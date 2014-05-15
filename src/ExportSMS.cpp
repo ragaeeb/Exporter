@@ -49,6 +49,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
     bool useServerTime = m_settings.value("serverTimestamp").toInt() == 1;
     QString userName = m_settings.value("userName").toString();
     QString timeFormat = getTimeFormat( m_settings.value("timeFormat").toInt() );
+    bool supportMMS = m_settings.contains("exporter_mms");
 
     MessageService ms;
 
@@ -90,7 +91,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
                         if ( a.mimeType() == "text/plain" ) {
                             totalBody << QString::fromLocal8Bit( a.data() );
-                        } else {
+                        } else if (supportMMS) {
                             FormattedAttachment fa;
                             fa.name = a.name();
                             fa.data = a.data();
