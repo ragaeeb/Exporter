@@ -422,12 +422,12 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="177"/>
+        <location filename="../src/ApplicationUI.cpp" line="181"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="182"/>
+        <location filename="../src/ApplicationUI.cpp" line="186"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -440,7 +440,7 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="133"/>
+        <location filename="../src/ExportSMS.cpp" line="141"/>
         <source>Writing...</source>
         <translation type="unfinished"></translation>
     </message>

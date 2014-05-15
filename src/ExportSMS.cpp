@@ -37,7 +37,7 @@ using namespace bb::pim::message;
 using namespace canadainc;
 
 ExportSMS::ExportSMS(QStringList const& keys, qint64 const& accountId) :
-        m_accountId(accountId), m_keys(keys), m_format(OutputFormat::TXT)
+        m_accountId(accountId), m_keys(keys), m_format(OutputFormat::TXT), m_active(true)
 {
 }
 
@@ -61,10 +61,18 @@ QList<FormattedConversation> ExportSMS::formatConversations()
         Conversation conversation = ms.conversation(m_accountId, m_keys[i]);
         LOGGER( conversation.messageCount() );
 
+        if (!m_active) {
+            return QList<FormattedConversation>();
+        }
+
         if ( !conversation.participants().isEmpty() && conversation.messageCount() > 0 )
         {
             QList<Message> messages = ms.messagesInConversation( m_accountId, m_keys[i], MessageFilter() );
             MessageContact c = conversation.participants()[0];
+
+            if (!m_active) {
+                return QList<FormattedConversation>();
+            }
 
             QString displayName = c.displayableName().trimmed();
             QString address = c.address().trimmed();
@@ -134,6 +142,10 @@ void ExportSMS::run()
 
     for (int x = 0; x < n; x++)
     {
+        if (!m_active) {
+            return;
+        }
+
         FormattedConversation fc = conversations[x];
 
         QList<FormattedMessage> messages = fc.messages;
@@ -182,6 +194,11 @@ void ExportSMS::run()
 
 void ExportSMS::setFormat(OutputFormat::Type format) {
     m_format = format;
+}
+
+
+void ExportSMS::cancel() {
+    m_active = false;
 }
 
 } /* namespace exportui */

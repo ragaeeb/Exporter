@@ -11,6 +11,7 @@ class ImportSMS : public QObject, public QRunnable
 	Q_OBJECT
 
 	qint64 m_accountId;
+	bool m_active;
 
 signals:
 	/**
@@ -24,6 +25,7 @@ signals:
 public:
 	ImportSMS(qint64 accountId);
 	void run();
+	Q_SLOT void cancel();
 };
 
 } /* namespace secret */

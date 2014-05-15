@@ -154,6 +154,9 @@ void ApplicationUI::getConversationsFor(qint64 accountId)
 	ImportSMS* sms = new ImportSMS(accountId);
 	connect( sms, SIGNAL( importCompleted(QVariantList const&) ), this, SIGNAL( conversationsImported(QVariantList const&) ) );
 	connect( sms, SIGNAL( progress(int, int, QString const&) ), this, SIGNAL( loadProgress(int, int, QString const&) ) );
+
+	connect( bb::cascades::Application::instance(), SIGNAL( aboutToQuit() ), sms, SLOT( cancel() ) );
+
 	IOUtils::startThread(sms);
 }
 
@@ -168,6 +171,7 @@ void ApplicationUI::getMessagesFor(QString const& conversationKey, qint64 accoun
 
 	 connect( ai, SIGNAL( importCompleted(QVariantList const&) ), this, SIGNAL( messagesImported(QVariantList const&) ) );
 	 connect( ai, SIGNAL( progress(int, int) ), this, SLOT( onMessageLoadProgress(int, int) ) );
+	 connect( bb::cascades::Application::instance(), SIGNAL( aboutToQuit() ), ai, SLOT( cancel() ) );
 
 	 IOUtils::startThread(ai);
 }
@@ -191,6 +195,8 @@ void ApplicationUI::exportSMS(QStringList const& conversationIds, qint64 account
 	sms->setFormat( static_cast<OutputFormat::Type>(outputFormat) );
 	connect( sms, SIGNAL( exportCompleted() ), this, SLOT( onExportCompleted() ) );
 	connect( sms, SIGNAL( loadProgress(int, int, QString const&) ), this, SIGNAL( loadProgress(int, int, QString const&) ) );
+
+	connect( bb::cascades::Application::instance(), SIGNAL( aboutToQuit() ), sms, SLOT( cancel() ) );
 
 	IOUtils::startThread(sms);
 }
