@@ -41,6 +41,7 @@ class ExportSMS : public QObject, public QRunnable
 
 signals:
 	void exportCompleted();
+	void loadProgress(int current, int total, QString const& status);
 
 public:
 	ExportSMS(QStringList const& keys, qint64 const& accountId);

@@ -50,18 +50,20 @@ QList<FormattedConversation> ExportSMS::formatConversations()
     QString userName = m_settings.value("userName").toString();
     QString timeFormat = getTimeFormat( m_settings.value("timeFormat").toInt() );
     bool supportMMS = m_settings.contains("exporter_mms");
+    QString status = tr("Preparing...");
 
     MessageService ms;
 
-    for (int i = m_keys.size()-1; i >= 0; i--)
+    int total = m_keys.size();
+
+    for (int i = 0; i < total; i++)
     {
         Conversation conversation = ms.conversation(m_accountId, m_keys[i]);
-        QList<Message> messages = ms.messagesInConversation( m_accountId, m_keys[i], MessageFilter() );
+        LOGGER( conversation.messageCount() );
 
-        LOGGER("numMessages" << messages.size());
-
-        if ( !conversation.participants().isEmpty() && !messages.isEmpty() )
+        if ( !conversation.participants().isEmpty() && conversation.messageCount() > 0 )
         {
+            QList<Message> messages = ms.messagesInConversation( m_accountId, m_keys[i], MessageFilter() );
             MessageContact c = conversation.participants()[0];
 
             QString displayName = c.displayableName().trimmed();
@@ -108,6 +110,8 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
             result << fc;
         }
+
+        emit loadProgress(i, total, status);
     }
 
     return result;
@@ -125,8 +129,13 @@ void ExportSMS::run()
 
     LOGGER("Total Conversations" << conversations.size());
 
-    foreach (FormattedConversation fc, conversations)
+    int n = conversations.size();
+    QString status = tr("Writing...");
+
+    for (int x = 0; x < n; x++)
     {
+        FormattedConversation fc = conversations[x];
+
         QList<FormattedMessage> messages = fc.messages;
         LOGGER("Total messages" << messages.size());
         QStringList total;
@@ -162,7 +171,12 @@ void ExportSMS::run()
         if ( !total.isEmpty() ) {
             IOUtils::writeTextFile( QString("%1/%2.%3").arg(outputPath).arg(fc.fileName).arg(extension), total.join(NEW_LINE), replace, false );
         }
+
+        emit loadProgress(x, n, status);
     }
+
+    emit loadProgress(n,n,status);
+    emit exportCompleted();
 }
 
 

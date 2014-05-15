@@ -77,10 +77,6 @@ NavigationPane
                 }
             }
             
-            Divider {
-                bottomMargin: 0; topMargin: 0;
-            }
-            
             ListView {
                 id: listView
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -94,15 +90,12 @@ NavigationPane
                     onAccountsLoaded: {
                         if (numAccounts == 0) {
                             instructions.text = qsTr("No accounts found. Are you sure you gave the app the permissions it needs?");
-                        } else {
-                            divider.visible = false;
                         }
                     }
                     
                     onSelectedValueChanged: {
                         definition.source = "ProgressDialog.qml";
                         var progress = definition.createObject();
-                        app.conversationLoadProgress.connect(progress.onProgressChanged);
                         progress.open();
 
                         app.getConversationsFor(selectedValue);
@@ -236,6 +229,10 @@ NavigationPane
                         onFileSelected : {
                             var result = selectedFiles[0];
                             persist.saveValueFor("output", result, false);
+                            
+                            definition.source = "ProgressDialog.qml";
+                            var progress = definition.createObject();
+                            progress.open();
                             
                             app.exportSMS(conversationIds, accountsDropDown.selectedValue, format);
                         }

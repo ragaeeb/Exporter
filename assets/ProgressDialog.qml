@@ -66,6 +66,7 @@ FullScreenDialog
                 textStyle.color: Color.White
                 opacity: 0.8
                 text: qsTr("Loading...") + Retranslate.onLanguageChanged
+                multiline: true
             }
             
             animations: [
@@ -90,13 +91,17 @@ FullScreenDialog
         tt.play();
     }
     
-    function onProgressChanged(current, total)
+    function onProgressChanged(current, total, status)
     {
-        label.text = qsTr("%1/%2").arg(current).arg(total);
+        label.text = "%3\n%1/%2".arg(current).arg(total).arg(status);
         progressBar.scaleX = current/total;
         
         if (current == total) {
             st.play();
         }
+    }
+    
+    onCreationCompleted: {
+        app.loadProgress.connect(onProgressChanged);
     }
 }

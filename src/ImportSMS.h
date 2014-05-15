@@ -19,7 +19,7 @@ signals:
 	 * associated with.
 	 */
 	void importCompleted(QVariantList const& qvl);
-	void progress(int current, int total);
+	void progress(int current, int total, QString const& status);
 
 public:
 	ImportSMS(qint64 accountId);
