@@ -36,6 +36,7 @@ class ExportSMS : public QObject, public QRunnable
 	QStringList m_keys;
 	QSettings m_settings;
 	OutputFormat::Type m_format;
+	bool m_active;
 
 	QList<FormattedConversation> formatConversations();
 
@@ -47,6 +48,7 @@ public:
 	ExportSMS(QStringList const& keys, qint64 const& accountId);
 	void setFormat(OutputFormat::Type format);
 	void run();
+	Q_SLOT void cancel();
 };
 
 } /* namespace exportui */

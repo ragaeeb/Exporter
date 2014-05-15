@@ -19,7 +19,7 @@ namespace exportui {
 
 using namespace bb::system;
 
-ImportSMS::ImportSMS(qint64 accountId) : m_accountId(accountId)
+ImportSMS::ImportSMS(qint64 accountId) : m_accountId(accountId), m_active(true)
 {
 }
 
@@ -39,6 +39,10 @@ void ImportSMS::run()
 
 	for (int i = 0; i < total; i++)
 	{
+	    if (!m_active) {
+	        return;
+	    }
+
 		Conversation c = conversations[i];
 
 		if ( !c.participants().isEmpty() )
@@ -63,6 +67,11 @@ void ImportSMS::run()
 
 	LOGGER( "Elements generated:" << qvl.size() );
 	emit importCompleted(qvl);
+}
+
+
+void ImportSMS::cancel() {
+    m_active = false;
 }
 
 } /* namespace secret */
