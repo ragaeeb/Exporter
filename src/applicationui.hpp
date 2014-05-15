@@ -2,6 +2,7 @@
 #define ApplicationUI_HPP_
 
 #include "LazySceneCover.h"
+#include "PaymentHelper.h"
 #include "Persistance.h"
 
 #include <bb/system/InvokeManager>
@@ -27,6 +28,7 @@ class ApplicationUI : public QObject
     bb::system::InvokeManager m_invokeManager;
     Persistance m_persistance;
     LazySceneCover m_cover;
+    PaymentHelper m_payment;
 
     ApplicationUI(bb::cascades::Application *app);
     QObject* initRoot(QString const& qml="main.qml");

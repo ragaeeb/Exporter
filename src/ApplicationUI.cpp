@@ -17,7 +17,8 @@ using namespace bb::system;
 using namespace bb::pim::message;
 using namespace canadainc;
 
-ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_cover("Cover.qml")
+ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
+        QObject(app), m_cover("Cover.qml"), m_payment(&m_persistance)
 {
 	switch ( m_invokeManager.startupMode() )
 	{
@@ -26,11 +27,8 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) : QObject(app), m_c
 		break;
 
 	case ApplicationStartupMode::InvokeCard:
+	case ApplicationStartupMode::InvokeApplication:
 		connect( &m_invokeManager, SIGNAL( invoked(bb::system::InvokeRequest const&) ), this, SLOT( invoked(bb::system::InvokeRequest const&) ) );
-		break;
-
-	default:
-		exit(0);
 		break;
 	}
 }
@@ -46,6 +44,7 @@ QObject* ApplicationUI::initRoot(QString const& qmlSource)
     QmlDocument *qml = QmlDocument::create( QString("asset:///%1").arg(qmlSource) ).parent(this);
     qml->setContextProperty("app", this);
     qml->setContextProperty("persist", &m_persistance);
+    qml->setContextProperty("payment", &m_payment);
 
     AbstractPane* root = qml->createRootObject<AbstractPane>();
     Application::instance()->setScene(root);
