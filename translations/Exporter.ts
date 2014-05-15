@@ -4,49 +4,49 @@
 <context>
     <name>ConversationView</name>
     <message>
-        <location filename="../assets/ConversationView.qml" line="32"/>
+        <location filename="../assets/ConversationView.qml" line="33"/>
         <source>Conversation with %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="34"/>
+        <location filename="../assets/ConversationView.qml" line="35"/>
         <source>There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="72"/>
+        <location filename="../assets/ConversationView.qml" line="73"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="92"/>
+        <location filename="../assets/ConversationView.qml" line="93"/>
         <source>Save All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="107"/>
+        <location filename="../assets/ConversationView.qml" line="108"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="122"/>
+        <location filename="../assets/ConversationView.qml" line="123"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="132"/>
+        <location filename="../assets/ConversationView.qml" line="133"/>
         <source>Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.
 
 Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="132"/>
+        <location filename="../assets/ConversationView.qml" line="133"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="81"/>
+        <location filename="../assets/ConversationView.qml" line="82"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -92,6 +92,19 @@ The great thing is that the app gives you access to nearly all your accounts to 
     <message>
         <location filename="../assets/InvokedPage.qml" line="34"/>
         <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../src/ExportSMS.cpp" line="13"/>
+        <source>MMM d/yy hh:mm:ss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ExportSMS.cpp" line="18"/>
+        <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -261,111 +274,94 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="78"/>
+        <location filename="../src/ApplicationUI.cpp" line="79"/>
         <source>MMM d/yy, hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="83"/>
+        <location filename="../src/ApplicationUI.cpp" line="84"/>
         <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="96"/>
+        <location filename="../src/ApplicationUI.cpp" line="97"/>
         <source>%1
 
 %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="115"/>
+        <location filename="../src/ApplicationUI.cpp" line="116"/>
         <source>You</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="133"/>
+        <location filename="../src/ApplicationUI.cpp" line="134"/>
         <source>Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="137"/>
+        <location filename="../src/ApplicationUI.cpp" line="138"/>
         <source>Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="140"/>
+        <location filename="../src/ApplicationUI.cpp" line="141"/>
         <source>Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="176"/>
+        <location filename="../src/ApplicationUI.cpp" line="177"/>
         <source>Export complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>exportui::ExportSMS</name>
-    <message>
-        <location filename="../src/ExportSMS.cpp" line="24"/>
-        <source>0% complete...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ExportSMS.cpp" line="31"/>
-        <source>MMM d/yy, hh:mm:ss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ExportSMS.cpp" line="36"/>
-        <source>hh:mm:ss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ExportSMS.cpp" line="118"/>
-        <source>%1% complete...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="36"/>
+        <location filename="../assets/main.qml" line="37"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="72"/>
+        <location filename="../assets/main.qml" line="73"/>
         <source>Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="109"/>
+        <location filename="../assets/main.qml" line="110"/>
         <source>No accounts found. Are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="184"/>
+        <location filename="../assets/main.qml" line="199"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="188"/>
-        <location filename="../assets/main.qml" line="231"/>
+        <location filename="../assets/main.qml" line="203"/>
+        <location filename="../assets/main.qml" line="257"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="212"/>
+        <location filename="../assets/main.qml" line="268"/>
+        <source>Export CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="237"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="253"/>
+        <location filename="../assets/main.qml" line="283"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="266"/>
+        <location filename="../assets/main.qml" line="296"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>

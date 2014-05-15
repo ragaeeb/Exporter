@@ -2,11 +2,31 @@
 #define EXPORTSMS_H_
 
 #include <QRunnable>
-#include <QStringList>
+#include <QSettings>
 
-#include <bb/system/SystemProgressToast>
+#include "OutputFormat.h"
 
 namespace exportui {
+
+struct FormattedAttachment
+{
+    QByteArray data;
+    QString name;
+};
+
+struct FormattedMessage
+{
+    QString sender;
+    QString timestamp;
+    QString body;
+    QList<FormattedAttachment> attachments;
+};
+
+struct FormattedConversation
+{
+    QList<FormattedMessage> messages;
+    QString fileName;
+};
 
 class ExportSMS : public QObject, public QRunnable
 {
@@ -14,13 +34,17 @@ class ExportSMS : public QObject, public QRunnable
 
 	qint64 m_accountId;
 	QStringList m_keys;
-	bb::system::SystemProgressToast m_progress;
+	QSettings m_settings;
+	OutputFormat::Type m_format;
+
+	QList<FormattedConversation> formatConversations();
 
 signals:
 	void exportCompleted();
 
 public:
 	ExportSMS(QStringList const& keys, qint64 const& accountId);
+	void setFormat(OutputFormat::Type format);
 	void run();
 };
 

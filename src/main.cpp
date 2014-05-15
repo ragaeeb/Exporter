@@ -6,7 +6,6 @@
 using namespace bb::cascades;
 using namespace exportui;
 
-#ifdef DEBUG
 namespace {
 
 void redirectedMessageOutput(QtMsgType type, const char *msg) {
@@ -15,13 +14,10 @@ void redirectedMessageOutput(QtMsgType type, const char *msg) {
 }
 
 }
-#endif
 
 Q_DECL_EXPORT int main(int argc, char **argv)
 {
-#ifdef DEBUG
 	qInstallMsgHandler(redirectedMessageOutput);
-#endif
 
     Application app(argc, argv);
     ApplicationUI::create(&app);

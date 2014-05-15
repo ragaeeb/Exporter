@@ -11,5 +11,4 @@
 #include <bb/pim/message/MessageFilter>
 #include <bb/pim/message/MessageService>
 
-#include <bb/system/SystemProgressDialog>
 #include <bb/system/CardDoneMessage>

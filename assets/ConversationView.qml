@@ -1,5 +1,7 @@
 import bb.cascades 1.0
-import CustomComponent 1.0
+import bb.cascades.pickers 1.0
+import bb.system 1.0
+import com.canadainc.data 1.0
 
 Page
 {
@@ -33,13 +35,6 @@ Page
         } else {
             label.text = qsTr("There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?") + Retranslate.onLanguageChanged
         }
-    }
-    
-    onCreationCompleted: {
-        persist.settingChanged.connect(onSettingChanged);
-        addAction(rangeSelector.rangeSelectAction);
-        
-        app.messagesImported.connect(onMessagesImported);
     }
     
     function concatenate()
@@ -94,13 +89,13 @@ Page
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered: {
-                filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
-                filePicker.open();
+                sld.show();
             }
             
             attachedObjects: [
                 FilePicker {
                     property variant conversationIds
+                    property int format
                     
                     id: filePicker
                     mode: FilePickerMode.SaverMultiple
@@ -109,15 +104,16 @@ Page
 
                     onFileSelected : {
                         var result = selectedFiles[0];
-                        persist.saveValueFor("output", result);
+                        persist.saveValueFor("output", result, false);
                         
-                        app.exportSMS(contact.conversationId, accountId);
+                        app.exportSMS(contact.conversationId, accountId, OutputFormat.TXT);
                     }
                 }
             ]
         },
 
-        InvokeActionItem {
+        InvokeActionItem
+        {
 		    id: iai
 		    title: qsTr("Share") + Retranslate.onLanguageChanged
 
@@ -295,6 +291,32 @@ Page
         ImagePaintDefinition {
             id: back
             imageSource: "images/background.amd"
+        },
+        
+        SystemListDialog {
+            id: sld
+            body: qsTr("Choose Output Type") + Retranslate.onLanguageChanged
+            title: qsTr("Output Format") + Retranslate.onLanguageChanged
+            selectionMode: ListSelectionMode.Single
+            
+            onFinished: {
+                if (result == SystemUiResult.ConfirmButtonSelection)
+                {
+                    filePicker.format = selectedIndices[0];
+                    filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
+                    filePicker.open();
+                }
+            }
         }
     ]
+    
+    onCreationCompleted: {
+        persist.settingChanged.connect(onSettingChanged);
+        addAction(rangeSelector.rangeSelectAction);
+        
+        app.messagesImported.connect(onMessagesImported);
+        
+        sld.appendItem( "CSV", persist.contains("exporter_csv") );
+        sld.appendItem( "TXT", true, true );
+    }
 }
