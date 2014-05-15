@@ -1,5 +1,6 @@
 import bb.cascades 1.2
-import CustomComponent 1.0
+import bb.cascades.pickers 1.0
+import com.canadainc.data 1.0
 
 NavigationPane
 {
@@ -117,12 +118,25 @@ NavigationPane
                     }
                 }
 	            
-	            function doExport(conversationIds)
+	            function doExport(conversationIds, format)
 	            {
 	                filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
 	                filePicker.conversationIds = conversationIds;
+	                filePicker.format = format;
 	                filePicker.open();
 	            }
+	            
+                function getAllSelected()
+                {
+                    var selectedIndices = listView.selectionList();
+                    var result = [];
+                    
+                    for (var i = 0; i < selectedIndices.length; i++) {
+                        result.push( listView.dataModel.data(selectedIndices[i]).conversationId );
+                    }
+                    
+                    return result;
+                }
 	            
 	            function onConversationsImported(conversations)
 	            {
@@ -179,7 +193,8 @@ NavigationPane
                             }
 	                        
     	                    contextActions: [
-    	                        ActionSet {
+    	                        ActionSet
+    	                        {
     	                            title: ListItemData.name
     	                            subtitle: qsTr("%1 messages").arg(ListItemData.messageCount)
     	                            
@@ -189,9 +204,18 @@ NavigationPane
 						                imageSource: "images/menu/ic_export.png"
 						                
 						                onTriggered: {
-							                control.ListItem.view.doExport([ListItemData.conversationId])
+							                control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.TXT)
 						                }
 						            }
+						            
+                                    ActionItem {
+                                        title: qsTr("Export CSV")
+                                        imageSource: "images/menu/ic_export_csv.png"
+                                        
+                                        onTriggered: {
+                                            control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.CSV)
+                                        }
+                                    }
     	                        }
     	                    ]
 	                        
@@ -206,6 +230,7 @@ NavigationPane
                 attachedObjects: [
 					FilePicker {
 	                    property variant conversationIds
+	                    property int format
 					    
 					    id: filePicker
 					    mode: FilePickerMode.SaverMultiple
@@ -214,9 +239,9 @@ NavigationPane
 		                
 		                onFileSelected : {
 					        var result = selectedFiles[0];
-							persist.saveValueFor("output", result);
+							persist.saveValueFor("output", result, false);
 							
-                            app.exportSMS(conversationIds, accountsDropDown.selectedValue);
+                            app.exportSMS(conversationIds, accountsDropDown.selectedValue, format);
 		                }
 					}
                 ]
@@ -224,6 +249,7 @@ NavigationPane
 	            multiSelectAction: MultiSelectActionItem {}
                                 
                 multiSelectHandler {
+                    
                     actions: [
 			            ActionItem {
 			                id: multiExportAction
@@ -232,16 +258,20 @@ NavigationPane
 			                imageSource: "images/menu/ic_export.png"
 			                
 			                onTriggered: {
-				                var selectedIndices = listView.selectionList();
-				                var result = [];
-				
-				                for (var i = 0; i < selectedIndices.length; i++) {
-				                    result.push( listView.dataModel.data(selectedIndices[i]).conversationId );
-				                }
-				                
-				                listView.doExport(result);
+                                listView.doExport( listView.getAllSelected(), OutputFormat.TXT );
 			                }
-			            }
+			            },
+			            
+                        ActionItem {
+                            id: multiExportCsvAction
+                            enabled: false
+                            title: qsTr("Export CSV") + Retranslate.onLanguageChanged
+                            imageSource: "images/menu/ic_export_csv.png"
+                            
+                            onTriggered: {
+                                listView.doExport( listView.getAllSelected(), OutputFormat.CSV );
+                            }
+                        }
                     ]
                     
                     onActiveChanged: {
@@ -264,7 +294,7 @@ NavigationPane
                 onSelectionChanged: {
                     var n = selectionList().length;
                     multiSelectHandler.status = qsTr("%1 conversations selected").arg(n);
-                    multiExportAction.enabled = n > 0;
+                    multiExportCsvAction.enabled = multiExportAction.enabled = n > 0;
                 }
 
 			    onTriggered: {

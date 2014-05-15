@@ -6,127 +6,167 @@
 #include "PimUtil.h"
 #include "TextUtils.h"
 
+namespace {
+
+QString getTimeFormat(int tf)
+{
+    QString timeFormat = QObject::tr("MMM d/yy hh:mm:ss");
+
+    switch (tf)
+    {
+        case 1:
+            timeFormat = QObject::tr("hh:mm:ss");
+            break;
+
+        case 2:
+            timeFormat = "";
+            break;
+
+        default:
+            break;
+    }
+
+    return timeFormat;
+}
+
+}
+
 namespace exportui {
 
 using namespace bb::pim::message;
-using namespace bb::system;
 using namespace canadainc;
 
-ExportSMS::ExportSMS(QStringList const& keys, qint64 const& accountId) : m_accountId(accountId), m_keys(keys)
+ExportSMS::ExportSMS(QStringList const& keys, qint64 const& accountId) :
+        m_accountId(accountId), m_keys(keys), m_format(OutputFormat::TXT)
 {
-	m_progress.setState(SystemUiProgressState::Inactive);
 }
+
+
+QList<FormattedConversation> ExportSMS::formatConversations()
+{
+    QList<FormattedConversation> result;
+
+    bool useServerTime = m_settings.value("serverTimestamp").toInt() == 1;
+    QString userName = m_settings.value("userName").toString();
+    QString timeFormat = getTimeFormat( m_settings.value("timeFormat").toInt() );
+
+    MessageService ms;
+
+    for (int i = m_keys.size()-1; i >= 0; i--)
+    {
+        Conversation conversation = ms.conversation(m_accountId, m_keys[i]);
+        QList<Message> messages = ms.messagesInConversation( m_accountId, m_keys[i], MessageFilter() );
+
+        LOGGER("numMessages" << messages.size());
+
+        if ( !conversation.participants().isEmpty() && !messages.isEmpty() )
+        {
+            MessageContact c = conversation.participants()[0];
+
+            QString displayName = c.displayableName().trimmed();
+            QString address = c.address().trimmed();
+
+            FormattedConversation fc;
+            fc.fileName = displayName == address ? address : QString("%1 %2").arg(displayName).arg(address);
+            fc.fileName = TextUtils::sanitize(fc.fileName);
+
+            for (int j = 0; j < messages.length(); j++)
+            {
+                Message m = messages[j];
+
+                if ( !m.isDraft() && m.attachmentCount() > 0 )
+                {
+                    FormattedMessage fm;
+
+                    QDateTime t = useServerTime ? m.serverTimestamp() : m.deviceTimestamp();
+                    fm.timestamp = timeFormat.isEmpty() ? "" : t.toString(timeFormat);
+                    fm.sender = m.isInbound() ? m.sender().displayableName() : userName;
+
+                    QStringList totalBody;
+
+                    for (int k = m.attachmentCount()-1; k >= 0; k--)
+                    {
+                        Attachment a = m.attachmentAt(k);
+
+                        if ( a.mimeType() == "text/plain" ) {
+                            totalBody << QString::fromLocal8Bit( a.data() );
+                        } else {
+                            FormattedAttachment fa;
+                            fa.name = a.name();
+                            fa.data = a.data();
+
+                            totalBody << QString("[%1]").arg(fa.name);
+                            fm.attachments << fa;
+                        }
+                    }
+
+                    fm.body = totalBody.join(" ");
+                    fc.messages << fm;
+                }
+            }
+
+            result << fc;
+        }
+    }
+
+    return result;
+}
+
 
 void ExportSMS::run()
 {
-	static QString spacer = "\r\n";
-	m_progress.setState(SystemUiProgressState::Active);
-	m_progress.setStatusMessage( tr("0% complete...") );
-	m_progress.setProgress(0);
-	m_progress.show();
+    QString result;
+    QList<FormattedConversation> conversations = formatConversations();
+    bool latestFirst = m_settings.value("latestFirst").toInt() == 1;
+    QString outputPath = m_settings.value("output").toString();
+    bool replace = m_settings.value("duplicateAction").toInt() == 1;
+    QString extension = m_format == OutputFormat::CSV ? "csv" : "txt";
 
-	QMap<QString, QString> map;
-    QSettings settings;
+    LOGGER("Total Conversations" << conversations.size());
 
-    QString timeFormat = tr("MMM d/yy, hh:mm:ss");
-
-    switch ( settings.value("timeFormat").toInt() )
+    foreach (FormattedConversation fc, conversations)
     {
-		case 1:
-			timeFormat = tr("hh:mm:ss");
-			break;
+        QList<FormattedMessage> messages = fc.messages;
+        LOGGER("Total messages" << messages.size());
+        QStringList total;
 
-		case 2:
-			timeFormat = "";
-			break;
+        for (int i = latestFirst ? messages.length()-1 : 0; latestFirst ? i >= 0 : i < messages.length(); latestFirst ? i-- : i++)
+        {
+            FormattedMessage fm = messages[i];
+            QList<FormattedAttachment> attachments = fm.attachments;
+            LOGGER("Attachments" << attachments.size());
 
-		default:
-			break;
+            for (int j = attachments.length()-1; j >= 0; j--)
+            {
+                FormattedAttachment fa = attachments[j];
+                QString destination = QString("%1/%2").arg(outputPath).arg(fa.name);
+
+                int k = 1;
+
+                while ( QFile::exists(destination) ) {
+                    destination = QString("%1/(%3)_%2").arg(outputPath).arg(fa.name).arg(k);
+                    ++k;
+                }
+
+                IOUtils::writeFile(destination, fa.data);
+            }
+
+            if (m_format == OutputFormat::CSV) {
+                total << QString("%1\t%2\t%3").arg(fm.timestamp).arg(fm.sender).arg(fm.body).trimmed();
+            } else if (m_format == OutputFormat::TXT) {
+                total << QString("%1 - %2: %3").arg(fm.timestamp).arg(fm.sender).arg(fm.body).trimmed();
+            }
+        }
+
+        if ( !total.isEmpty() ) {
+            IOUtils::writeTextFile( QString("%1/%2.%3").arg(outputPath).arg(fc.fileName).arg(extension), total.join(NEW_LINE), replace, false );
+        }
     }
+}
 
-    QString userName = settings.value("userName").toString();
-    MessageService ms;
-    MessageFilter filter;
 
-    bool doubleSpace = settings.value("doubleSpace").toInt() == 1;
-    bool useServerTime = settings.value("serverTimestamp").toInt() == 1;
-    bool latestFirst = settings.value("latestFirst").toInt() == 1;
-
-	for (int i = 0; i < m_keys.size(); i++)
-	{
-		Conversation conversation = ms.conversation(m_accountId, m_keys[i]);
-
-		if ( !conversation.participants().isEmpty() )
-		{
-			MessageContact c = conversation.participants()[0];
-			QString fileName;
-
-			QString displayName = TextUtils::sanitize( c.displayableName().trimmed() );
-			QString address = TextUtils::sanitize( c.address().trimmed() );
-
-			if (displayName == address) { // unknown contact
-			   fileName = address;
-			} else {
-			   fileName = QString("%1 %2").arg(displayName).arg(address);
-			}
-
-			QString formattedConversation = QString("%1%2%2").arg( c.address() ).arg(spacer);
-			QList<Message> messages = ms.messagesInConversation(m_accountId, m_keys[i], filter);
-
-			int totalMessages = messages.size();
-
-			for (int j = latestFirst ? totalMessages-1 : 0; latestFirst ? j >= 0 : j < messages.size(); latestFirst ? j-- : j++)
-			{
-			   Message m = messages[j];
-
-			   if ( !m.isDraft() )
-			   {
-				   QDateTime t = useServerTime ? m.serverTimestamp() : m.deviceTimestamp();
-				   QString ts = timeFormat.isEmpty() ? "" : t.toString(timeFormat);
-				   QString text = PimUtil::extractText(m);
-
-				   QString sender = m.isInbound() ? m.sender().displayableName() : userName;
-				   QString suffix;
-
-				   if ( ts.isEmpty() ) {
-					   suffix = QString("%1: %2").arg(sender).arg(text);
-				   } else {
-					   suffix = QString("%1 - %2: %3").arg(ts).arg(sender).arg(text);
-				   }
-
-				   formattedConversation += suffix +spacer;
-
-				   if (doubleSpace) {
-					   formattedConversation += spacer;
-				   }
-			   }
-			}
-
-			map.insert( fileName, formattedConversation.trimmed() );
-		}
-	}
-
-	QStringList keys = map.keys();
-	QString outputPath = settings.value("output").toString();
-
-    bool replace = settings.value("duplicateAction").toInt() == 1;
-    int total = keys.size();
-
-	for (int i = 0; i < total; i++)
-	{
-	   QString key = keys[i];
-	   IOUtils::writeTextFile( QString("%1/%2.txt").arg(outputPath).arg(key), map[key], replace );
-
-		int progress = (double)i/total * 100;
-		m_progress.setProgress(progress);
-		m_progress.setStatusMessage( tr("%1% complete...").arg(progress) );
-		m_progress.show();
-	}
-
-    emit exportCompleted();
-
-	m_progress.cancel();
-	m_progress.setState(SystemUiProgressState::Inactive);
+void ExportSMS::setFormat(OutputFormat::Type format) {
+    m_format = format;
 }
 
 } /* namespace exportui */
