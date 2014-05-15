@@ -173,7 +173,7 @@ void ApplicationUI::getMessagesFor(QString const& conversationKey, qint64 accoun
 
 
 void ApplicationUI::onExportCompleted() {
-	m_persistance.showToast( tr("Export complete") );
+	m_persistance.showToast( tr("Export complete"), "", "asset:///images/menu/ic_export.png" );
 }
 
 
