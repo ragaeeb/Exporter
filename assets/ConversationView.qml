@@ -10,6 +10,10 @@ Page
     property int timeSetting
     property string userName
     
+    titleBar: TitleBar {
+        id: tb
+    }
+    
     onContactChanged:
     {
         userName = persist.getValueFor("userName");
@@ -35,9 +39,9 @@ Page
         
         if (results.length > 0) {
             theDataModel.append(results);
-            label.text = qsTr("Conversation with %1").arg(contact.name.length > 0 ? contact.name : contact.number);
+            tb.title = contact.name.length > 0 ? contact.name : contact.number;
         } else {
-            label.text = qsTr("There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?") + Retranslate.onLanguageChanged
+            tb.title = qsTr("No messages found") + Retranslate.onLanguageChanged
         }
     }
     
@@ -143,36 +147,12 @@ Page
     
     Container
     {
-        leftPadding: 10; rightPadding: 10; topPadding: 10
         background: back.imagePaint
+        horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
         
-        Label
-        {
-            id: label
-            textStyle.fontSize: FontSize.XSmall
-            multiline: true
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Fill
-            textStyle.textAlign: TextAlign.Center
-            
-	        animations: [
-	            FadeTransition {
-	                id: fadeInTransition
-	                fromOpacity: 0
-	                duration: 1000
-	            }
-	        ]
-            
-	        onCreationCompleted: {
-                fadeInTransition.play();
-	        }
-        }
-        
-        Divider {
-            bottomMargin: 0; topMargin: 0;
-        }
-        
-		ListView {
+		ListView
+		{
             property alias backgroundIncoming: backIncoming
             property alias backgroundOutgoing: backOutgoing
 
