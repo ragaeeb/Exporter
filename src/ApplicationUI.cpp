@@ -40,6 +40,7 @@ QObject* ApplicationUI::initRoot(QString const& qmlSource)
 	qmlRegisterUncreatableType<bb::cascades::pickers::FileType>("bb.cascades.pickers", 1, 0, "FileType", "Can't instantiate");
 	qmlRegisterUncreatableType<bb::cascades::pickers::FilePickerMode>("bb.cascades.pickers", 1, 0, "FilePickerMode", "Can't instantiate");
 	qmlRegisterUncreatableType<OutputFormat>("com.canadainc.data", 1, 0, "OutputFormat", "Can't instantiate");
+	qmlRegisterType<bb::device::DisplayInfo>("bb.device", 1, 0, "DisplayInfo");
 
     QmlDocument *qml = QmlDocument::create( QString("asset:///%1").arg(qmlSource) ).parent(this);
     qml->setContextProperty("app", this);

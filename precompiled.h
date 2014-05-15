@@ -12,3 +12,5 @@
 #include <bb/pim/message/MessageService>
 
 #include <bb/system/CardDoneMessage>
+
+#include <bb/device/DisplayInfo>

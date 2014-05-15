@@ -171,6 +171,19 @@ The great thing is that the app gives you access to nearly all your accounts to 
     </message>
 </context>
 <context>
+    <name>ProgressDialog</name>
+    <message>
+        <location filename="../assets/ProgressDialog.qml" line="43"/>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ProgressDialog.qml" line="46"/>
+        <source>%1/%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PurchasePane</name>
     <message>
         <location filename="../assets/PurchasePane.qml" line="14"/>
@@ -377,44 +390,44 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="78"/>
+        <location filename="../src/ApplicationUI.cpp" line="79"/>
         <source>MMM d/yy, hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="83"/>
+        <location filename="../src/ApplicationUI.cpp" line="84"/>
         <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="96"/>
+        <location filename="../src/ApplicationUI.cpp" line="97"/>
         <source>%1
 
 %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="115"/>
+        <location filename="../src/ApplicationUI.cpp" line="116"/>
         <source>You</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="133"/>
+        <location filename="../src/ApplicationUI.cpp" line="134"/>
         <source>Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="137"/>
+        <location filename="../src/ApplicationUI.cpp" line="138"/>
         <source>Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="140"/>
+        <location filename="../src/ApplicationUI.cpp" line="141"/>
         <source>Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="176"/>
+        <location filename="../src/ApplicationUI.cpp" line="177"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>

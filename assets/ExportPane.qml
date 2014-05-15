@@ -54,13 +54,6 @@ NavigationPane
             topPadding: 10
             horizontalAlignment: HorizontalAlignment.Fill
             
-            ProgressDelegate
-            {
-                onCreationCompleted: {
-                    app.conversationLoadProgress.connect(onProgressChanged);
-                }
-            }
-            
             Label {
                 id: instructions
                 text: qsTr("Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.")
@@ -107,6 +100,11 @@ NavigationPane
                     }
                     
                     onSelectedValueChanged: {
+                        definition.source = "ProgressDialog.qml";
+                        var progress = definition.createObject();
+                        app.conversationLoadProgress.connect(progress.onProgressChanged);
+                        progress.open();
+
                         app.getConversationsFor(selectedValue);
                     }
                 }
