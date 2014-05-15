@@ -173,22 +173,27 @@ The great thing is that the app gives you access to nearly all your accounts to 
 <context>
     <name>PurchasePane</name>
     <message>
-        <location filename="../assets/PurchasePane.qml" line="26"/>
+        <location filename="../assets/PurchasePane.qml" line="14"/>
+        <source>Purchases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/PurchasePane.qml" line="31"/>
         <source>$0.99</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/PurchasePane.qml" line="26"/>
+        <location filename="../assets/PurchasePane.qml" line="31"/>
         <source>Unlocked!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/PurchasePane.qml" line="45"/>
+        <location filename="../assets/PurchasePane.qml" line="50"/>
         <source>CSV Exporting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/PurchasePane.qml" line="46"/>
+        <location filename="../assets/PurchasePane.qml" line="51"/>
         <source>MMS Support</source>
         <translation type="unfinished"></translation>
     </message>
