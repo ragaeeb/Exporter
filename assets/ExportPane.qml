@@ -49,58 +49,34 @@ NavigationPane
             ]
             
             background: back.imagePaint
-            leftPadding: 10
-            rightPadding: 10
-            topPadding: 10
             horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
             
-            Label {
-                id: instructions
-                text: qsTr("Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.")
-                textStyle.fontSize: FontSize.XSmall
-                multiline: true
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
-                textStyle.textAlign: TextAlign.Center
-                visible: !accountsDropDown.expanded
+            AccountsDropDown
+            {
+                id: accountsDropDown
+                selectedAccountId: 23
                 
-                animations: [
-                    FadeTransition {
-                        id: fadeInTransition
-                        fromOpacity: 0
-                        duration: 1000
+                onAccountsLoaded: {
+                    if (numAccounts == 0) {
+                        instructions.text = qsTr("No accounts found. Are you sure you gave the app the permissions it needs?");
                     }
-                ]
+                }
                 
-                onCreationCompleted: {
-                    fadeInTransition.play();
+                onSelectedValueChanged: {
+                    definition.source = "ProgressDialog.qml";
+                    var progress = definition.createObject();
+                    progress.open();
+                    
+                    app.getConversationsFor(selectedValue);
                 }
             }
             
-            ListView {
+            ListView
+            {
                 id: listView
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
-                
-                leadingVisual: AccountsDropDown
-                {
-                    id: accountsDropDown
-                    selectedAccountId: 23
-                    
-                    onAccountsLoaded: {
-                        if (numAccounts == 0) {
-                            instructions.text = qsTr("No accounts found. Are you sure you gave the app the permissions it needs?");
-                        }
-                    }
-                    
-                    onSelectedValueChanged: {
-                        definition.source = "ProgressDialog.qml";
-                        var progress = definition.createObject();
-                        progress.open();
-
-                        app.getConversationsFor(selectedValue);
-                    }
-                }
                 
                 function doExport(conversationIds, format)
                 {
@@ -133,9 +109,8 @@ NavigationPane
                     adm.append(conversations);
                     
                     selectAllAction.enabled = conversations.length > 0;
-                    
-                    scrollToPosition(0, ScrollAnimation.None);
-                    scroll(-100, ScrollAnimation.Smooth);
+                    emptyDelegate.delegateActive = conversations.length == 0;
+                    listView.visible = conversations.length > 0;
                 }
                 
                 onCreationCompleted: {
@@ -173,7 +148,7 @@ NavigationPane
                                         duration: 200
                                     }
                                     
-                                    delay: control.ListItem.indexInSection * 100
+                                    delay: Math.min(control.ListItem.indexInSection * 100, 1000);
                                 }
                             ]
                             
@@ -280,10 +255,6 @@ NavigationPane
                     id: adm
                 }
                 
-                layoutProperties: StackLayoutProperties {
-                    spaceQuota: 1
-                }
-                
                 onSelectionChanged: {
                     var n = selectionList().length;
                     multiSelectHandler.status = qsTr("%1 conversations selected").arg(n);
@@ -296,6 +267,17 @@ NavigationPane
                     page.accountId = accountsDropDown.selectedValue;
                     page.contact = dataModel.data(indexPath);
                     navigationPane.push(page);
+                }
+            }
+            
+            EmptyDelegate
+            {
+                id: emptyDelegate
+                graphic: "images/placeholders/empty_conversations.png"
+                labelText: qsTr("There are no messages found for that specific mailbox.") + Retranslate.onLanguageChanged
+                
+                onImageTapped: {
+                    accountsDropDown.expanded = true;
                 }
             }
         }

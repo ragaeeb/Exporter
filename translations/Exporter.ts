@@ -69,59 +69,59 @@ Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="59"/>
-        <source>Tap on a conversation to open up its messages and share them. Press-and-hold on a conversation to export them to persistant storage.</source>
+        <location filename="../assets/ExportPane.qml" line="60"/>
+        <source>There are no messages found for that specific mailbox.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="92"/>
+        <location filename="../assets/ExportPane.qml" line="80"/>
         <source>No accounts found. Are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="108"/>
+        <location filename="../assets/ExportPane.qml" line="96"/>
         <source>This is a purchasable feature. You can buy it for just $0.99!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="108"/>
+        <location filename="../assets/ExportPane.qml" line="96"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="109"/>
+        <location filename="../assets/ExportPane.qml" line="97"/>
         <source>CSV Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="188"/>
+        <location filename="../assets/ExportPane.qml" line="178"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="192"/>
-        <location filename="../assets/ExportPane.qml" line="250"/>
+        <location filename="../assets/ExportPane.qml" line="182"/>
+        <location filename="../assets/ExportPane.qml" line="240"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="201"/>
-        <location filename="../assets/ExportPane.qml" line="261"/>
+        <location filename="../assets/ExportPane.qml" line="191"/>
+        <location filename="../assets/ExportPane.qml" line="251"/>
         <source>Export CSV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="226"/>
+        <location filename="../assets/ExportPane.qml" line="216"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="276"/>
+        <location filename="../assets/ExportPane.qml" line="266"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="289"/>
+        <location filename="../assets/ExportPane.qml" line="275"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>
