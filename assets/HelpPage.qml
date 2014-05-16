@@ -30,7 +30,7 @@ Page
             
             imageSource: "images/menu/ic_tutorial.png"
             title: qsTr("Video Tutorial") + Retranslate.onLanguageChanged
-            ActionBar.placement: ActionBarPlacement.OnBar
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement.Signature : ActionBarPlacement.OnBar
         }
     ]
 

@@ -73,6 +73,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
             LOGGER("Total messages fetched" << messages.size());
 
             if (!m_active) {
+                LOGGER("Aborting!");
                 return QList<FormattedConversation>();
             }
 
@@ -122,8 +123,12 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
                     fm.body = totalBody.join(" ");
                     fc.messages << fm;
+
+                    LOGGER("FormattedMessage" << totalBody.size() << fm.attachments.size());
                 }
             }
+
+            LOGGER("FormattedConversation" << fc.messages.size());
 
             result << fc;
         }
@@ -137,6 +142,8 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
 void ExportSMS::run()
 {
+    LOGGER(m_accountId << m_keys << m_format);
+
     QString result;
     QList<FormattedConversation> conversations = formatConversations();
     bool latestFirst = m_settings.value("latestFirst").toInt() == 1;
@@ -152,6 +159,7 @@ void ExportSMS::run()
     for (int x = 0; x < n; x++)
     {
         if (!m_active) {
+            LOGGER("Aborting!");
             return;
         }
 
@@ -175,6 +183,7 @@ void ExportSMS::run()
                 int k = 1;
 
                 while ( QFile::exists(destination) ) {
+                    LOGGER(destination << "already exists");
                     destination = QString("%1/(%3)_%2").arg(outputPath).arg(fa.name).arg(k);
                     ++k;
                 }
@@ -189,8 +198,12 @@ void ExportSMS::run()
             }
         }
 
+        LOGGER("Total lines" << total.size());
+
         if ( !total.isEmpty() ) {
             IOUtils::writeTextFile( QString("%1/%2.%3").arg(outputPath).arg(fc.fileName).arg(extension), total.join(NEW_LINE), replace, false );
+        } else {
+            LOGGER("Total was empty...");
         }
 
         emit loadProgress(x, n, status);

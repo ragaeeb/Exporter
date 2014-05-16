@@ -4,54 +4,69 @@
 <context>
     <name>ConversationView</name>
     <message>
-        <location filename="../assets/ConversationView.qml" line="44"/>
+        <location filename="../assets/ConversationView.qml" line="289"/>
         <source>No messages found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="75"/>
+        <location filename="../assets/ConversationView.qml" line="63"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="95"/>
+        <location filename="../assets/ConversationView.qml" line="83"/>
         <source>Save All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="110"/>
+        <location filename="../assets/ConversationView.qml" line="98"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="130"/>
+        <location filename="../assets/ConversationView.qml" line="118"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="140"/>
+        <location filename="../assets/ConversationView.qml" line="128"/>
         <source>Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.
 
 Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="140"/>
+        <location filename="../assets/ConversationView.qml" line="128"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="278"/>
+        <location filename="../assets/ConversationView.qml" line="266"/>
         <source>Choose Output Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="279"/>
+        <location filename="../assets/ConversationView.qml" line="267"/>
         <source>Output Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="84"/>
+        <location filename="../assets/ConversationView.qml" line="292"/>
+        <source>You can select only the messages that you want to export by tapping on them so they are highlighted (the dimmed ones will be skipped). You can also use the &apos;Select Range&apos; feature from the menu to pick start and end points. Once you have your selection you can choose &apos;Share&apos; and pick Exporter from the Share menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ConversationView.qml" line="293"/>
+        <source>To the Save All action at the bottom to save all the messages in one shot!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ConversationView.qml" line="294"/>
+        <source>You can easily copy only certain converastions and messages and share them with your contacts! Simply select the appropriate bubbles by tapping on them, and then either choose &apos;Share&apos; to share socially, or choose the &apos;Copy&apos; action from the menu to copy it to your clipboard so you can paste it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ConversationView.qml" line="72"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -64,7 +79,7 @@ Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="278"/>
+        <location filename="../assets/ExportPane.qml" line="283"/>
         <source>There are no messages found for that specific mailbox.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -74,49 +89,70 @@ Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="85"/>
+        <location filename="../assets/ExportPane.qml" line="90"/>
         <source>This is a purchasable feature. You can buy it for just $0.99!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="85"/>
+        <location filename="../assets/ExportPane.qml" line="62"/>
+        <location filename="../assets/ExportPane.qml" line="90"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="86"/>
+        <location filename="../assets/ExportPane.qml" line="65"/>
+        <source>These are a list of all the conversations, press-and-hold on one and from the menu choose &apos;Select More&apos; and then &apos;Export TXT&apos; to save it. You can also tap on the conversation itself and save only parts of it if you wish.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ExportPane.qml" line="66"/>
+        <source>You can tap the Select All button at the bottom of the screen to quickly export all your conversations!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ExportPane.qml" line="67"/>
+        <source>Use the dropdown at the top to switch between your mailboxes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ExportPane.qml" line="68"/>
+        <source>There are many customizations you can make to the way the messages are exported. You can do this from the Settings. To access the app settings, swipe-down from the top-bezel and choose &apos;Settings&apos; from the application menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ExportPane.qml" line="91"/>
         <source>CSV Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="164"/>
+        <location filename="../assets/ExportPane.qml" line="169"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="168"/>
-        <location filename="../assets/ExportPane.qml" line="226"/>
+        <location filename="../assets/ExportPane.qml" line="173"/>
+        <location filename="../assets/ExportPane.qml" line="231"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="177"/>
-        <location filename="../assets/ExportPane.qml" line="237"/>
+        <location filename="../assets/ExportPane.qml" line="182"/>
+        <location filename="../assets/ExportPane.qml" line="242"/>
         <source>Export CSV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="202"/>
+        <location filename="../assets/ExportPane.qml" line="207"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="252"/>
+        <location filename="../assets/ExportPane.qml" line="257"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="261"/>
+        <location filename="../assets/ExportPane.qml" line="266"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -380,49 +416,49 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="79"/>
+        <location filename="../src/ApplicationUI.cpp" line="90"/>
         <source>MMM d/yy, hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="84"/>
+        <location filename="../src/ApplicationUI.cpp" line="95"/>
         <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="97"/>
+        <location filename="../src/ApplicationUI.cpp" line="108"/>
         <source>%1
 
 %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="116"/>
+        <location filename="../src/ApplicationUI.cpp" line="127"/>
         <source>You</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="134"/>
+        <location filename="../src/ApplicationUI.cpp" line="145"/>
         <source>Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="138"/>
+        <location filename="../src/ApplicationUI.cpp" line="149"/>
         <source>Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="141"/>
+        <location filename="../src/ApplicationUI.cpp" line="152"/>
         <source>Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="181"/>
+        <location filename="../src/ApplicationUI.cpp" line="192"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="186"/>
+        <location filename="../src/ApplicationUI.cpp" line="197"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -435,7 +471,7 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="150"/>
+        <location filename="../src/ExportSMS.cpp" line="157"/>
         <source>Writing...</source>
         <translation type="unfinished"></translation>
     </message>
