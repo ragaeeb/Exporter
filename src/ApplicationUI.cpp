@@ -2,13 +2,17 @@
 
 #include "applicationui.hpp"
 #include "AccountImporter.h"
+#include "ExporterCollector.h"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
 #include "InvocationUtils.h"
 #include "IOUtils.h"
 #include "Logger.h"
+#include "LogMonitor.h"
 #include "MessageImporter.h"
 #include "PimUtil.h"
+
+#define CARD_KEY "logCard"
 
 namespace exportui {
 
@@ -20,14 +24,21 @@ using namespace canadainc;
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
         QObject(app), m_cover("Cover.qml"), m_payment(&m_persistance)
 {
+    INIT_SETTING(CARD_KEY, true);
+    INIT_SETTING(UI_KEY, true);
+
+    new AppLogFetcher( new ExporterCollector(), this );
+
 	switch ( m_invokeManager.startupMode() )
 	{
 	case ApplicationStartupMode::InvokeCard:
 	case ApplicationStartupMode::InvokeApplication:
+	    new LogMonitor(CARD_KEY, CARD_LOG_FILE, this);
 		connect( &m_invokeManager, SIGNAL( invoked(bb::system::InvokeRequest const&) ), this, SLOT( invoked(bb::system::InvokeRequest const&) ) );
 		break;
 
 	default:
+	    new LogMonitor(UI_KEY, UI_LOG_FILE, this);
         initRoot();
 	    break;
 	}

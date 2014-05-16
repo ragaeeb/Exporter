@@ -40,6 +40,7 @@ void ImportSMS::run()
 	for (int i = 0; i < total; i++)
 	{
 	    if (!m_active) {
+	        LOGGER("Aborting!");
 	        return;
 	    }
 
@@ -71,6 +72,7 @@ void ImportSMS::run()
 
 
 void ImportSMS::cancel() {
+    LOGGER("Cancel!");
     m_active = false;
 }
 
