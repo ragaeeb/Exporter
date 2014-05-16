@@ -27,6 +27,10 @@ class PaymentHelper : public QObject
     PaymentManager* m_payment;
     PaymentManager* getPaymentManager();
 
+private slots:
+    void existingPurchasesFinished(bb::platform::ExistingPurchasesReply* reply);
+    void purchaseFinished(bb::platform::PurchaseReply* reply);
+
 signals:
     void initialize();
 
@@ -34,8 +38,6 @@ public:
     PaymentHelper(Persistance* persist, QObject* parent=NULL);
     virtual ~PaymentHelper();
 
-    void existingPurchasesFinished(bb::platform::ExistingPurchasesReply* reply);
-    void purchaseFinished(bb::platform::PurchaseReply* reply);
     Q_SLOT void refreshPurchases();
     Q_SLOT void requestPurchase(QString const& sku, QString const& name);
 };

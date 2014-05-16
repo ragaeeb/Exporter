@@ -49,6 +49,7 @@ public:
 	void setFormat(OutputFormat::Type format);
 	void run();
 	Q_SLOT void cancel();
+	static QString getTimeFormat(int tf);
 };
 
 } /* namespace exportui */
