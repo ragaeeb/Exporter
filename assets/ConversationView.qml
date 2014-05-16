@@ -33,18 +33,6 @@ Page
         }
     }
     
-    function onMessagesImported(results)
-    {
-        theDataModel.clear();
-        
-        if (results.length > 0) {
-            theDataModel.append(results);
-            tb.title = contact.name.length > 0 ? contact.name : contact.number;
-        } else {
-            tb.title = qsTr("No messages found") + Retranslate.onLanguageChanged
-        }
-    }
-    
     function concatenate()
     {
         var selectedIndices = listView.selectionList()
@@ -94,7 +82,7 @@ Page
         ActionItem {
             title: qsTr("Save All") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_save.png"
-            ActionBar.placement: ActionBarPlacement.OnBar
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement.Signature : ActionBarPlacement.OnBar
             
             onTriggered: {
                 sld.show();
@@ -289,6 +277,22 @@ Page
             }
         }
     ]
+    
+    function onMessagesImported(results)
+    {
+        theDataModel.clear();
+        
+        if (results.length > 0) {
+            theDataModel.append(results);
+            tb.title = contact.name.length > 0 ? contact.name : contact.number;
+        } else {
+            tb.title = qsTr("No messages found") + Retranslate.onLanguageChanged
+        }
+        
+        if ( persist.tutorial("tutorialRange"), qsTr("You can select only the messages that you want to export by tapping on them so they are highlighted (the dimmed ones will be skipped). You can also use the 'Select Range' feature from the menu to pick start and end points. Once you have your selection you can choose 'Share' and pick Exporter from the Share menu."), "asset:///images/menu/ic_range.png" ) {}
+        else if ( persist.tutorial("tutorialSaveAll"), qsTr("To the Save All action at the bottom to save all the messages in one shot!"), "asset:///images/menu/ic_save.png" ) {}
+        else if ( persist.tutorial("tutorialCopy"), qsTr("You can easily copy only certain converastions and messages and share them with your contacts! Simply select the appropriate bubbles by tapping on them, and then either choose 'Share' to share socially, or choose the 'Copy' action from the menu to copy it to your clipboard so you can paste it."), "asset:///images/menu/ic_copy.png" ) {}
+    }
     
     onCreationCompleted: {
         persist.settingChanged.connect(onSettingChanged);
