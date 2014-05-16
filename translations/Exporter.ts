@@ -4,59 +4,54 @@
 <context>
     <name>ConversationView</name>
     <message>
-        <location filename="../assets/ConversationView.qml" line="38"/>
-        <source>Conversation with %1</source>
+        <location filename="../assets/ConversationView.qml" line="44"/>
+        <source>No messages found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="40"/>
-        <source>There are no messages detected for this conversation...are you sure you gave the app the permissions it needs?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/ConversationView.qml" line="71"/>
+        <location filename="../assets/ConversationView.qml" line="75"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="91"/>
+        <location filename="../assets/ConversationView.qml" line="95"/>
         <source>Save All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="106"/>
+        <location filename="../assets/ConversationView.qml" line="110"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="126"/>
+        <location filename="../assets/ConversationView.qml" line="130"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="136"/>
+        <location filename="../assets/ConversationView.qml" line="140"/>
         <source>Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.
 
 Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="136"/>
+        <location filename="../assets/ConversationView.qml" line="140"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="298"/>
+        <location filename="../assets/ConversationView.qml" line="278"/>
         <source>Choose Output Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="299"/>
+        <location filename="../assets/ConversationView.qml" line="279"/>
         <source>Output Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="80"/>
+        <location filename="../assets/ConversationView.qml" line="84"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -69,59 +64,59 @@ Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="60"/>
+        <location filename="../assets/ExportPane.qml" line="278"/>
         <source>There are no messages found for that specific mailbox.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="80"/>
+        <location filename="../assets/ExportPane.qml" line="62"/>
         <source>No accounts found. Are you sure you gave the app the permissions it needs?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="96"/>
+        <location filename="../assets/ExportPane.qml" line="85"/>
         <source>This is a purchasable feature. You can buy it for just $0.99!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="96"/>
+        <location filename="../assets/ExportPane.qml" line="85"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="97"/>
+        <location filename="../assets/ExportPane.qml" line="86"/>
         <source>CSV Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="178"/>
+        <location filename="../assets/ExportPane.qml" line="164"/>
         <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="182"/>
-        <location filename="../assets/ExportPane.qml" line="240"/>
+        <location filename="../assets/ExportPane.qml" line="168"/>
+        <location filename="../assets/ExportPane.qml" line="226"/>
         <source>Export TXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="191"/>
-        <location filename="../assets/ExportPane.qml" line="251"/>
+        <location filename="../assets/ExportPane.qml" line="177"/>
+        <location filename="../assets/ExportPane.qml" line="237"/>
         <source>Export CSV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="216"/>
+        <location filename="../assets/ExportPane.qml" line="202"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="266"/>
+        <location filename="../assets/ExportPane.qml" line="252"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="275"/>
+        <location filename="../assets/ExportPane.qml" line="261"/>
         <source>%1 conversations selected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -440,7 +435,7 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="141"/>
+        <location filename="../src/ExportSMS.cpp" line="150"/>
         <source>Writing...</source>
         <translation type="unfinished"></translation>
     </message>

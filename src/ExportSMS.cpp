@@ -70,6 +70,8 @@ QList<FormattedConversation> ExportSMS::formatConversations()
             QList<Message> messages = ms.messagesInConversation( m_accountId, m_keys[i], MessageFilter() );
             MessageContact c = conversation.participants()[0];
 
+            LOGGER("Total messages fetched" << messages.size());
+
             if (!m_active) {
                 return QList<FormattedConversation>();
             }
@@ -81,11 +83,14 @@ QList<FormattedConversation> ExportSMS::formatConversations()
             fc.fileName = displayName == address ? address : QString("%1 %2").arg(displayName).arg(address);
             fc.fileName = TextUtils::sanitize(fc.fileName);
 
+            LOGGER("Current" << displayName << address);
+
             for (int j = 0; j < messages.length(); j++)
             {
                 Message m = messages[j];
+                bool isEmail = m.mimeType() == "message/rfc822";
 
-                if ( !m.isDraft() && m.attachmentCount() > 0 )
+                if ( !m.isDraft() && ( m.attachmentCount() > 0 || isEmail ) )
                 {
                     FormattedMessage fm;
 
@@ -94,6 +99,10 @@ QList<FormattedConversation> ExportSMS::formatConversations()
                     fm.sender = m.isInbound() ? m.sender().displayableName() : userName;
 
                     QStringList totalBody;
+
+                    if (isEmail) {
+                        totalBody << m.body(MessageBody::PlainText).data();
+                    }
 
                     for (int k = m.attachmentCount()-1; k >= 0; k--)
                     {

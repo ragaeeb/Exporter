@@ -26,7 +26,7 @@ NavigationPane
             ActionItem {
                 id: selectAllAction
                 imageSource: "images/menu/selectAll.png"
-                ActionBar.placement: ActionBarPlacement.OnBar
+                ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement.Signature : ActionBarPlacement.OnBar
                 title: qsTr("Select All") + Retranslate.onLanguageChanged
                 enabled: false
                 
@@ -55,12 +55,17 @@ NavigationPane
             AccountsDropDown
             {
                 id: accountsDropDown
-                selectedAccountId: 23
+                selectedAccountId: persist.contains("accountId") ? persist.getValueFor("accountId") : 23
                 
                 onAccountsLoaded: {
                     if (numAccounts == 0) {
-                        instructions.text = qsTr("No accounts found. Are you sure you gave the app the permissions it needs?");
+                        persist.showToast( qsTr("No accounts found. Are you sure you gave the app the permissions it needs?"), qsTr("OK"), "asset:///images/dropdown/ic_account.png" );
                     }
+                    
+                    else if ( persist.tutorial("tutorialExportTxt"), qsTr("These are a list of all the conversations, press-and-hold on one and from the menu choose 'Select More' and then 'Export TXT' to save it. You can also tap on the conversation itself and save only parts of it if you wish."), "asset:///images/menu/ic_export.png" ) {}
+                    else if ( persist.tutorial("tutorialSelectAll"), qsTr("You can tap the Select All button at the bottom of the screen to quickly export all your conversations!"), "asset:///images/menu/selectAll.png" ) {}
+                    else if ( persist.tutorial("tutorialDropDown"), qsTr("Use the dropdown at the top to switch between your mailboxes."), "asset:///images/dropdown/ic_account.png" ) {}
+                    else if ( persist.tutorial("tutorialSettings"), qsTr("There are many customizations you can make to the way the messages are exported. You can do this from the Settings. To access the app settings, swipe-down from the top-bezel and choose 'Settings' from the application menu."), "file:///usr/share/icons/bb_action_install.png" ) {}
                 }
                 
                 onSelectedValueChanged: {
@@ -69,6 +74,7 @@ NavigationPane
                     progress.open();
                     
                     app.getConversationsFor(selectedValue);
+                    persist.saveValueFor("accountId", selectedValue, false);
                 }
             }
             
