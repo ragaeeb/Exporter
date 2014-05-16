@@ -24,7 +24,7 @@ Page
         {
             query {
                 mimeType: "text/html"
-                uri: "http://www.youtube.com/watch?v=AbHZLmWSKts"
+                uri: "http://youtu.be/_sSZJPBwlnc"
                 invokeActionId: "bb.action.OPEN"
             }
             
