@@ -6,34 +6,26 @@
 #include "PimUtil.h"
 #include "TextUtils.h"
 
+using namespace bb::pim::message;
+
 namespace {
 
-QString getTimeFormat(int tf)
+bool latestFirst = true;
+bool deviceTime = false;
+
+bool messageComparator(Message const& c1, Message const& c2)
 {
-    QString timeFormat = QObject::tr("MMM d/yy hh:mm:ss");
-
-    switch (tf)
-    {
-        case 1:
-            timeFormat = QObject::tr("hh:mm:ss");
-            break;
-
-        case 2:
-            timeFormat = "";
-            break;
-
-        default:
-            break;
+    if (deviceTime) {
+        return !latestFirst ? c1.deviceTimestamp() < c2.deviceTimestamp() : c1.deviceTimestamp() > c2.deviceTimestamp();
+    } else {
+        return !latestFirst ? c1.serverTimestamp() < c2.serverTimestamp() : c1.serverTimestamp() > c2.serverTimestamp();
     }
-
-    return timeFormat;
 }
 
 }
 
 namespace exportui {
 
-using namespace bb::pim::message;
 using namespace canadainc;
 
 ExportSMS::ExportSMS(QStringList const& keys, qint64 const& accountId) :
@@ -46,7 +38,8 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 {
     QList<FormattedConversation> result;
 
-    bool useServerTime = m_settings.value("serverTimestamp").toInt() == 1;
+    deviceTime = m_settings.value("serverTimestamp").toInt() != 1;
+    latestFirst = m_settings.value("latestFirst").toInt() == 1;
     QString userName = m_settings.value("userName").toString();
     QString timeFormat = getTimeFormat( m_settings.value("timeFormat").toInt() );
     bool supportMMS = m_settings.contains("exporter_mms");
@@ -68,6 +61,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
         if ( !conversation.participants().isEmpty() && conversation.messageCount() > 0 )
         {
             QList<Message> messages = ms.messagesInConversation( m_accountId, m_keys[i], MessageFilter() );
+            qSort( messages.begin(), messages.end(), messageComparator );
             MessageContact c = conversation.participants()[0];
 
             LOGGER("Total messages fetched" << messages.size());
@@ -95,15 +89,23 @@ QList<FormattedConversation> ExportSMS::formatConversations()
                 {
                     FormattedMessage fm;
 
-                    QDateTime t = useServerTime ? m.serverTimestamp() : m.deviceTimestamp();
+                    QDateTime t = deviceTime ? m.deviceTimestamp() : m.serverTimestamp();
                     fm.timestamp = timeFormat.isEmpty() ? "" : t.toString(timeFormat);
                     fm.sender = m.isInbound() ? m.sender().displayableName() : userName;
 
                     QStringList totalBody;
 
                     if (isEmail) {
-                        totalBody << m.body(MessageBody::PlainText).data();
+                        QString body = m.body(MessageBody::PlainText).plainText();
+
+                        if ( body.isEmpty() ) {
+                            body = m.body(MessageBody::Html).plainText();
+                        }
+
+                        totalBody << body;
                     }
+
+                    LOGGER("total" << isEmail << totalBody);
 
                     for (int k = m.attachmentCount()-1; k >= 0; k--)
                     {
@@ -146,7 +148,6 @@ void ExportSMS::run()
 
     QString result;
     QList<FormattedConversation> conversations = formatConversations();
-    bool latestFirst = m_settings.value("latestFirst").toInt() == 1;
     QString outputPath = m_settings.value("output").toString();
     bool replace = m_settings.value("duplicateAction").toInt() == 1;
     QString extension = m_format == OutputFormat::CSV ? "csv" : "txt";
@@ -169,7 +170,7 @@ void ExportSMS::run()
         LOGGER("Total messages" << messages.size());
         QStringList total;
 
-        for (int i = latestFirst ? messages.length()-1 : 0; latestFirst ? i >= 0 : i < messages.length(); latestFirst ? i-- : i++)
+        for (int i = 0; i < messages.length(); i++)
         {
             FormattedMessage fm = messages[i];
             QList<FormattedAttachment> attachments = fm.attachments;
@@ -211,6 +212,28 @@ void ExportSMS::run()
 
     emit loadProgress(n,n,status);
     emit exportCompleted();
+}
+
+
+QString ExportSMS::getTimeFormat(int tf)
+{
+    QString timeFormat = QObject::tr("MMM d/yy hh:mm:ss");
+
+    switch (tf)
+    {
+        case 1:
+            timeFormat = QObject::tr("hh:mm:ss");
+            break;
+
+        case 2:
+            timeFormat = "";
+            break;
+
+        default:
+            break;
+    }
+
+    return timeFormat;
 }
 
 

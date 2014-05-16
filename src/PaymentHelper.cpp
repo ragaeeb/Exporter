@@ -24,8 +24,10 @@ PaymentHelper::PaymentHelper(Persistance* persist, QObject* parent) :
 PaymentManager* PaymentHelper::getPaymentManager()
 {
     if (!m_payment) {
+        LOGGER("Instantiating for first time!");
         m_payment = new PaymentManager(this);
-
+        connect( m_payment, SIGNAL( existingPurchasesFinished(bb::platform::ExistingPurchasesReply*) ), this, SLOT( existingPurchasesFinished(bb::platform::ExistingPurchasesReply*) ) );
+        connect( m_payment, SIGNAL( purchaseFinished(bb::platform::PurchaseReply*) ), this, SLOT( purchaseFinished(bb::platform::PurchaseReply*) ) );
 #if !defined(QT_NO_DEBUG)
         m_payment->setConnectionMode(PaymentConnectionMode::Test);
 #endif

@@ -47,7 +47,7 @@ NavigationPane
                 if (key == "exporter_csv" || key == "exporter_mms")
                 {
                     adm.clear();
-                    adm.append({'title': qsTr("CSV Exporting"), 'description': "Support for comma-separated-value format", 'imageSource': "images/ic_export_csv.png", 'sku': "exporter_csv", 'purchased': persist.contains("exporter_csv")});
+                    adm.append({'title': qsTr("CSV Exporting"), 'description': "Support for comma-separated-value format", 'imageSource': "images/menu/ic_export_csv.png", 'sku': "exporter_csv", 'purchased': persist.contains("exporter_csv")});
                     adm.append({'title': qsTr("MMS Support"), 'description': "Save multimedia content (videos, images, etc.)", 'imageSource': "images/ic_mms.png", 'sku': "exporter_mms", 'purchased': persist.contains("exporter_mms")});
                 }
             }
