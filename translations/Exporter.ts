@@ -241,12 +241,12 @@ The great thing is that the app gives you access to nearly all your accounts to 
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="220"/>
+        <location filename="../src/ExportSMS.cpp" line="222"/>
         <source>MMM d/yy hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="225"/>
+        <location filename="../src/ExportSMS.cpp" line="227"/>
         <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
@@ -462,7 +462,7 @@ Tap the first message, then tap the last message and all of the ones in between 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ExportSMS.cpp" line="158"/>
+        <location filename="../src/ExportSMS.cpp" line="160"/>
         <source>Writing...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -478,12 +478,12 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="18"/>
+        <location filename="../assets/main.qml" line="16"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="28"/>
+        <location filename="../assets/main.qml" line="26"/>
         <source>Purchase</source>
         <translation type="unfinished"></translation>
     </message>
