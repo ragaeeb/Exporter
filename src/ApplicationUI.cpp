@@ -27,18 +27,18 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
     INIT_SETTING(CARD_KEY, true);
     INIT_SETTING(UI_KEY, true);
 
-    new AppLogFetcher( new ExporterCollector(), this );
+    AppLogFetcher::create( &m_persistance, new ExporterCollector(), this );
 
 	switch ( m_invokeManager.startupMode() )
 	{
 	case ApplicationStartupMode::InvokeCard:
 	case ApplicationStartupMode::InvokeApplication:
-	    new LogMonitor(CARD_KEY, CARD_LOG_FILE, this);
+	    LogMonitor::create(CARD_KEY, CARD_LOG_FILE, this);
 		connect( &m_invokeManager, SIGNAL( invoked(bb::system::InvokeRequest const&) ), this, SLOT( invoked(bb::system::InvokeRequest const&) ) );
 		break;
 
 	default:
-	    new LogMonitor(UI_KEY, UI_LOG_FILE, this);
+	    LogMonitor::create(UI_KEY, UI_LOG_FILE, this);
         initRoot();
 	    break;
 	}

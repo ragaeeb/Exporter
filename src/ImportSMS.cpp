@@ -48,14 +48,21 @@ void ImportSMS::run()
 
 		if ( !c.participants().isEmpty() )
 		{
-			MessageContactKey key = c.participants()[0].id();
+		    MessageContact mc = c.participants()[0];
+			MessageContactKey key = mc.id();
 			Contact contact = cs.contactDetails(key);
 
+			QString name = contact.displayName().trimmed();
+
+			if ( name.isEmpty() ) {
+			    name = mc.displayableName().trimmed();
+			}
+
 			QVariantMap qvm;
-			qvm.insert( "name", contact.displayName() );
+			qvm.insert( "name", name );
 			qvm.insert( "smallPhotoFilepath", contact.smallPhotoFilepath() );
 			qvm.insert( "messageCount", c.messageCount() );
-			qvm.insert( "number", c.participants()[0].address() );
+			qvm.insert( "number", mc.address() );
 			qvm.insert( "conversationId", c.id() );
 
 			qvl.append(qvm);

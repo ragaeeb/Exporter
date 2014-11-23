@@ -80,12 +80,12 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
             LOGGER("Current" << displayName << address);
 
-            for (int j = 0; j < messages.length(); j++)
+            for (int j = 0; j < messages.size(); j++)
             {
                 Message m = messages[j];
-                bool isEmail = m.mimeType() == "message/rfc822";
+                bool isSpecial = m.mimeType() == "message/rfc822" || m.mimeType() == "application/vnd.blackberry.pin";
 
-                if ( !m.isDraft() && ( m.attachmentCount() > 0 || isEmail ) )
+                if ( !m.isDraft() && ( m.attachmentCount() > 0 || isSpecial ) )
                 {
                     FormattedMessage fm;
 
@@ -95,7 +95,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
                     QStringList totalBody;
 
-                    if (isEmail) {
+                    if (isSpecial) {
                         QString body = m.body(MessageBody::PlainText).plainText();
 
                         if ( body.isEmpty() ) {
@@ -105,7 +105,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
                         totalBody << body;
                     }
 
-                    LOGGER("total" << isEmail << totalBody);
+                    LOGGER("total" << isSpecial << totalBody);
 
                     for (int k = m.attachmentCount()-1; k >= 0; k--)
                     {

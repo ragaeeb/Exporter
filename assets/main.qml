@@ -8,8 +8,6 @@ TabbedPane
     Menu.definition: CanadaIncMenu
     {
         projectName: "exporter10"
-        bbWorldID: "22552876"
-        showSubmitLogs: true
     }
     
     Tab {
