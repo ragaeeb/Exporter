@@ -35,6 +35,10 @@ Page
 	                imageSource: "images/dropdown/ic_overwrite.png"
                     value: 1
 	            }
+	            
+                onSelectedValueChanged: {
+                    console.log("UserEvent: DuplicateAction", selectedValue);
+                }
 	        }
 	        
 	        PersistDropDown
@@ -74,6 +78,10 @@ Page
 	                    infoText.text = qsTr("The time will will be appended in front of the messages with a format like 10:15:03.") + Retranslate.onLanguageChanged;
                     }
 	            }
+	            
+                onSelectedValueChanged: {
+                    console.log("UserEvent: MessageTimeFormat", selectedValue);
+                }
 	        }
 	        
 	        Label {
@@ -89,6 +97,8 @@ Page
 	            onTextChanged: {
 	                persist.saveValueFor("userName", text);
 	                infoText.text = qsTr("In the output, messages you sent will be prefixed by: %1").arg(text) + Retranslate.onLanguageChanged
+	                
+                    console.log("UserEvent: UserName", text);
                 }
 	
 	            text: persist.getValueFor("userName")
@@ -107,6 +117,8 @@ Page
                     } else {
                         infoText.text = qsTr("Each message will be single-spaced.") + Retranslate.onLanguageChanged
                     }
+                    
+                    console.log("UserEvent: DoubleSpaceEnabled", checked);
                 }
             }
 
@@ -123,6 +135,8 @@ Page
                     } else {
                         infoText.text = qsTr("Messages will be ordered from oldest to newest .");
                     }
+                    
+                    console.log("UserEvent: LatestFirstEnabled", checked);
                 }
             }
             
@@ -139,6 +153,8 @@ Page
                     } else {
                         infoText.text = qsTr("Message timestamps will reflect the time they were created on the device.");
                     }
+                    
+                    console.log("UserEvent: UseServerTimestampEnabled", checked);
                 }
             }
 

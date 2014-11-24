@@ -36,6 +36,7 @@ NavigationPane
             
             onTriggered: {
                 var data = dataModel.data(indexPath);
+                console.log("UserEvent: PurchaseElementTapped", data.sku);
                 
                 if (!data.purchased) {
                     payment.requestPurchase(data.sku, data.title);

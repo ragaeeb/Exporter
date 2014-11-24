@@ -31,6 +31,8 @@ NavigationPane
                 enabled: false
                 
                 onTriggered: {
+                    console.log("UserEvent: SelectAllTriggered");
+                    
                     listView.multiSelectHandler.active = true;
                     listView.selectAll();
                 }
@@ -74,6 +76,8 @@ NavigationPane
                     definition.source = "ProgressDialog.qml";
                     var progress = definition.createObject();
                     progress.open();
+                    
+                    console.log("UserEvent: AccountSelected", selectedValue);
                     
                     app.getConversationsFor(selectedValue);
                     persist.saveValueFor("accountId", selectedValue, false);
@@ -176,6 +180,7 @@ NavigationPane
                                         imageSource: "images/menu/ic_export.png"
                                         
                                         onTriggered: {
+                                            console.log("UserEvent: ExportTxtTriggered");
                                             control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.TXT)
                                         }
                                     }
@@ -185,6 +190,7 @@ NavigationPane
                                         imageSource: "images/menu/ic_export_csv.png"
                                         
                                         onTriggered: {
+                                            console.log("UserEvent: ExportCsvTriggered");
                                             control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.CSV)
                                         }
                                     }
@@ -211,6 +217,7 @@ NavigationPane
                         
                         onFileSelected : {
                             var result = selectedFiles[0];
+                            console.log("UserEvent: FolderSelected", result);
                             persist.saveValueFor("output", result, false);
                             
                             definition.source = "ProgressDialog.qml";
@@ -234,6 +241,7 @@ NavigationPane
                             imageSource: "images/menu/ic_export.png"
                             
                             onTriggered: {
+                                console.log("UserEvent: ExportTxtMultiTriggered");
                                 listView.doExport( listView.getAllSelected(), OutputFormat.TXT );
                             }
                         },
@@ -245,6 +253,7 @@ NavigationPane
                             imageSource: "images/menu/ic_export_csv.png"
                             
                             onTriggered: {
+                                console.log("UserEvent: ExportCsvMultiTriggered");
                                 listView.doExport( listView.getAllSelected(), OutputFormat.CSV );
                             }
                         }
@@ -275,6 +284,8 @@ NavigationPane
                     page.accountId = accountsDropDown.selectedValue;
                     page.contact = dataModel.data(indexPath);
                     navigationPane.push(page);
+                    
+                    console.log("UserEvent: ConversationTriggered");
                 }
             }
             
@@ -285,6 +296,7 @@ NavigationPane
                 labelText: qsTr("There are no messages found for that specific mailbox.") + Retranslate.onLanguageChanged
                 
                 onImageTapped: {
+                    console.log("UserEvent: EmptyConversationTapped");
                     accountsDropDown.expanded = true;
                 }
             }

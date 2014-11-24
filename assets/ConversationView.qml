@@ -63,6 +63,8 @@ Page
             title: qsTr("Select All") + Retranslate.onLanguageChanged
             
             onTriggered: {
+                console.log("UserEvent: SelectAllConversationTriggered");
+                
                 listView.selectAll();
             }
         },
@@ -74,6 +76,8 @@ Page
             enabled: false
 
             onTriggered: {
+                console.log("UserEvent: CopyConversationTriggered");
+                
                 var result = concatenate();
                 persist.copyToClipboard(result);
             }
@@ -85,6 +89,7 @@ Page
             ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement.Signature : ActionBarPlacement.OnBar
             
             onTriggered: {
+                console.log("UserEvent: SaveAllTriggered");
                 sld.show();
             }
             
@@ -101,6 +106,8 @@ Page
                     onFileSelected : {
                         var result = selectedFiles[0];
                         persist.saveValueFor("output", result, false);
+                        
+                        console.log("UserEvent: ConversationSelectFolderSelected", result);
                         
                         definition.source = "ProgressDialog.qml";
                         var progress = definition.createObject();
@@ -125,6 +132,8 @@ Page
             enabled: false
             
             onTriggered: {
+                console.log("UserEvent: ShareActionTriggered");
+                
                 persist.showBlockingToast( qsTr("Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.\n\nUse the Range Selector if the message gets truncated."), qsTr("OK") );
                 iai.data = persist.convertToUtf8( concatenate() );
             }
@@ -243,6 +252,7 @@ Page
 		    ]
 		    
 		    onTriggered: {
+                console.log("UserEvent: MessageTapped");
 		        toggleSelection(indexPath);
 		    }
 		
@@ -268,7 +278,9 @@ Page
             selectionMode: ListSelectionMode.Single
             
             onFinished: {
-                if (result == SystemUiResult.ConfirmButtonSelection)
+                console.log("UserEvent: OutputFormatChosen", value);
+                
+                if (value == SystemUiResult.ConfirmButtonSelection)
                 {
                     filePicker.format = selectedIndices[0];
                     filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
