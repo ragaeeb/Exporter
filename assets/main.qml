@@ -19,6 +19,10 @@ TabbedPane
         delegate: Delegate {
             source: "ExportPane.qml"
         }
+        
+        onTriggered: {
+            console.log("UserEvent: ExportTab");
+        }
     }
     
     Tab
@@ -29,6 +33,10 @@ TabbedPane
         
         delegate: Delegate {
             source: "PurchasePane.qml"
+        }
+        
+        onTriggered: {
+            console.log("UserEvent: PurchasePane");
         }
     }
 }

@@ -29,6 +29,7 @@ Page
             
             onFileSelected : {
                 var result = selectedFiles[0];
+                console.log("UserEvent: InvokedFileSelected", result);
                 app.saveTextData(result, data);
                 
                 persist.showBlockingToast( qsTr("Successfully saved file: %1").arg(result), qsTr("OK") );
