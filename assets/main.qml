@@ -7,6 +7,7 @@ TabbedPane
     
     Menu.definition: CanadaIncMenu
     {
+        labelColor: 'Signature' in ActionBarPlacement ? Color.Black : Color.White
         projectName: "exporter10"
     }
     
