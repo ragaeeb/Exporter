@@ -70,6 +70,8 @@ NavigationPane
                     else if ( persist.tutorial("tutorialSelectAll", qsTr("You can tap the Select All button at the bottom of the screen to quickly export all your conversations!"), "asset:///images/menu/selectAll.png" ) ) {}
                     else if ( persist.tutorial("tutorialDropDown", qsTr("Use the dropdown at the top to switch between your mailboxes."), "asset:///images/dropdown/ic_account.png" ) ) {}
                     else if ( persist.tutorial("tutorialSettings", qsTr("There are many customizations you can make to the way the messages are exported. You can do this from the Settings. To access the app settings, swipe-down from the top-bezel and choose 'Settings' from the application menu."), "file:///usr/share/icons/bb_action_install.png" ) ) {}
+                    else if ( persist.reviewed() ) {}
+                    else if ( reporter.performCII() ) {}
                 }
                 
                 onSelectedValueChanged: {
