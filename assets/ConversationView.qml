@@ -106,7 +106,7 @@ Page
                         var progress = definition.createObject();
                         progress.open();
                         
-                        app.exportSMS(contact.conversationId, accountId, OutputFormat.TXT);
+                        app.exportSMS(contact.conversationId, accountId, format);
                     }
                 }
             ]
