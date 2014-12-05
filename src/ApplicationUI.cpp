@@ -2,6 +2,7 @@
 
 #include "applicationui.hpp"
 #include "AccountImporter.h"
+#include "CardUtils.h"
 #include "ExporterCollector.h"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
@@ -22,7 +23,7 @@ using namespace bb::pim::message;
 using namespace canadainc;
 
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
-        QObject(app), m_cover("Cover.qml"), m_payment(&m_persistance)
+        QObject(app), m_cover("Cover.qml"), m_payment(&m_persistance), m_root(NULL)
 {
     INIT_SETTING(CARD_KEY, true);
     INIT_SETTING(UI_KEY, true);
@@ -45,60 +46,36 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 }
 
 
-QObject* ApplicationUI::initRoot(QString const& qmlSource)
+void ApplicationUI::initRoot(QString const& qmlSource)
 {
 	qmlRegisterType<bb::cascades::pickers::FilePicker>("bb.cascades.pickers", 1, 0, "FilePicker");
 	qmlRegisterUncreatableType<bb::cascades::pickers::FileType>("bb.cascades.pickers", 1, 0, "FileType", "Can't instantiate");
 	qmlRegisterUncreatableType<bb::cascades::pickers::FilePickerMode>("bb.cascades.pickers", 1, 0, "FilePickerMode", "Can't instantiate");
 	qmlRegisterUncreatableType<OutputFormat>("com.canadainc.data", 1, 0, "OutputFormat", "Can't instantiate");
-	qmlRegisterType<bb::device::DisplayInfo>("bb.device", 1, 0, "DisplayInfo");
 
-    QmlDocument *qml = QmlDocument::create( QString("asset:///%1").arg(qmlSource) ).parent(this);
-    qml->setContextProperty("app", this);
-    qml->setContextProperty("persist", &m_persistance);
-    qml->setContextProperty("payment", &m_payment);
+    QMap<QString, QObject*> context;
+    context.insert("payment", &m_payment);
 
-    AbstractPane* root = qml->createRootObject<AbstractPane>();
-    Application::instance()->setScene(root);
-
-	connect( this, SIGNAL( initialize() ), this, SLOT( init() ), Qt::QueuedConnection ); // async startup
-
-	emit initialize();
-
-	return root;
+    m_root = CardUtils::initAppropriate(qmlSource, context, this);
+    emit initialize();
 }
 
 
 void ApplicationUI::invoked(bb::system::InvokeRequest const& request)
 {
-	QObject* root = initRoot("InvokedPage.qml");
-	QString text;
+    QString target = request.target();
+    LOGGER( request.action() << target << request.mimeType() << request.metadata() << request.uri().toString() << QString( request.data() ) );
 
-	if ( request.uri().toString().startsWith("pim") )
-	{
-		QStringList tokens = request.uri().toString().split(":");
-	    LOGGER("INVOKED DATA" << tokens);
+    QMap<QString,QString> targetToQML;
+    QString qml = targetToQML.value(target);
 
-	    if ( tokens.size() > 3 ) {
-	    	qint64 accountId = tokens[2].toLongLong();
-	    	qint64 messageId = tokens[3].toLongLong();
+    if ( qml.isNull() ) {
+        qml = "InvokedPage.qml";
+    }
 
-	    	Message m = MessageService().message(accountId, messageId);
-	    	QString name = m.sender().displayableName().trimmed();
-	    	root->setProperty( "defaultName", QString("%1.txt").arg(name) );
+    initRoot(qml);
 
-	        QString timeFormat = ExportSMS::getTimeFormat( m_persistance.getValueFor("timeFormat").toInt() );
-	        QDateTime t = m_persistance.getValueFor("serverTimestamp").toInt() == 1 ? m.serverTimestamp() : m.deviceTimestamp();
-
-	    	text = tr("%1\r\n\r\n%2: %3").arg( m.sender().address() ).arg( timeFormat.isEmpty() ? "" : t.toString(timeFormat) ).arg( PimUtil::extractText(m) );
-	    }
-	} else {
-		text = QString::fromUtf8( request.data().data() );
-	}
-
-	root->setProperty("data", text);
-
-	connect( root, SIGNAL( finished() ), this, SLOT( cardFinished() ) );
+    m_request = request;
 }
 
 
@@ -107,7 +84,7 @@ void ApplicationUI::cardFinished() {
 }
 
 
-void ApplicationUI::init()
+void ApplicationUI::lazyInit()
 {
 	INIT_SETTING( "userName", tr("You") );
 	INIT_SETTING("timeFormat", 0);
@@ -127,6 +104,7 @@ void ApplicationUI::init()
 		m_persistance.saveValueFor("output", sdDirectory, false);
 	}
 
+	/*
 	bool permissionOK = PimUtil::validateEmailSMSAccess( tr("Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
 
 	if (permissionOK)
@@ -136,7 +114,43 @@ void ApplicationUI::init()
 		if (permissionOK) {
 			PimUtil::validateContactsAccess( tr("Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
 		}
-	}
+	} */
+
+    QString target = m_request.target();
+
+    if ( !target.isNull() )
+    {
+        QString text;
+        QString uri = m_request.uri().toString();
+
+        if ( uri.startsWith("pim") )
+        {
+            QStringList tokens = uri.split(":");
+            LOGGER("INVOKED DATA" << tokens);
+
+            if ( tokens.size() > 3 ) {
+                qint64 accountId = tokens[2].toLongLong();
+                qint64 messageId = tokens[3].toLongLong();
+
+                Message m = MessageService().message(accountId, messageId);
+                QString name = m.sender().displayableName().trimmed();
+                m_root->setProperty( "defaultName", QString("%1.txt").arg(name) );
+
+                QString timeFormat = ExportSMS::getTimeFormat( m_persistance.getValueFor("timeFormat").toInt() );
+                QDateTime t = m_persistance.getValueFor("serverTimestamp").toInt() == 1 ? m.serverTimestamp() : m.deviceTimestamp();
+
+                text = tr("%1\r\n\r\n%2: %3").arg( m.sender().address() ).arg( timeFormat.isEmpty() ? "" : t.toString(timeFormat) ).arg( PimUtil::extractText(m) );
+            }
+        } else {
+            text = QString::fromUtf8( m_request.data().data() );
+        }
+
+        m_root->setProperty("data", text);
+
+        connect( m_root, SIGNAL( finished() ), this, SLOT( cardFinished() ) );
+    }
+
+	emit lazyInitComplete();
 }
 
 

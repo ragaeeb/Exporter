@@ -7,8 +7,6 @@
 
 #include <bb/system/InvokeManager>
 
-class QRunnable;
-
 namespace bb {
 	namespace cascades {
 		class Application;
@@ -29,9 +27,11 @@ class ApplicationUI : public QObject
     Persistance m_persistance;
     LazySceneCover m_cover;
     PaymentHelper m_payment;
+    QObject* m_root;
+    bb::system::InvokeRequest m_request;
 
     ApplicationUI(bb::cascades::Application *app);
-    QObject* initRoot(QString const& qml="main.qml");
+    void initRoot(QString const& qml="main.qml");
 
 Q_SIGNALS:
 	void initialize();
@@ -39,10 +39,11 @@ Q_SIGNALS:
 	void messagesImported(QVariantList const& qvl);
 	void conversationsImported(QVariantList const& qvl);
 	void loadProgress(int current, int total, QString const& status);
+	void lazyInitComplete();
 
 private slots:
     void onExportCompleted();
-    void init();
+    void lazyInit();
     void invoked(bb::system::InvokeRequest const& request);
     void cardFinished();
     void onMessageLoadProgress(int current, int total);
