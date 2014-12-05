@@ -231,7 +231,9 @@ NavigationPane
                     }
                 ]
                 
-                multiSelectAction: MultiSelectActionItem {}
+                multiSelectAction: MultiSelectActionItem {
+                    imageSource: "images/menu/ic_select_more.png"
+                }
                 
                 multiSelectHandler {
                     
