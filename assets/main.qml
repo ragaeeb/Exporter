@@ -9,6 +9,10 @@ TabbedPane
     {
         labelColor: 'Signature' in ActionBarPlacement ? Color.Black : Color.White
         projectName: "exporter10"
+        help.imageSource: "images/menu/ic_help.png"
+        help.title: qsTr("Help") + Retranslate.onLanguageChanged
+        settings.imageSource: "images/menu/ic_settings.png"
+        settings.title: qsTr("Settings") + Retranslate.onLanguageChanged
     }
     
     Tab {
