@@ -95,13 +95,15 @@ void ApplicationUI::lazyInit()
 
 	if ( m_persistance.getValueFor("output").isNull() ) // first run
 	{
-		QString sdDirectory("/accounts/1000/removable/sdcard/documents");
+	    QStringList availableFolders = QStringList() << "/accounts/1000/removable/sdcard/documents" << "/accounts/1000/shared/documents";
 
-		if ( !QDir(sdDirectory).exists() ) {
-			sdDirectory = "/accounts/1000/shared/documents";
-		}
-
-		m_persistance.saveValueFor("output", sdDirectory, false);
+	    foreach (QString const& folder, availableFolders)
+	    {
+	        if ( QDir(folder).exists() ) {
+	            m_persistance.saveValueFor("output", folder, false);
+	            break;
+	        }
+	    }
 	}
 
 	/*
