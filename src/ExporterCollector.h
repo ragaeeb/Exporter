@@ -13,7 +13,6 @@ class ExporterCollector : public LogCollector
 {
 public:
     ExporterCollector();
-    QString appName() const;
     QByteArray compressFiles();
     ~ExporterCollector();
 };

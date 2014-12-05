@@ -12,11 +12,6 @@ ExporterCollector::ExporterCollector()
 }
 
 
-QString ExporterCollector::appName() const {
-    return "exporter";
-}
-
-
 QByteArray ExporterCollector::compressFiles()
 {
     AppLogFetcher::dumpDeviceInfo();
