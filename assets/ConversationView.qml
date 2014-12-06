@@ -72,7 +72,7 @@ Page
         ActionItem {
             id: copyAction
             title: qsTr("Copy") + Retranslate.onLanguageChanged
-            imageSource: "images/ic_copy.png"
+            imageSource: "images/menu/ic_copy.png"
             enabled: false
 
             onTriggered: {
