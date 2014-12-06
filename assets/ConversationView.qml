@@ -301,9 +301,25 @@ Page
             tb.title = qsTr("No messages found") + Retranslate.onLanguageChanged
         }
         
-        if ( persist.tutorial("tutorialRange", qsTr("You can select only the messages that you want to export by tapping on them so they are highlighted (the dimmed ones will be skipped). You can also use the 'Select Range' feature from the menu to pick start and end points. Once you have your selection you can choose 'Share' and pick Exporter from the Share menu."), "asset:///images/menu/ic_range.png" ) ) {}
-        else if ( persist.tutorial("tutorialSaveAll", qsTr("To the Save All action at the bottom to save all the messages in one shot!"), "asset:///images/menu/ic_save.png" ) ) {}
-        else if ( persist.tutorial("tutorialCopy", qsTr("You can easily copy only certain converastions and messages and share them with your contacts! Simply select the appropriate bubbles by tapping on them, and then either choose 'Share' to share socially, or choose the 'Copy' action from the menu to copy it to your clipboard so you can paste it."), "asset:///images/menu/ic_copy.png" ) ) {}
+        var tutorialText = "";
+        var icon = ""
+        var title = qsTr("Tip!");
+        
+        if ( !persist.contains("tutorialRange") ) {
+            icon = "images/menu/ic_range.png";
+            tutorialText = qsTr("You can select only the messages that you want to export by tapping on them so they are highlighted (the dimmed ones will be skipped). You can also use the 'Select Range' feature from the menu to pick start and end points. Once you have your selection you can choose 'Share' and pick Exporter from the Share menu.");
+            persist.saveValueFor("tutorialRange", 1, false);
+        } else if ( !persist.contains("tutorialSaveAll") ) {
+            tutorialText = qsTr("To save this entire conversation, use the Save All action at the bottom to save all the messages in one shot!");
+            icon = "images/menu/ic_save.png";
+            persist.saveValueFor("tutorialSaveAll", 1, false);
+        } else if ( !persist.contains("tutorialCopy") ) {
+            tutorialText = qsTr("You can easily copy only certain converastions and messages and share them with your contacts! Simply select the appropriate bubbles by tapping on them, and then either choose 'Share' to share socially, or choose the 'Copy' action from the menu to copy it to your clipboard so you can paste it.");
+            icon = "images/menu/ic_copy.png";
+            persist.saveValueFor("tutorialCopy", 1, false);
+        }
+        
+        tutorialToast.init(tutorialText, icon, title);
     }
     
     onCreationCompleted: {

@@ -174,4 +174,22 @@ Page
 	        }
 	    }
     }
+    
+    onCreationCompleted: {
+        var tutorialText = "";
+        var icon = ""
+        var title = qsTr("Tip!");
+        
+        if ( !persist.contains("tutorialDuplicate") ) {
+            icon = "images/dropdown/ic_append.png";
+            tutorialText = qsTr("You can control what Exporter does when it notices an existing conversation with the conversation that is being exported by setting the 'Duplicate File Behavior' dropdown.");
+            persist.saveValueFor("tutorialDuplicate", 1, false);
+        } else if ( !persist.contains("tutorialUserName") ) {
+            tutorialText = qsTr("You can control how your name appears on all outgoing messages by modifying the 'Your name shows up as:' text field.");
+            icon = "images/ic_user.png";
+            persist.saveValueFor("tutorialUserName", 1, false);
+        }
+        
+        tutorialToast.init(tutorialText, icon, title);
+    }
 }
