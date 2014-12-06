@@ -63,6 +63,7 @@ NavigationPane
                     id: accountsDropDown
                     selectedAccountId: persist.contains("accountId") ? persist.getValueFor("accountId") : 23
                     bottomMargin: 0
+                    immediate: false
                     
                     onAccountsLoaded: {
                         var tutorialText = "";
