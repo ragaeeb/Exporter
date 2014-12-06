@@ -65,18 +65,44 @@ NavigationPane
                     bottomMargin: 0
                     
                     onAccountsLoaded: {
+                        var tutorialText = "";
+                        var icon = ""
+                        var title = qsTr("Tip!");
+                        
                         if (numAccounts == 0) {
-                            persist.showToast( qsTr("No accounts found. Are you sure you gave the app the permissions it needs?"), qsTr("OK"), "asset:///images/dropdown/ic_account.png" );
+                            icon = "images/dropdown/ic_account.png";
+                            tutorialText = qsTr("No accounts found. Are you sure you gave the app the permissions it needs?");
+                            title = qsTr("Warning!");
+                        } else if ( persist.tutorialVideo("http://youtu.be/_sSZJPBwlnc") ) {
+                        } else if ( !persist.contains("tutorialExportTxt") ) {
+                            icon = "images/menu/ic_export.png";
+                            tutorialText = qsTr("These are a list of all the conversations, press-and-hold on one and from the menu choose 'Select More' and then 'Export TXT' to save it. You can also tap on the conversation itself and save only parts of it if you wish.");
+                            persist.saveValueFor("tutorialExportTxt", 1, false);
+                        } else if ( !persist.contains("tutorialHelp") ) {
+                            tutorialText = qsTr("To get more help, swipe-down from the top-bezel and choose the 'Help' action.");
+                            icon = "images/menu/ic_help.png";
+                            persist.saveValueFor("tutorialHelp", 1, false);
+                        } else if ( !persist.contains("tutorialSettings") ) {
+                            tutorialText = qsTr("There are many customizations you can make to the way the messages are exported. You can do this from the Settings. To access the app settings, swipe-down from the top-bezel and choose 'Settings' from the application menu.");
+                            icon = "images/menu/ic_settings.png";
+                            persist.saveValueFor("tutorialSettings", 1, false);
+                        } else if ( !persist.contains("tutorialBugReports") ) {
+                            tutorialText = qsTr("If you notice any bugs in the app that you want to report or you want to file a feature request, swipe-down from the top-bezel and choose the 'Bug Reports' action.");
+                            icon = "images/ic_bugs.png";
+                            persist.saveValueFor("tutorialBugReports", 1, false);
+                        } else if ( !persist.contains("tutorialSelectAll") ) {
+                            tutorialText = qsTr("You can tap the Select All button at the bottom of the screen to quickly export all your conversations!");
+                            icon = "images/menu/selectAll.png";
+                            persist.saveValueFor("tutorialSelectAll", 1, false);
+                        } else if ( !persist.contains("tutorialDropDown") ) {
+                            tutorialText = qsTr("Use the dropdown at the top to switch between your mailboxes.");
+                            icon = "images/dropdown/ic_account.png";
+                            persist.saveValueFor("tutorialDropDown", 1, false);
+                        } else if ( persist.reviewed() ) {
+                        } else if ( reporter.performCII() ) {
                         }
                         
-                        else if ( persist.tutorialVideo("http://youtu.be/_sSZJPBwlnc") ) {}
-                        else if ( persist.tutorial("tutorialExportTxt", qsTr("These are a list of all the conversations, press-and-hold on one and from the menu choose 'Select More' and then 'Export TXT' to save it. You can also tap on the conversation itself and save only parts of it if you wish."), "asset:///images/menu/ic_export.png" ) ) {}
-                        else if ( persist.tutorial("tutorialExportTxt", qsTr("These are a list of all the conversations, press-and-hold on one and from the menu choose 'Select More' and then 'Export TXT' to save it. You can also tap on the conversation itself and save only parts of it if you wish."), "asset:///images/menu/ic_export.png" ) ) {}
-                        else if ( persist.tutorial("tutorialSelectAll", qsTr("You can tap the Select All button at the bottom of the screen to quickly export all your conversations!"), "asset:///images/menu/selectAll.png" ) ) {}
-                        else if ( persist.tutorial("tutorialDropDown", qsTr("Use the dropdown at the top to switch between your mailboxes."), "asset:///images/dropdown/ic_account.png" ) ) {}
-                        else if ( persist.tutorial("tutorialSettings", qsTr("There are many customizations you can make to the way the messages are exported. You can do this from the Settings. To access the app settings, swipe-down from the top-bezel and choose 'Settings' from the application menu."), "file:///usr/share/icons/bb_action_install.png" ) ) {}
-                        else if ( persist.reviewed() ) {}
-                        else if ( reporter.performCII() ) {}
+                        tutorialToast.init(tutorialText, icon, title);
                     }
                     
                     onSelectedValueChanged: {

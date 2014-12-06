@@ -140,6 +140,10 @@ void ApplicationUI::lazyInit()
         connect( m_root, SIGNAL( finished() ), this, SLOT( cardFinished() ) );
     }
 
+    QmlDocument* qml = QmlDocument::create("asset:///NotificationToast.qml").parent(this);
+    QObject* toast = qml->createRootObject<QObject>();
+    QmlDocument::defaultDeclarativeEngine()->rootContext()->setContextProperty("tutorialToast", toast);
+
 	emit lazyInitComplete();
 }
 
