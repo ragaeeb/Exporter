@@ -93,7 +93,7 @@ void ApplicationUI::lazyInit()
 	INIT_SETTING("latestFirst", 1);
 	INIT_SETTING("serverTimestamp", 1);
 
-	if ( m_persistance.getValueFor("output").isNull() ) // first run
+	if ( !m_persistance.contains("output") ) // first run
 	{
 	    QStringList availableFolders = QStringList() << "/accounts/1000/removable/sdcard/documents" << "/accounts/1000/shared/documents";
 
@@ -105,18 +105,6 @@ void ApplicationUI::lazyInit()
 	        }
 	    }
 	}
-
-	/*
-	bool permissionOK = PimUtil::validateEmailSMSAccess( tr("Warning: It seems like the app does not have access to your Email/SMS messages Folder. This permission is needed for the app to access the SMS and email services it needs to render and process them so they can be saved. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
-
-	if (permissionOK)
-	{
-		permissionOK = InvocationUtils::validateSharedFolderAccess( tr("Warning: It seems like the app does not have access to your Shared Folder. This permission is needed for the app to access the file system so that it can save the text messages as files. If you leave this permission off, some features may not work properly.") );
-
-		if (permissionOK) {
-			PimUtil::validateContactsAccess( tr("Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.") );
-		}
-	} */
 
     QString target = m_request.target();
 
@@ -224,6 +212,11 @@ void ApplicationUI::loadAccounts()
 	AccountImporter* ai = new AccountImporter();
 	connect( ai, SIGNAL( importCompleted(QVariantList const&) ), this, SIGNAL( accountsImported(QVariantList const&) ) );
 	IOUtils::startThread(ai);
+}
+
+
+bool ApplicationUI::hasContactsAccess() {
+    return PimUtil::hasContactsAccess();
 }
 
 
