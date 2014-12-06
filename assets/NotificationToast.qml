@@ -71,7 +71,7 @@ Delegate
                         
                         Label {
                             id: tipLabel
-                            text: "Tip!"
+                            text: titleText
                             textStyle.fontSize: FontSize.XXSmall
                             textStyle.fontWeight: FontWeight.Bold
                             verticalAlignment: VerticalAlignment.Top

@@ -26,7 +26,7 @@ NavigationPane
             ActionItem {
                 id: selectAllAction
                 imageSource: "images/menu/selectAll.png"
-                ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement.Signature : ActionBarPlacement.OnBar
+                ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
                 title: qsTr("Select All") + Retranslate.onLanguageChanged
                 enabled: false
                 
