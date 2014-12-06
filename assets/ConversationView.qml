@@ -86,7 +86,7 @@ Page
         ActionItem {
             title: qsTr("Save All") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_save.png"
-            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement.Signature : ActionBarPlacement.OnBar
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
             onTriggered: {
                 console.log("UserEvent: SaveAllTriggered");
