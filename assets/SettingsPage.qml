@@ -157,9 +157,14 @@ Page
                     console.log("UserEvent: UseServerTimestampEnabled", checked);
                 }
             }
+            
+            ImageView {
+                topMargin: 40
+                imageSource: "images/divider.png"
+                horizontalAlignment: HorizontalAlignment.Center
+            }
 
             Label {
-	            topMargin: 40
 	            id: infoText
 	            multiline: true
 	            textStyle.fontSize: FontSize.XXSmall
