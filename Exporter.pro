@@ -3,7 +3,7 @@ APP_NAME = Exporter
 INCLUDEPATH += ../../canadainc/src/
 INCLUDEPATH += ../../quazip/src/
 CONFIG += qt warn_on cascades10
-LIBS += -lbbpim -lbbsystem -lbbcascadespickers -lbb -lbbplatform -lbbdevice
+LIBS += -lbbpim -lbbsystem -lbb -lbbplatform -lbbdevice
 QT += network
 
 CONFIG(release, debug|release) {

@@ -35,7 +35,7 @@
     <!-- A string value of the format <0-999>.<0-999>.<0-999> that represents application version which can be used to check for application upgrade. 
          Values can also be 1-part or 2-part. It is not necessary to have a 3-part value.
          An updated version of application must have a versionNumber value higher than the previous version. Required. -->
-    <versionNumber>2.8.0</versionNumber>
+    <versionNumber>3.0.0</versionNumber>
 
     <!-- Fourth digit segment of the package version. First three segments are taken from the 
          <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
@@ -63,7 +63,6 @@
     <initialWindow>
         <autoOrients>true</autoOrients>
         <systemChrome>none</systemChrome>
-        <transparent>false</transparent>
     </initialWindow>
     
     <!--  The category where the application appears. Either core.games or core.media. -->
@@ -95,12 +94,12 @@
     </asset>
     <asset path="splash_n.png">splash_n.png</asset>
     
-    <asset path="../canadainc/assets/AboutTitleBar.qml">assets/AboutTitleBar.qml</asset>
     <asset path="../canadainc/assets/AccountsDropDown.qml">assets/AccountsDropDown.qml</asset>
     <asset path="../canadainc/assets/BugReportPage.qml">assets/BugReportPage.qml</asset>
     <asset path="../canadainc/assets/CanadaIncMenu.qml">assets/CanadaIncMenu.qml</asset>
     <asset path="../canadainc/assets/EmptyDelegate.qml">assets/EmptyDelegate.qml</asset>
     <asset path="../canadainc/assets/FullScreenDialog.qml">assets/FullScreenDialog.qml</asset>
+    <asset path="../canadainc/assets/HelpPage.qml">assets/HelpPage.qml</asset>
     <asset path="../canadainc/assets/PermissionToast.qml">assets/PermissionToast.qml</asset>
     <asset path="../canadainc/assets/PersistCheckBox.qml">assets/PersistCheckBox.qml</asset>
     <asset path="../canadainc/assets/PersistDropDown.qml">assets/PersistDropDown.qml</asset>

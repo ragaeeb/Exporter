@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "ExportSMS.h"
+#include "CommonConstants.h"
 #include "IOUtils.h"
 #include "Logger.h"
 #include "PimUtil.h"
@@ -41,7 +42,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
     deviceTime = m_settings.value("serverTimestamp").toInt() != 1;
     latestFirst = m_settings.value("latestFirst").toInt() == 1;
     QString userName = m_settings.value("userName").toString();
-    QString timeFormat = getTimeFormat( m_settings.value("timeFormat").toInt() );
+    QString timeFormat = CommonConstants::getTimeFormat( m_settings.value("timeFormat").toInt() );
     bool supportMMS = m_settings.contains("exporter_mms");
     QString status = tr("Preparing...");
 
@@ -212,28 +213,6 @@ void ExportSMS::run()
 
     emit loadProgress(n,n,status);
     emit exportCompleted();
-}
-
-
-QString ExportSMS::getTimeFormat(int tf)
-{
-    QString timeFormat = QObject::tr("MMM d/yy hh:mm:ss");
-
-    switch (tf)
-    {
-        case 1:
-            timeFormat = QObject::tr("hh:mm:ss");
-            break;
-
-        case 2:
-            timeFormat = "";
-            break;
-
-        default:
-            break;
-    }
-
-    return timeFormat;
 }
 
 
