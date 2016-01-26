@@ -7,12 +7,15 @@ TabbedPane
     
     Menu.definition: CanadaIncMenu
     {
-        labelColor: 'Signature' in ActionBarPlacement ? Color.Black : Color.White
-        projectName: "exporter10"
-        help.imageSource: "images/menu/ic_help.png"
-        help.title: qsTr("Help") + Retranslate.onLanguageChanged
-        settings.imageSource: "images/menu/ic_settings.png"
-        settings.title: qsTr("Settings") + Retranslate.onLanguageChanged
+        bbWorldID: "22552876"
+        helpPageQml: "ExporterHelp.qml"
+        projectName: "exporter"
+        
+        onFinished: {
+            if (clean) {
+                tutorial.execAppMenu();
+            }
+        }
     }
     
     Tab {
@@ -34,7 +37,7 @@ TabbedPane
     {
         title: qsTr("Purchase") + Retranslate.onLanguageChanged
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
-        imageSource: "images/menu/ic_purchase.png"
+        imageSource: "images/tabs/ic_purchase.png"
         
         delegate: Delegate {
             source: "PurchasePane.qml"

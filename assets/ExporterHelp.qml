@@ -1,44 +1,13 @@
 import bb.cascades 1.0
 
-Page
+HelpPage
 {
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-
-    titleBar: AboutTitleBar {
-        id: atb
-        labelColor: 'Signature' in ActionBarPlacement ? Color.Black : Color.White
-    }
-    
-    actions: [
-        ActionItem
-        {
-            imageSource: "file:///usr/share/icons/bb_action_openbbmchannel.png"
-            title: atb.channelTitle
-            ActionBar.placement: ActionBarPlacement.OnBar
-            
-            onTriggered: {
-                console.log("UserEvent: OpenChannelTriggered");
-                persist.openChannel();
-            }
-        },
-        
-        ActionItem
-        {
-            imageSource: "images/menu/ic_tutorial.png"
-            title: qsTr("Video Tutorial") + Retranslate.onLanguageChanged
-            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
-            
-            onTriggered: {
-                console.log("UserEvent: VideoTutorialTriggered");
-                persist.tutorialVideo("http://youtu.be/_sSZJPBwlnc", false);
-            }
-        }
-    ]
+    videoTutorialUri: "http://youtu.be/_sSZJPBwlnc"
 
     Container
     {
         leftPadding: 10; rightPadding: 10
-
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
 

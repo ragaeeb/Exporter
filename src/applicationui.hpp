@@ -1,11 +1,10 @@
 #ifndef ApplicationUI_HPP_
 #define ApplicationUI_HPP_
 
+#include "InvokeHelper.h"
 #include "LazySceneCover.h"
 #include "PaymentHelper.h"
 #include "Persistance.h"
-
-#include <bb/system/InvokeManager>
 
 namespace bb {
 	namespace cascades {
@@ -23,14 +22,11 @@ class ApplicationUI : public QObject
 {
     Q_OBJECT
 
-    bb::system::InvokeManager m_invokeManager;
     Persistance m_persistance;
     LazySceneCover m_cover;
     PaymentHelper m_payment;
-    QObject* m_root;
-    bb::system::InvokeRequest m_request;
+    InvokeHelper m_invoke;
 
-    ApplicationUI(bb::cascades::Application *app);
     void initRoot(QString const& qml="main.qml");
 
 Q_SIGNALS:
@@ -49,7 +45,7 @@ private slots:
     void onMessageLoadProgress(int current, int total);
 
 public:
-    static void create(bb::cascades::Application *app);
+    ApplicationUI(InvokeManager* i);
     ~ApplicationUI();
 
     Q_INVOKABLE void loadAccounts();

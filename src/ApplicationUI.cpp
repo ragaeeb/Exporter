@@ -3,13 +3,11 @@
 #include "applicationui.hpp"
 #include "AccountImporter.h"
 #include "CardUtils.h"
-#include "ExporterCollector.h"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
 #include "InvocationUtils.h"
 #include "IOUtils.h"
 #include "Logger.h"
-#include "LogMonitor.h"
 #include "MessageImporter.h"
 #include "PimUtil.h"
 
@@ -22,65 +20,41 @@ using namespace bb::system;
 using namespace bb::pim::message;
 using namespace canadainc;
 
-ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
-        QObject(app), m_cover("Cover.qml"), m_payment(&m_persistance), m_root(NULL)
+ApplicationUI::ApplicationUI(InvokeManager* i) :
+        m_persistance(i),
+        m_cover( i->startupMode() != ApplicationStartupMode::InvokeCard, this ),
+        m_payment(&m_persistance), m_invoke(i, &m_persistance)
 {
-    INIT_SETTING(CARD_KEY, true);
-    INIT_SETTING(UI_KEY, true);
+    switch ( i->startupMode() )
+    {
+        case ApplicationStartupMode::LaunchApplication:
+            initRoot();
+            break;
 
-    AppLogFetcher::create( &m_persistance, new ExporterCollector(), this );
+        case ApplicationStartupMode::InvokeCard:
+        case ApplicationStartupMode::InvokeApplication:
+            connect( i, SIGNAL( invoked(bb::system::InvokeRequest const&) ), this, SLOT( invoked(bb::system::InvokeRequest const&) ) );
+            break;
 
-	switch ( m_invokeManager.startupMode() )
-	{
-	case ApplicationStartupMode::InvokeCard:
-	case ApplicationStartupMode::InvokeApplication:
-	    LogMonitor::create(CARD_KEY, CARD_LOG_FILE, this);
-		connect( &m_invokeManager, SIGNAL( invoked(bb::system::InvokeRequest const&) ), this, SLOT( invoked(bb::system::InvokeRequest const&) ) );
-		break;
-
-	default:
-	    LogMonitor::create(UI_KEY, UI_LOG_FILE, this);
-        initRoot();
-	    break;
-	}
+        default:
+            break;
+    }
 }
 
 
 void ApplicationUI::initRoot(QString const& qmlSource)
 {
-	qmlRegisterType<bb::cascades::pickers::FilePicker>("bb.cascades.pickers", 1, 0, "FilePicker");
-	qmlRegisterUncreatableType<bb::cascades::pickers::FileType>("bb.cascades.pickers", 1, 0, "FileType", "Can't instantiate");
-	qmlRegisterUncreatableType<bb::cascades::pickers::FilePickerMode>("bb.cascades.pickers", 1, 0, "FilePickerMode", "Can't instantiate");
-	qmlRegisterUncreatableType<OutputFormat>("com.canadainc.data", 1, 0, "OutputFormat", "Can't instantiate");
-
     QMap<QString, QObject*> context;
     context.insert("payment", &m_payment);
 
-    m_root = CardUtils::initAppropriate(qmlSource, context, this);
+    m_invoke.init(qmlSource, context, this);
+
     emit initialize();
 }
 
 
-void ApplicationUI::invoked(bb::system::InvokeRequest const& request)
-{
-    QString target = request.target();
-    LOGGER( request.action() << target << request.mimeType() << request.metadata() << request.uri().toString() << QString( request.data() ) );
-
-    QMap<QString,QString> targetToQML;
-    QString qml = targetToQML.value(target);
-
-    if ( qml.isNull() ) {
-        qml = "InvokedPage.qml";
-    }
-
-    initRoot(qml);
-
-    m_request = request;
-}
-
-
-void ApplicationUI::cardFinished() {
-	m_invokeManager.sendCardDone( CardDoneMessage() );
+void ApplicationUI::invoked(bb::system::InvokeRequest const& request) {
+    initRoot( m_invoke.invoked(request) );
 }
 
 
@@ -106,50 +80,9 @@ void ApplicationUI::lazyInit()
 	    }
 	}
 
-    QString target = m_request.target();
-
-    if ( !target.isNull() )
-    {
-        QString text;
-        QString uri = m_request.uri().toString();
-
-        if ( uri.startsWith("pim") )
-        {
-            QStringList tokens = uri.split(":");
-            LOGGER("INVOKED DATA" << tokens);
-
-            if ( tokens.size() > 3 ) {
-                qint64 accountId = tokens[2].toLongLong();
-                qint64 messageId = tokens[3].toLongLong();
-
-                Message m = MessageService().message(accountId, messageId);
-                QString name = m.sender().displayableName().trimmed();
-                m_root->setProperty( "defaultName", QString("%1.txt").arg(name) );
-
-                QString timeFormat = ExportSMS::getTimeFormat( m_persistance.getValueFor("timeFormat").toInt() );
-                QDateTime t = m_persistance.getValueFor("serverTimestamp").toInt() == 1 ? m.serverTimestamp() : m.deviceTimestamp();
-
-                text = tr("%1\r\n\r\n%2: %3").arg( m.sender().address() ).arg( timeFormat.isEmpty() ? "" : t.toString(timeFormat) ).arg( PimUtil::extractText(m) );
-            }
-        } else {
-            text = QString::fromUtf8( m_request.data().data() );
-        }
-
-        m_root->setProperty("data", text);
-
-        connect( m_root, SIGNAL( finished() ), this, SLOT( cardFinished() ) );
-    }
-
-    QmlDocument* qml = QmlDocument::create("asset:///NotificationToast.qml").parent(this);
-    QObject* toast = qml->createRootObject<QObject>();
-    QmlDocument::defaultDeclarativeEngine()->rootContext()->setContextProperty("tutorialToast", toast);
+	m_invoke.lazyInit();
 
 	emit lazyInitComplete();
-}
-
-
-void ApplicationUI::create(bb::cascades::Application *app) {
-	new ApplicationUI(app);
 }
 
 
@@ -187,7 +120,7 @@ void ApplicationUI::onMessageLoadProgress(int current, int total) {
 
 
 void ApplicationUI::onExportCompleted() {
-	m_persistance.showToast( tr("Export complete"), "", "asset:///images/menu/ic_export.png" );
+	m_persistance.showToast( tr("Export complete"), "images/menu/ic_export.png" );
 }
 
 
