@@ -85,10 +85,9 @@ void InvokeHelper::process()
                 QString name = m.sender().displayableName().trimmed();
                 m_root->setProperty( "defaultName", QString("%1.txt").arg(name) );
 
-                QString timeFormat = CommonConstants::getTimeFormat( m_persist->getValueFor("timeFormat").toInt() );
                 QDateTime t = m_persist->getValueFor("serverTimestamp").toInt() == 1 ? m.serverTimestamp() : m.deviceTimestamp();
 
-                text = tr("%1\r\n\r\n%2: %3").arg( m.sender().address() ).arg( timeFormat.isEmpty() ? "" : t.toString(timeFormat) ).arg( PimUtil::extractText(m) );
+                text = tr("%1\r\n\r\n%2: %3").arg( m.sender().address() ).arg( t.toString("MMM d/yy hh:mm:ss") ).arg( PimUtil::extractText(m) );
             }
         } else {
             text = QString::fromUtf8( m_request.data().data() );
