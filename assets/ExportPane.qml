@@ -55,12 +55,17 @@ NavigationPane
             verticalAlignment: VerticalAlignment.Fill
             layout: DockLayout {}
             
-            attachedObjects: [
-                ImagePaintDefinition {
-                    id: back
-                    imageSource: "images/background.amd"
+            EmptyDelegate
+            {
+                id: emptyDelegate
+                graphic: "images/placeholders/empty_conversations.png"
+                labelText: qsTr("There are no messages found for that specific mailbox.") + Retranslate.onLanguageChanged
+                
+                onImageTapped: {
+                    console.log("UserEvent: EmptyConversationTapped");
+                    accountsDropDown.expanded = true;
                 }
-            ]
+            }
             
             Container
             {
@@ -295,18 +300,6 @@ NavigationPane
                 }
             }
             
-            EmptyDelegate
-            {
-                id: emptyDelegate
-                graphic: "images/placeholders/empty_conversations.png"
-                labelText: qsTr("There are no messages found for that specific mailbox.") + Retranslate.onLanguageChanged
-                
-                onImageTapped: {
-                    console.log("UserEvent: EmptyConversationTapped");
-                    accountsDropDown.expanded = true;
-                }
-            }
-            
             PermissionToast
             {
                 id: tm
@@ -371,6 +364,11 @@ NavigationPane
                 
                 app.exportSMS(conversationIds, accountsDropDown.selectedValue, format);
             }
+        },
+        
+        ImagePaintDefinition {
+            id: back
+            imageSource: "images/background.amd"
         }
     ]
 }
