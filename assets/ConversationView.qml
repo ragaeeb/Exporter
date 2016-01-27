@@ -14,6 +14,11 @@ Page
         id: tb
     }
     
+    function cleanUp() {
+        app.messagesImported.disconnect(onMessagesImported);
+        persist.settingChanged.disconnect(onSettingChanged);
+    }
+    
     onContactChanged:
     {
         userName = persist.getValueFor("userName");

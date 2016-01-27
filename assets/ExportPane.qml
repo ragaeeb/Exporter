@@ -6,14 +6,21 @@ NavigationPane
 {
     id: navigationPane
     
-    attachedObjects: [
-        ComponentDefinition {
-            id: definition
-        }
-    ]
-    
     onPopTransitionEnded: {
-        page.destroy();
+        deviceUtils.cleanUpAndDestroy(page);
+    }
+    
+    function onTutorialStarted(key)
+    {
+        if (key == "dropDown") {
+            accountsDropDown.expanded = true;
+        }
+    }
+    
+    function initialize()
+    {
+        tm.onReady();
+        tutorial.tutorialStarted.connect(onTutorialStarted);
     }
     
     Page
@@ -70,39 +77,18 @@ NavigationPane
                         var icon = ""
                         var title = qsTr("Tip!");
                         
-                        if (numAccounts == 0) {
+                        if (numAccounts == 0)
+                        {
                             icon = "images/dropdown/ic_account.png";
                             tutorialText = qsTr("No accounts found. Are you sure you gave the app the permissions it needs?");
                             title = qsTr("Warning!");
-                        } else if ( !persist.contains("tutorialExportTxt") ) {
-                            icon = "images/menu/ic_export.png";
-                            tutorialText = qsTr("These are a list of all the conversations, press-and-hold on one and from the menu choose 'Select More' and then 'Export TXT' to save it. You can also tap on the conversation itself and save only parts of it if you wish.");
-                            persist.saveValueFor("tutorialExportTxt", 1, false);
-                        } else if ( !persist.contains("tutorialHelp") ) {
-                            tutorialText = qsTr("To get more help, swipe-down from the top-bezel and choose the 'Help' action.");
-                            icon = "images/menu/ic_help.png";
-                            persist.saveValueFor("tutorialHelp", 1, false);
-                        } else if ( !persist.contains("tutorialSettings") ) {
-                            tutorialText = qsTr("There are many customizations you can make to the way the messages are exported. You can do this from the Settings. To access the app settings, swipe-down from the top-bezel and choose 'Settings' from the application menu.");
-                            icon = "images/menu/ic_settings.png";
-                            persist.saveValueFor("tutorialSettings", 1, false);
-                        } else if ( !persist.contains("tutorialBugReports") ) {
-                            tutorialText = qsTr("If you notice any bugs in the app that you want to report or you want to file a feature request, swipe-down from the top-bezel and choose the 'Bug Reports' action.");
-                            icon = "images/ic_bugs.png";
-                            persist.saveValueFor("tutorialBugReports", 1, false);
-                        } else if ( !persist.contains("tutorialSelectAll") ) {
-                            tutorialText = qsTr("You can tap the Select All button at the bottom of the screen to quickly export all your conversations!");
-                            icon = "images/menu/selectAll.png";
-                            persist.saveValueFor("tutorialSelectAll", 1, false);
-                        } else if ( !persist.contains("tutorialDropDown") ) {
-                            tutorialText = qsTr("Use the dropdown at the top to switch between your mailboxes.");
-                            icon = "images/dropdown/ic_account.png";
-                            persist.saveValueFor("tutorialDropDown", 1, false);
-                        } else if ( persist.reviewed() ) {
-                        } else if ( reporter.performCII() ) {
                         }
-                        
+
                         tutorialToast.init(tutorialText, icon, title);
+                        
+                        tutorial.execSwipe( "exportTxt", qsTr("These are a list of all the conversations, press-and-hold on one and from the menu choose 'Select More' and then 'Export TXT' to save it. You can also tap on the conversation itself and save only parts of it if you wish."), HorizontalAlignment.Center, VerticalAlignment.Center, "d" );
+                        tutorial.execActionBar( "selectAll", qsTr("You can tap the Select All button at the bottom of the screen to quickly export all your conversations!"), "x" );
+                        tutorial.execBelowTitleBar( "dropDown", qsTr("Use the dropdown at the top to switch between your mailboxes.") );
                     }
                     
                     onSelectedValueChanged: {
@@ -126,8 +112,8 @@ NavigationPane
                     function doExport(conversationIds, format)
                     {
                         if ( format == OutputFormat.CSV && !persist.contains("exporter_csv") ) {
-                            persist.showToast( qsTr("This is a purchasable feature. You can buy it for just $0.99!"), qsTr("OK"), "asset:///images/ic_good.png" );
-                            app.requestPurchase("exporter_csv", qsTr("CSV Export") );
+                            persist.showToast( qsTr("This is a purchasable feature. You can buy it for just $0.99!"), "images/ic_good.png" );
+                            app.requestPurchase( "exporter_csv", qsTr("CSV Export") );
                         } else {
                             filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
                             filePicker.conversationIds = conversationIds;
@@ -169,14 +155,20 @@ NavigationPane
                             StandardListItem
                             {
                                 id: control
-                                
+                                description: ListItemData.number
+                                imageSource: ListItemData.smallPhotoFilepath.length > 0 ? "file://"+ListItemData.smallPhotoFilepath : "images/ic_user.png"
+                                title: ListItemData.name ? ListItemData.name : ListItemData.number
+                                status: ListItemData.messageCount
                                 scaleX: 0.8
                                 scaleY: 0.8
                                 opacity: 0
+
                                 animations: [
                                     ParallelAnimation
                                     {
                                         id: showAnim
+                                        delay: Math.min(control.ListItem.indexInSection * 100, 1000);
+                                        
                                         ScaleTransition
                                         {
                                             fromX: 0.8
@@ -187,18 +179,19 @@ NavigationPane
                                             easingCurve: StockCurve.ElasticOut
                                         }
                                         
-                                        FadeTransition {
+                                        FadeTransition
+                                        {
                                             fromOpacity: 0
                                             toOpacity: 1
                                             duration: 200
                                         }
-                                        
-                                        delay: Math.min(control.ListItem.indexInSection * 100, 1000);
                                     }
                                 ]
                                 
-                                onCreationCompleted: {
-                                    showAnim.play();
+                                ListItem.onInitializedChanged: {
+                                    if (initialized) {
+                                        showAnim.play();
+                                    }
                                 }
                                 
                                 contextActions: [
@@ -207,57 +200,30 @@ NavigationPane
                                         title: ListItemData.name
                                         subtitle: qsTr("%1 messages").arg(ListItemData.messageCount)
                                         
-                                        ActionItem {
+                                        ActionItem
+                                        {
                                             id: exportAction
                                             title: qsTr("Export TXT")
                                             imageSource: "images/menu/ic_export.png"
                                             
                                             onTriggered: {
-                                                console.log("UserEvent: ExportTxtTriggered");
+                                                console.log("UserEvent: ExportTxt");
                                                 control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.TXT)
                                             }
                                         }
                                         
-                                        ActionItem {
+                                        ActionItem
+                                        {
                                             title: qsTr("Export CSV")
                                             imageSource: "images/menu/ic_export_csv.png"
                                             
                                             onTriggered: {
-                                                console.log("UserEvent: ExportCsvTriggered");
+                                                console.log("UserEvent: ExportCsv");
                                                 control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.CSV)
                                             }
                                         }
                                     }
                                 ]
-                                
-                                title: ListItemData.name ? ListItemData.name : ListItemData.number
-                                description: ListItemData.number
-                                status: ListItemData.messageCount
-                                imageSource: ListItemData.smallPhotoFilepath.length > 0 ? "file://"+ListItemData.smallPhotoFilepath : "images/ic_user.png"
-                            }
-                        }
-                    ]
-                    
-                    attachedObjects: [
-                        FilePicker {
-                            property variant conversationIds
-                            property int format
-                            
-                            id: filePicker
-                            mode: FilePickerMode.SaverMultiple
-                            title : qsTr("Select Folder") + Retranslate.onLanguageChanged
-                            filter: ["*.txt"]
-                            
-                            onFileSelected : {
-                                var result = selectedFiles[0];
-                                console.log("UserEvent: FolderSelected", result);
-                                persist.saveValueFor("output", result, false);
-                                
-                                definition.source = "ProgressDialog.qml";
-                                var progress = definition.createObject();
-                                progress.open();
-                                
-                                app.exportSMS(conversationIds, accountsDropDown.selectedValue, format);
                             }
                         }
                     ]
@@ -267,9 +233,9 @@ NavigationPane
                     }
                     
                     multiSelectHandler {
-                        
                         actions: [
-                            ActionItem {
+                            ActionItem
+                            {
                                 id: multiExportAction
                                 enabled: false
                                 title: qsTr("Export TXT") + Retranslate.onLanguageChanged
@@ -281,7 +247,8 @@ NavigationPane
                                 }
                             },
                             
-                            ActionItem {
+                            ActionItem
+                            {
                                 id: multiExportCsvAction
                                 enabled: false
                                 title: qsTr("Export CSV") + Retranslate.onLanguageChanged
@@ -372,11 +339,35 @@ NavigationPane
                         delegateActive = true;
                     }
                 }
-                
-                onCreationCompleted: {
-                    app.lazyInitComplete.connect(onReady);
-                }
             }
         }
     }
+    
+    attachedObjects: [
+        ComponentDefinition {
+            id: definition
+        },
+        
+        FilePicker {
+            property variant conversationIds
+            property int format
+            
+            id: filePicker
+            mode: FilePickerMode.SaverMultiple
+            title : qsTr("Select Folder") + Retranslate.onLanguageChanged
+            filter: ["*.txt"]
+            
+            onFileSelected : {
+                var result = selectedFiles[0];
+                console.log("UserEvent: FolderSelected", result);
+                persist.saveValueFor("output", result, false);
+                
+                definition.source = "ProgressDialog.qml";
+                var progress = definition.createObject();
+                progress.open();
+                
+                app.exportSMS(conversationIds, accountsDropDown.selectedValue, format);
+            }
+        }
+    ]
 }

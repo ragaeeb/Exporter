@@ -5,7 +5,7 @@ NavigationPane
     id: navigationPane
     
     onPopTransitionEnded: {
-        page.destroy();
+        deviceUtils.cleanUpAndDestroy(page);
     }
     
     Page
