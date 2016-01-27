@@ -74,7 +74,6 @@ NavigationPane
                             icon = "images/dropdown/ic_account.png";
                             tutorialText = qsTr("No accounts found. Are you sure you gave the app the permissions it needs?");
                             title = qsTr("Warning!");
-                        } else if ( persist.tutorialVideo("http://youtu.be/_sSZJPBwlnc") ) {
                         } else if ( !persist.contains("tutorialExportTxt") ) {
                             icon = "images/menu/ic_export.png";
                             tutorialText = qsTr("These are a list of all the conversations, press-and-hold on one and from the menu choose 'Select More' and then 'Export TXT' to save it. You can also tap on the conversation itself and save only parts of it if you wish.");

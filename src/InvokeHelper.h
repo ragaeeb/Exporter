@@ -34,11 +34,6 @@ class InvokeHelper : public QObject
 
 private slots:
     void cardFinished();
-    void onChapterMatched();
-    void onDataLoaded(QVariant id, QVariant data);
-    void onDatabasePorted();
-    void onPicked(int chapter, int verse);
-    void onSearchPicked(int chapter, int verse);
 
 public:
     InvokeHelper(InvokeManager* invokeManager, Persistance* p);

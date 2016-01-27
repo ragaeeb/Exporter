@@ -41,7 +41,6 @@ private slots:
     void onExportCompleted();
     void lazyInit();
     void invoked(bb::system::InvokeRequest const& request);
-    void cardFinished();
     void onMessageLoadProgress(int current, int total);
 
 public:
