@@ -5,6 +5,7 @@ import com.canadainc.data 1.0
 
 Page
 {
+    id: rootPage
     property variant accountId
     property variant contact
     property int timeSetting
@@ -77,7 +78,7 @@ Page
         ActionItem {
             id: copyAction
             title: qsTr("Copy") + Retranslate.onLanguageChanged
-            imageSource: "images/menu/ic_copy.png"
+            imageSource: "images/common/ic_copy.png"
             enabled: false
 
             onTriggered: {
@@ -155,10 +156,9 @@ Page
         
 		ListView
 		{
+		    id: listView
             property alias backgroundIncoming: backIncoming
             property alias backgroundOutgoing: backOutgoing
-
-            id: listView
 	        objectName: "listView"
 	        scrollRole: ScrollRole.Main
 
@@ -336,5 +336,7 @@ Page
         
         sld.appendItem( "CSV", persist.contains("exporter_csv") );
         sld.appendItem( "TXT", true, true );
+        
+        deviceUtils.attachTopBottomKeys(rootPage, listView);
     }
 }

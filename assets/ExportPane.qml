@@ -21,6 +21,8 @@ NavigationPane
     {
         tm.onReady();
         tutorial.tutorialStarted.connect(onTutorialStarted);
+        
+        deviceUtils.attachTopBottomKeys(rootPage, listView);
     }
     
     Page
