@@ -16,6 +16,8 @@ NavigationPane
         
         ListView
         {
+            scrollRole: ScrollRole.Main
+            
             dataModel: ArrayDataModel {
                 id: adm
             }
