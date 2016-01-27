@@ -2,6 +2,7 @@
 
 #include "applicationui.hpp"
 #include "AccountImporter.h"
+#include "AppLogFetcher.h"
 #include "CardUtils.h"
 #include "ExportSMS.h"
 #include "ImportSMS.h"
@@ -10,8 +11,7 @@
 #include "Logger.h"
 #include "MessageImporter.h"
 #include "PimUtil.h"
-
-#define CARD_KEY "logCard"
+#include "ThreadUtils.h"
 
 namespace exportui {
 
@@ -80,6 +80,7 @@ void ApplicationUI::lazyInit()
 	    }
 	}
 
+	AppLogFetcher::create( &m_persistance, &ThreadUtils::compressFiles, this );
 	m_invoke.lazyInit();
 
 	emit lazyInitComplete();

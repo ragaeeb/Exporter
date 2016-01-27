@@ -15,16 +15,21 @@ TabbedPane
             if (clean) {
                 tutorial.execAppMenu();
             }
+            
+            if (exportControl.object) {
+                exportControl.object.initialize();
+            }
         }
     }
     
     Tab {
         id: exportPane
-        imageSource: "images/menu/ic_save.png"
+        imageSource: "images/tabs/ic_export.png"
         title: qsTr("Export") + Retranslate.onLanguageChanged
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
         
         delegate: Delegate {
+            id: exportControl
             source: "ExportPane.qml"
         }
         

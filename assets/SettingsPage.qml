@@ -6,6 +6,8 @@ Page
         title: qsTr("Settings") + Retranslate.onLanguageChanged
     }
     
+    function cleanUp() {}
+    
     ScrollView
     {
         horizontalAlignment: HorizontalAlignment.Fill
