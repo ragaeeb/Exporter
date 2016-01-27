@@ -184,23 +184,11 @@ Page
             
             function render(data)
             {
-			    var timeFormat = "MMM d/yy, hh:mm:ss";
-			    
-			    if (timeSetting == 1) {
-			        timeFormat = "hh:mm:ss"
-			    } else if (timeSetting == 2) {
-			        timeFormat = ""
-			    }
-                
-                var time = Qt.formatDateTime(data.time, timeFormat);
+                var time = Qt.formatDateTime(data.time, "MMM d/yy, hh:mm:ss");
                 var name = data.inbound ? data.sender : userName;
                 var text = data.text;
                 
-                if (timeSetting == 2) {
-                    return name+": "+text
-                } else {
-					return time+" - "+name+": "+text
-                }
+                return time+" - "+name+": "+text
             }
             
             dataModel: ArrayDataModel {

@@ -42,7 +42,6 @@ QList<FormattedConversation> ExportSMS::formatConversations()
     deviceTime = m_settings.value("serverTimestamp").toInt() != 1;
     latestFirst = m_settings.value("latestFirst").toInt() == 1;
     QString userName = m_settings.value("userName").toString();
-    QString timeFormat = CommonConstants::getTimeFormat( m_settings.value("timeFormat").toInt() );
     bool supportMMS = m_settings.contains("exporter_mms");
     QString status = tr("Preparing...");
 
@@ -91,7 +90,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
                     FormattedMessage fm;
 
                     QDateTime t = deviceTime ? m.deviceTimestamp() : m.serverTimestamp();
-                    fm.timestamp = timeFormat.isEmpty() ? "" : t.toString(timeFormat);
+                    fm.timestamp = t.toString("MMM d/yy hh:mm:ss");
                     fm.sender = m.isInbound() ? m.sender().displayableName() : userName;
 
                     QStringList totalBody;
