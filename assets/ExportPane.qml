@@ -108,6 +108,7 @@ NavigationPane
                     id: listView
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
+                    scrollRole: ScrollRole.Main
                     
                     function doExport(conversationIds, format)
                     {

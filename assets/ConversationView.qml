@@ -160,6 +160,7 @@ Page
 
             id: listView
 	        objectName: "listView"
+	        scrollRole: ScrollRole.Main
 
             attachedObjects: [
 		        ImagePaintDefinition {
