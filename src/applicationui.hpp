@@ -3,6 +3,7 @@
 
 #include "InvokeHelper.h"
 #include "LazySceneCover.h"
+#include "LocaleUtil.h"
 #include "Offloader.h"
 #include "PaymentHelper.h"
 #include "Persistance.h"
@@ -28,6 +29,7 @@ class ApplicationUI : public QObject
     PaymentHelper m_payment;
     InvokeHelper m_invoke;
     Offloader m_offloader;
+    LocaleUtil m_locale;
 
     void initRoot(QString const& qml="main.qml");
 

@@ -40,6 +40,7 @@
     <!-- Fourth digit segment of the package version. First three segments are taken from the 
          <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
     <buildId>0</buildId>
+    <packageLocale>ar,en,fr,de,id,ru,es,th,tr</packageLocale>
                  
     <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
     <!-- <versionLabel></versionLabel> -->
@@ -92,6 +93,10 @@
     <asset path="translations" dest="qm">
         <include name="*.qm"/>
     </asset>
+    <asset path="../canadainc/translations" dest="qm">
+        <include name="*.qm"/>
+    </asset>
+    
     <asset path="splash_n.png">splash_n.png</asset>
     
     <asset path="../canadainc/assets/AccountsDropDown.qml">assets/AccountsDropDown.qml</asset>
