@@ -38,7 +38,7 @@ Q_SIGNALS:
 	void lazyInitComplete();
 
 private slots:
-    void onExportCompleted();
+    void onExportCompleted(int success, int failed);
     void lazyInit();
     void invoked(bb::system::InvokeRequest const& request);
     void onMessageLoadProgress(int current, int total);

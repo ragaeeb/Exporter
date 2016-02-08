@@ -38,6 +38,7 @@ TabbedPane
         
         onTriggered: {
             console.log("UserEvent: ExportTab");
+            reporter.record("ExportTab");
         }
     }
     
@@ -54,6 +55,7 @@ TabbedPane
         
         onTriggered: {
             console.log("UserEvent: PurchasePane");
+            reporter.record("PurchasePane");
         }
     }
 }

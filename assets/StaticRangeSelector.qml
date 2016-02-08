@@ -12,12 +12,15 @@ QtObject
         title: qsTr("Range Select") + Retranslate.onLanguageChanged
         imageSource: "images/menu/ic_range.png"
         enabled: !root.rangeSelect
+
         onTriggered: {
             console.log("UserEvent: RangeSelectTriggered");
             
-            persist.showToast( qsTr("This mode allows you to select a range of messages.\n\nTap the first message, then tap the last message and all of the ones in between will then be selected."), qsTr("OK"), "asset:///images/menu/ic_range.png" );
+            tutorial.execCentered( "rangeInstructions", qsTr("This mode allows you to select a range of messages.\n\nTap the first message, then tap the last message and all of the ones in between will then be selected."), "images/menu/ic_range.png" );
             root.first = root.last = undefined;
             root.rangeSelect = true;
+            
+            reporter.record("RangeSelectTriggered");
         }
     }
 

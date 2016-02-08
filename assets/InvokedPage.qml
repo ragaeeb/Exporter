@@ -25,14 +25,15 @@ Page
             defaultType: FileType.Document
             allowOverwrite: true
             filter: ["*.txt"]
-            directories: persist.getValueFor("output")
+            directories: persist.getFlag("output")
             
             onFileSelected : {
                 var result = selectedFiles[0];
                 console.log("UserEvent: InvokedFileSelected", result);
                 app.saveTextData(result, data);
                 
-                persist.showBlockingToast( qsTr("Successfully saved file: %1").arg(result), qsTr("OK") );
+                persist.showBlockingDialog( qsTr("Successfully saved file: %1").arg(result), qsTr("OK"), "" );
+                reporter.record( "SuccessfulSave", result );
                 
                 finished();
             }

@@ -28,25 +28,36 @@ struct FormattedConversation
     QString fileName;
 };
 
+struct ExportParams
+{
+    qint64 accountId;
+    QStringList keys;
+    OutputFormat::Type format;
+    bool deviceTime;
+    bool latestFirst;
+    QString userName;
+    bool supportMMS;
+    QString outputPath;
+    bool overwrite;
+
+    ExportParams() : accountId(0), format(OutputFormat::TXT), deviceTime(false), latestFirst(true), supportMMS(false), overwrite(false) {}
+};
+
 class ExportSMS : public QObject, public QRunnable
 {
 	Q_OBJECT
 
-	qint64 m_accountId;
-	QStringList m_keys;
-	QSettings m_settings;
-	OutputFormat::Type m_format;
 	bool m_active;
+	ExportParams m_params;
 
 	QList<FormattedConversation> formatConversations();
 
 signals:
-	void exportCompleted();
+	void exportCompleted(int success, int failed);
 	void loadProgress(int current, int total, QString const& status);
 
 public:
-	ExportSMS(QStringList const& keys, qint64 const& accountId);
-	void setFormat(OutputFormat::Type format);
+	ExportSMS(ExportParams params);
 	void run();
 	Q_SLOT void cancel();
 };

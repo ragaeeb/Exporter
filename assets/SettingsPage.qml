@@ -6,7 +6,27 @@ Page
         title: qsTr("Settings") + Retranslate.onLanguageChanged
     }
     
-    function cleanUp() {}
+    function onTutorialFinished(key)
+    {
+        if (key == "useServerTS") {
+            duplicateAction.expanded = true;
+        }
+    }
+    
+    
+    function cleanUp() {
+        tutorial.tutorialFinished.disconnect(onTutorialFinished);
+    }
+    
+    onCreationCompleted: {
+        tutorial.tutorialFinished.connect(onTutorialFinished);        
+        tutorial.execBelowTitleBar("duplicateBehaviour", qsTr("You can control what Exporter does when it notices an existing conversation with the conversation that is being exported by setting the '%1' dropdown.").arg(duplicateAction.title) );
+        tutorial.execActionBar( "settingsClose", qsTr("Tap here to close this page."), "b" );
+        tutorial.exec( "yourName", qsTr("You can control how your name appears on all outgoing messages by modifying the '%1' text field.").arg(yourNameLabel.text), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, tutorial.du(28), 0, undefined, "r" );
+        tutorial.exec("doubleSpace", qsTr("If you require extra padding to be present between the messages in the plain-text document, enable the '%1' checkmark.").arg(doubleSpace.text), HorizontalAlignment.Right, VerticalAlignment.Top, 0, 0, tutorial.du(36), 0, "images/toast/double_space.png" );
+        tutorial.exec("latestFirst", qsTr("Typically the app would display the most recent message at the top and the oldest message at the bottom. If you wish to reverse this and show the messages from most least recent to most recent, uncheck '%1'.").arg(latestFirst.text), HorizontalAlignment.Right, VerticalAlignment.Top, 0, 0, tutorial.du(44), 0, "images/toast/ic_clock.png" );
+        tutorial.exec("useServerTS", qsTr("If your device was offline, or was turned off, it might have received the message at a later time than it was originally sent.\n\nAs a result, the '%1' checkbox ensures that the server timestamp is used for better accuracy. However there may be some scenarios when the server timestamp is not recorded at which point the device timestamp of the message will be used.").arg(serverTimestamp.text), HorizontalAlignment.Right, VerticalAlignment.Top, 0, 0, tutorial.du(52), 0, "images/toast/ic_calendar.png" );
+    }
     
     ScrollView
     {
@@ -21,10 +41,12 @@ Page
 	        
             PersistDropDown
             {
+                id: duplicateAction
 	            title: qsTr("Duplicate File Behaviour") + Retranslate.onLanguageChanged
                 key: "duplicateAction"
 	
 	            Option {
+	                id: append
 	                text: qsTr("Append") + Retranslate.onLanguageChanged
 	                description: qsTr("If a file already exists, then export to the tail of the file.") + Retranslate.onLanguageChanged
                     imageSource: "images/dropdown/ic_append.png"
@@ -32,61 +54,29 @@ Page
 	            }
 	
 	            Option {
+	                id: overwrite
 	                text: qsTr("Overwrite") + Retranslate.onLanguageChanged
 	                description: qsTr("If a file already exists, then overwrite it with the new information") + Retranslate.onLanguageChanged
 	                imageSource: "images/dropdown/ic_overwrite.png"
                     value: 1
 	            }
-	            
-                onSelectedValueChanged: {
+                
+                onValueChanged: {
                     console.log("UserEvent: DuplicateAction", selectedValue);
+                    reporter.record( "DuplicateAction", selectedValue.toString() );
                 }
-	        }
-	        
-	        PersistDropDown
-	        {
-	            title: qsTr("Message Time Format") + Retranslate.onLanguageChanged
-	            key: "timeFormat"
-	
-	            Option {
-	                text: qsTr("Date & Time") + Retranslate.onLanguageChanged
-	                description: qsTr("ie: Jan 4/13 10:15:03") + Retranslate.onLocaleOrLanguageChanged
-	                imageSource: "images/dropdown/ic_calendar.png"
-	                value: 0
-	            }
-	
-	            Option {
-	                text: qsTr("Time Only") + Retranslate.onLanguageChanged
-	                description: qsTr("ie: 10:15:03") + Retranslate.onLocaleOrLanguageChanged
-	                imageSource: "images/dropdown/ic_clock.png"
-                    value: 1
-	            }
-	
-	            Option {
-	                text: qsTr("Off") + Retranslate.onLanguageChanged
-	                description: qsTr("No date or time will be shown on messages.") + Retranslate.onLanguageChanged
-	                imageSource: "images/dropdown/ic_off.png"
-                    value: 2
-	            }
-	
-	            bottomMargin: 20
-	
-	            onSelectedIndexChanged: {
-	                if (selectedIndex == 2) {
-	                    infoText.text = qsTr("The time will not be appended to the messages.") + Retranslate.onLanguageChanged;
-                    } else if (selectedIndex == 0) {
-	                    infoText.text = qsTr("The time will will be appended in front of the messages with a format like Jan 4/13 10:15:03.") + Retranslate.onLanguageChanged;
-                    } else {
-	                    infoText.text = qsTr("The time will will be appended in front of the messages with a format like 10:15:03.") + Retranslate.onLanguageChanged;
+                
+                onExpandedChanged: {
+                    if (expanded)
+                    {
+                        tutorial.execBelowTitleBar( "append", qsTr("To append to the existing file upon duplicate name encounter use the '%1' option.").arg(append.text), tutorial.du(8) );
+                        tutorial.execBelowTitleBar( "overwrite", qsTr("To replace the file with the same name upon duplicate name encounter, use the '%1' option.").arg(overwrite.text), tutorial.du(16) );
                     }
-	            }
-	            
-                onSelectedValueChanged: {
-                    console.log("UserEvent: MessageTimeFormat", selectedValue);
                 }
 	        }
 	        
 	        Label {
+	            id: yourNameLabel
 	            text: qsTr("Your name shows up as:") + Retranslate.onLanguageChanged;
                 textStyle.fontSize: FontSize.XSmall
 	            textStyle.textAlign: TextAlign.Center
@@ -95,20 +85,21 @@ Page
 	        TextField
 	        {
 	            hintText: qsTr("The name that shows for messages you sent.") + Retranslate.onLanguageChanged
+                text: persist.getValueFor("userName")
+                verticalAlignment: VerticalAlignment.Fill
 	
 	            onTextChanged: {
 	                persist.saveValueFor("userName", text);
+
 	                infoText.text = qsTr("In the output, messages you sent will be prefixed by: %1").arg(text) + Retranslate.onLanguageChanged
-	                
                     console.log("UserEvent: UserName", text);
+                    reporter.record( "UserName", text );
                 }
-	
-	            text: persist.getValueFor("userName")
-	            verticalAlignment: VerticalAlignment.Fill
 	        }
 	        
 	        PersistCheckBox
 	        {
+                id: doubleSpace
                 topMargin: 20
                 key: "doubleSpace"
                 text: qsTr("Double-space") + Retranslate.onLanguageChanged
@@ -122,12 +113,16 @@ Page
                     
                     console.log("UserEvent: DoubleSpaceEnabled", checked);
                 }
+                
+                onValueChanged: {
+                    reporter.record( "DoubleSpaceEnabled", checked.toString() );
+                }
             }
 
             PersistCheckBox
             {
+                id: latestFirst
                 topMargin: 20
-
                 text: qsTr("Latest Message First") + Retranslate.onLanguageChanged;
                 key: "latestFirst"
 
@@ -140,12 +135,16 @@ Page
                     
                     console.log("UserEvent: LatestFirstEnabled", checked);
                 }
+                
+                onValueChanged: {
+                    reporter.record( "LatestFirstEnabled", checked.toString() );
+                }
             }
             
             PersistCheckBox
             {
+                id: serverTimestamp
                 topMargin: 20
-                
                 text: qsTr("Use Server Timestamp") + Retranslate.onLanguageChanged;
                 key: "serverTimestamp"
                 
@@ -156,7 +155,11 @@ Page
                         infoText.text = qsTr("Message timestamps will reflect the time they were created on the device.");
                     }
                     
-                    console.log("UserEvent: UseServerTimestampEnabled", checked);
+                    console.log("UserEvent: UseServerTimestamp", checked);
+                }
+                
+                onValueChanged: {
+                    reporter.record( "UseServerTimestamp", checked.toString() );
                 }
             }
             
@@ -176,22 +179,6 @@ Page
 	        }
 	    }
     }
-    
-    onCreationCompleted: {
-        var tutorialText = "";
-        var icon = ""
-        var title = qsTr("Tip!");
-        
-        if ( !persist.contains("tutorialDuplicate") ) {
-            icon = "images/dropdown/ic_append.png";
-            tutorialText = qsTr("You can control what Exporter does when it notices an existing conversation with the conversation that is being exported by setting the 'Duplicate File Behavior' dropdown.");
-            persist.saveValueFor("tutorialDuplicate", 1, false);
-        } else if ( !persist.contains("tutorialUserName") ) {
-            tutorialText = qsTr("You can control how your name appears on all outgoing messages by modifying the 'Your name shows up as:' text field.");
-            icon = "images/ic_user.png";
-            persist.saveValueFor("tutorialUserName", 1, false);
-        }
-        
-        tutorialToast.init(tutorialText, icon, title);
-    }
 }
+
+// ic calendar, ic clock, ic off
