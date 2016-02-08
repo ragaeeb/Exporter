@@ -202,6 +202,18 @@ NavigationPane
                                     }
                                 }
                                 
+                                contextMenuHandler: ContextMenuHandler
+                                {
+                                    onVisualStateChanged: {
+                                        if (visualState == 1)
+                                        {
+                                            tutorial.execOverFlow("exportSingleTxt", qsTr("Use the '%1' action to save this conversation as a plain-text document."), exportAction);
+                                            tutorial.execOverFlow("exportSingleCsv", qsTr("Use the '%1' action to save this conversation as a comma-separated document."), exportCSV);
+                                            tutorial.execOverFlow("selectMoreConvos", qsTr("Use the 'Select More' action to select more conversations."), control.ListItem.view.multiSelectAction);
+                                        }
+                                    }
+                                }
+                                
                                 contextActions: [
                                     ActionSet
                                     {
@@ -222,6 +234,7 @@ NavigationPane
                                         
                                         ActionItem
                                         {
+                                            id: exportCSV
                                             title: qsTr("Export CSV")
                                             imageSource: "images/menu/ic_export_csv.png"
                                             
@@ -270,7 +283,11 @@ NavigationPane
                         ]
                         
                         onActiveChanged: {
-                            if (!active) {
+                            if (active) {
+                                tutorial.execActionBar("multiExportTxt", qsTr("Use the '%1' action if you want to save the selected conversations as plain-text documents.").arg(multiExportAction.title), "l");
+                                tutorial.execActionBar("multiCsvTxt", qsTr("Use the '%1' action if you want to save the selected conversations as comma-separated-values.").arg(multiExportCsvAction.title), "r");
+                                tutorial.execActionBar("cancelMultiSelect", qsTr("Use the 'Cancel' action if you want to clear all the selections."), "b");
+                            } else {
                                 listView.clearSelection();
                             }
                         }

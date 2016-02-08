@@ -2,7 +2,7 @@ import bb.cascades 1.2
 
 TabbedPane
 {
-    activeTab: exportPane
+    activeTab: exportTab
     showTabsOnActionBar: true
     
     Menu.definition: CanadaIncMenu
@@ -18,12 +18,15 @@ TabbedPane
             
             if (exportControl.object) {
                 exportControl.object.initialize();
+                
+                tutorial.execActionBar( "exportTab", qsTr("In the '%1' tab you can select one or more conversations that you wish to view or save.").arg(exportTab.title), "b" );
+                tutorial.execActionBar( "purchaseTab", qsTr("In the '%1' tab you can purchase additional features to maximize the app's functionality.").arg(purchaseTab.title), "r" );
             }
         }
     }
     
     Tab {
-        id: exportPane
+        id: exportTab
         imageSource: "images/tabs/ic_export.png"
         title: qsTr("Export") + Retranslate.onLanguageChanged
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
@@ -40,6 +43,7 @@ TabbedPane
     
     Tab
     {
+        id: purchaseTab
         title: qsTr("Purchase") + Retranslate.onLanguageChanged
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
         imageSource: "images/tabs/ic_purchase.png"

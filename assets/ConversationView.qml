@@ -15,7 +15,25 @@ Page
         id: tb
     }
     
-    function cleanUp() {
+    onActionMenuVisualStateChanged: {
+        if (actionMenuVisualState == ActionMenuVisualState.VisibleFull)
+        {
+            
+            /*
+            tutorial.execOverFlow( "selectRange", qsTr("You can use the '%1' feature from the menu to pick start and end points. Once you have your selection you can choose 'Share' and pick Exporter from the Share menu."), copyAction );
+            tutorial.execOverFlow( "addShortcutHome", qsTr("To quickly access this schedule again, tap on the '%1' action at the bottom to pin it to your homescreen."), addShortcutAction );
+            tutorial.execOverFlow( "call", qsTr("You can easily call the appropriate schedule hotline by tapping on the '%1' button from the menu."), call );
+            tutorial.execOverFlow( "refresh", qsTr("You can refresh this list again by tapping on the '%1' action from the menu!"), refreshAction );
+            
+            tutorialText = qsTr("You can easily copy only certain converastions and messages and share them with your contacts! Simply select the appropriate bubbles by tapping on them, and then either choose 'Share' to share socially, or choose the 'Copy' action from the menu to copy it to your clipboard so you can paste it.");
+            */
+
+            reporter.record("ConversationViewMenuShown");
+        }
+    }
+    
+    function cleanUp()
+    {
         app.messagesImported.disconnect(onMessagesImported);
         persist.settingChanged.disconnect(onSettingChanged);
     }
@@ -64,6 +82,7 @@ Page
     
     actions: [
         ActionItem {
+            id: selectAll
             imageSource: "images/menu/selectAll.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             title: qsTr("Select All") + Retranslate.onLanguageChanged
@@ -90,6 +109,7 @@ Page
         },
         
         ActionItem {
+            id: saveAll
             title: qsTr("Save All") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_save.png"
             ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
@@ -128,14 +148,20 @@ Page
         InvokeActionItem
         {
 		    id: iai
+            ActionBar.placement: ActionBarPlacement.OnBar
+            enabled: false
 		    title: qsTr("Share") + Retranslate.onLanguageChanged
+		    
+		    onEnabledChanged: {
+		        if (enabled) {
+                    tutorial.execActionBar( "shareSelected", qsTr("If you want to share the selected messages with your contacts use the '%1' action.").arg(title), "r" );
+		        }
+		    }
 
             query {
                 mimeType: "text/plain"
                 invokeActionId: "bb.action.SHARE"
             }
-            
-            enabled: false
             
             onTriggered: {
                 console.log("UserEvent: ShareActionTriggered");
@@ -143,8 +169,6 @@ Page
                 persist.showBlockingToast( qsTr("Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.\n\nUse the Range Selector if the message gets truncated."), qsTr("OK") );
                 iai.data = persist.convertToUtf8( concatenate() );
             }
-            
-            ActionBar.placement: ActionBarPlacement.OnBar
         }
     ]
     
@@ -196,7 +220,7 @@ Page
             }
             
             onSelectionChanged: {
-                copyAction.enabled = iai.enabled = selectionList().length > 0
+                copyAction.enabled = iai.enabled = selectionList().length > 0;
             }
 		
 		    listItemComponents: [
@@ -295,25 +319,8 @@ Page
             tb.title = qsTr("No messages found") + Retranslate.onLanguageChanged
         }
         
-        var tutorialText = "";
-        var icon = ""
-        var title = qsTr("Tip!");
-        
-        if ( !persist.contains("tutorialRange") ) {
-            icon = "images/menu/ic_range.png";
-            tutorialText = qsTr("You can select only the messages that you want to export by tapping on them so they are highlighted (the dimmed ones will be skipped). You can also use the 'Select Range' feature from the menu to pick start and end points. Once you have your selection you can choose 'Share' and pick Exporter from the Share menu.");
-            persist.saveValueFor("tutorialRange", 1, false);
-        } else if ( !persist.contains("tutorialSaveAll") ) {
-            tutorialText = qsTr("To save this entire conversation, use the Save All action at the bottom to save all the messages in one shot!");
-            icon = "images/menu/ic_save.png";
-            persist.saveValueFor("tutorialSaveAll", 1, false);
-        } else if ( !persist.contains("tutorialCopy") ) {
-            tutorialText = qsTr("You can easily copy only certain converastions and messages and share them with your contacts! Simply select the appropriate bubbles by tapping on them, and then either choose 'Share' to share socially, or choose the 'Copy' action from the menu to copy it to your clipboard so you can paste it.");
-            icon = "images/menu/ic_copy.png";
-            persist.saveValueFor("tutorialCopy", 1, false);
-        }
-        
-        tutorialToast.init(tutorialText, icon, title);
+        tutorial.execActionBar( "saveAll", qsTr("To save this entire conversation, use the '%1' action at the bottom to save all the messages in one shot!").arg(saveAll.title) );
+        tutorial.execActionBar( "selectAllMessages", qsTr("If you want to select all the messages to copy them to the clipboard or share them, use the '%1' action.").arg(selectAll.title), "l" );
     }
     
     onCreationCompleted: {
