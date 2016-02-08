@@ -51,8 +51,8 @@ FullScreenDialog
                 horizontalAlignment: HorizontalAlignment.Center
                 verticalAlignment: VerticalAlignment.Center
                 imageSource: "images/progress/circle.png"
-                preferredHeight: 150
-                preferredWidth: 150
+                preferredHeight: tutorial.du(18)
+                preferredWidth: tutorial.du(18)
             }
             
             Label

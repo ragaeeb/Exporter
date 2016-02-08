@@ -29,8 +29,8 @@ namespace exportui {
 
 using namespace canadainc;
 
-ExportSMS::ExportSMS(QStringList const& keys, qint64 const& accountId) :
-        m_accountId(accountId), m_keys(keys), m_format(OutputFormat::TXT), m_active(true)
+ExportSMS::ExportSMS(ExportParams params) :
+        m_active(true), m_params(params)
 {
 }
 
@@ -38,20 +38,20 @@ ExportSMS::ExportSMS(QStringList const& keys, qint64 const& accountId) :
 QList<FormattedConversation> ExportSMS::formatConversations()
 {
     QList<FormattedConversation> result;
+    LOGGER( m_params.accountId << m_params.keys << m_params.deviceTime << m_params.outputPath << m_params.format << m_params.userName << m_params.latestFirst );
 
-    deviceTime = m_settings.value("serverTimestamp").toInt() != 1;
-    latestFirst = m_settings.value("latestFirst").toInt() == 1;
-    QString userName = m_settings.value("userName").toString();
-    bool supportMMS = m_settings.contains("exporter_mms");
+    deviceTime = m_params.deviceTime;
+    latestFirst = m_params.latestFirst;
     QString status = tr("Preparing...");
 
     MessageService ms;
+    MessageFilter mf;
 
-    int total = m_keys.size();
+    int total = m_params.keys.size();
 
     for (int i = 0; i < total; i++)
     {
-        Conversation conversation = ms.conversation(m_accountId, m_keys[i]);
+        Conversation conversation = ms.conversation(m_params.accountId, m_params.keys[i]);
         LOGGER( conversation.messageCount() );
 
         if (!m_active) {
@@ -60,7 +60,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
         if ( !conversation.participants().isEmpty() && conversation.messageCount() > 0 )
         {
-            QList<Message> messages = ms.messagesInConversation( m_accountId, m_keys[i], MessageFilter() );
+            QList<Message> messages = ms.messagesInConversation( m_params.accountId, m_params.keys[i], mf );
             qSort( messages.begin(), messages.end(), messageComparator );
             MessageContact c = conversation.participants()[0];
 
@@ -91,7 +91,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
                     QDateTime t = deviceTime ? m.deviceTimestamp() : m.serverTimestamp();
                     fm.timestamp = t.toString("MMM d/yy hh:mm:ss");
-                    fm.sender = m.isInbound() ? m.sender().displayableName() : userName;
+                    fm.sender = m.isInbound() ? m.sender().displayableName() : m_params.userName;
 
                     QStringList totalBody;
 
@@ -113,7 +113,7 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
                         if ( a.mimeType() == "text/plain" ) {
                             totalBody << QString::fromLocal8Bit( a.data() );
-                        } else if (supportMMS) {
+                        } else if (m_params.supportMMS) {
                             FormattedAttachment fa;
                             fa.name = a.name();
                             fa.data = a.data();
@@ -144,18 +144,18 @@ QList<FormattedConversation> ExportSMS::formatConversations()
 
 void ExportSMS::run()
 {
-    LOGGER(m_accountId << m_keys << m_format);
+    LOGGER(m_params.accountId << m_params.keys << m_params.format);
 
     QString result;
     QList<FormattedConversation> conversations = formatConversations();
-    QString outputPath = m_settings.value("output").toString();
-    bool replace = m_settings.value("duplicateAction").toInt() == 1;
-    QString extension = m_format == OutputFormat::CSV ? "csv" : "txt";
+    QString extension = m_params.format == OutputFormat::CSV ? "csv" : "txt";
 
     LOGGER("Total Conversations" << conversations.size());
 
     int n = conversations.size();
     QString status = tr("Writing...");
+    int failed = 0;
+    int success = 0;
 
     for (int x = 0; x < n; x++)
     {
@@ -179,44 +179,53 @@ void ExportSMS::run()
             for (int j = attachments.length()-1; j >= 0; j--)
             {
                 FormattedAttachment fa = attachments[j];
-                QString destination = QString("%1/%2").arg(outputPath).arg(fa.name);
+                QString destination = QString("%1/%2").arg(m_params.outputPath).arg(fa.name);
 
                 int k = 1;
 
                 while ( QFile::exists(destination) ) {
                     LOGGER(destination << "already exists");
-                    destination = QString("%1/(%3)_%2").arg(outputPath).arg(fa.name).arg(k);
+                    destination = QString("%1/(%3)_%2").arg(m_params.outputPath).arg(fa.name).arg(k);
                     ++k;
                 }
 
                 IOUtils::writeFile(destination, fa.data);
             }
 
-            if (m_format == OutputFormat::CSV) {
-                total << QString("%1\t%2\t%3").arg(fm.timestamp).arg(fm.sender).arg(fm.body).trimmed();
-            } else if (m_format == OutputFormat::TXT) {
-                total << QString("%1 - %2: %3").arg(fm.timestamp).arg(fm.sender).arg(fm.body).trimmed();
+            switch (m_params.format)
+            {
+                case OutputFormat::CSV:
+                    total << QString("%1\t%2\t%3").arg(fm.timestamp).arg(fm.sender).arg(fm.body).trimmed();
+                    break;
+                case OutputFormat::TXT:
+                    total << QString("%1 - %2: %3").arg(fm.timestamp).arg(fm.sender).arg(fm.body).trimmed();
+                    break;
+                default:
+                    break;
             }
         }
 
         LOGGER("Total lines" << total.size());
 
-        if ( !total.isEmpty() ) {
-            IOUtils::writeTextFile( QString("%1/%2.%3").arg(outputPath).arg(fc.fileName).arg(extension), total.join(NEW_LINE), replace, false );
+        if ( !total.isEmpty() )
+        {
+            bool written = IOUtils::writeTextFile( QString("%1/%2.%3").arg(m_params.outputPath).arg(fc.fileName).arg(extension), total.join(NEW_LINE), m_params.overwrite, false );
+
+            if (written) {
+                ++success;
+            } else {
+                ++failed;
+            }
         } else {
             LOGGER("Total was empty...");
+            ++failed;
         }
 
         emit loadProgress(x, n, status);
     }
 
     emit loadProgress(n,n,status);
-    emit exportCompleted();
-}
-
-
-void ExportSMS::setFormat(OutputFormat::Type format) {
-    m_format = format;
+    emit exportCompleted(success, failed);
 }
 
 

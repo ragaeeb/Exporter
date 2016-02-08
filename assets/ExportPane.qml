@@ -44,6 +44,8 @@ NavigationPane
                     
                     listView.multiSelectHandler.active = true;
                     listView.selectAll();
+                    
+                    reporter.record("SelectAllConvos");
                 }
             }
         ]
@@ -64,6 +66,7 @@ NavigationPane
                 onImageTapped: {
                     console.log("UserEvent: EmptyConversationTapped");
                     accountsDropDown.expanded = true;
+                    reporter.record("EmptyConversationTapped");
                 }
             }
             
@@ -123,7 +126,7 @@ NavigationPane
                             persist.showToast( qsTr("This is a purchasable feature. You can buy it for just $0.99!"), "images/ic_good.png" );
                             app.requestPurchase( "exporter_csv", qsTr("CSV Export") );
                         } else {
-                            filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
+                            filePicker.directories = [ persist.getFlag("output"), "/accounts/1000/shared/documents"]
                             filePicker.conversationIds = conversationIds;
                             filePicker.format = format;
                             filePicker.open();
@@ -209,7 +212,9 @@ NavigationPane
                                         {
                                             tutorial.execOverFlow("exportSingleTxt", qsTr("Use the '%1' action to save this conversation as a plain-text document."), exportAction);
                                             tutorial.execOverFlow("exportSingleCsv", qsTr("Use the '%1' action to save this conversation as a comma-separated document."), exportCSV);
-                                            tutorial.execOverFlow("selectMoreConvos", qsTr("Use the 'Select More' action to select more conversations."), control.ListItem.view.multiSelectAction);
+                                            tutorial.exec("selectMoreConvos", qsTr("Use the 'Select More' action to select more conversations."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, tutorialDelegate.du(2), 0, 0, control.ListItem.view.multiSelectAction.imageSource.toString());
+                                            
+                                            reporter.record("LongPressConversation");
                                         }
                                     }
                                 }
@@ -228,7 +233,9 @@ NavigationPane
                                             
                                             onTriggered: {
                                                 console.log("UserEvent: ExportTxt");
-                                                control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.TXT)
+                                                control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.TXT);
+                                                
+                                                reporter.record("ExportSingleTXT");
                                             }
                                         }
                                         
@@ -240,7 +247,8 @@ NavigationPane
                                             
                                             onTriggered: {
                                                 console.log("UserEvent: ExportCsv");
-                                                control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.CSV)
+                                                control.ListItem.view.doExport([ListItemData.conversationId], OutputFormat.CSV);
+                                                reporter.record("ExportSingleCSV");
                                             }
                                         }
                                     }
@@ -249,8 +257,14 @@ NavigationPane
                         }
                     ]
                     
-                    multiSelectAction: MultiSelectActionItem {
+                    multiSelectAction: MultiSelectActionItem
+                    {
                         imageSource: "images/menu/ic_select_more.png"
+                        
+                        onTriggered: {
+                            console.log("UserEvent: SelectMoreConvos");
+                            reporter.record("SelectMoreConvos");
+                        }
                     }
                     
                     multiSelectHandler {
@@ -264,7 +278,10 @@ NavigationPane
                                 
                                 onTriggered: {
                                     console.log("UserEvent: ExportTxtMultiTriggered");
-                                    listView.doExport( listView.getAllSelected(), OutputFormat.TXT );
+                                    
+                                    var all = listView.getAllSelected();
+                                    listView.doExport( all, OutputFormat.TXT );
+                                    reporter.record("ExportTxtMultiTriggered", all.length);
                                 }
                             },
                             
@@ -277,7 +294,10 @@ NavigationPane
                                 
                                 onTriggered: {
                                     console.log("UserEvent: ExportCsvMultiTriggered");
-                                    listView.doExport( listView.getAllSelected(), OutputFormat.CSV );
+                                    
+                                    var all = listView.getAllSelected();
+                                    listView.doExport( all, OutputFormat.CSV );
+                                    reporter.record("ExportCsvMultiTriggered", all.length);
                                 }
                             }
                         ]
@@ -373,13 +393,15 @@ NavigationPane
             onFileSelected : {
                 var result = selectedFiles[0];
                 console.log("UserEvent: FolderSelected", result);
-                persist.saveValueFor("output", result, false);
+                persist.setFlag("output", result);
                 
                 definition.source = "ProgressDialog.qml";
                 var progress = definition.createObject();
                 progress.open();
                 
                 app.exportSMS(conversationIds, accountsDropDown.selectedValue, format);
+                reporter.record("SaveSelected", result);
+                reporter.record("AccountId", accountsDropDown.selectedValue.toString());
             }
         },
         

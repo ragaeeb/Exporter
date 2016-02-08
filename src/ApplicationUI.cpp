@@ -61,20 +61,19 @@ void ApplicationUI::invoked(bb::system::InvokeRequest const& request) {
 void ApplicationUI::lazyInit()
 {
 	INIT_SETTING( "userName", tr("You") );
-	INIT_SETTING("timeFormat", 0);
 	INIT_SETTING("duplicateAction", 0);
 	INIT_SETTING("doubleSpace", 0);
 	INIT_SETTING("latestFirst", 1);
 	INIT_SETTING("serverTimestamp", 1);
 
-	if ( !m_persistance.contains("output") ) // first run
+	if ( !m_persistance.containsFlag("output") ) // first run
 	{
 	    QStringList availableFolders = QStringList() << "/accounts/1000/removable/sdcard/documents" << "/accounts/1000/shared/documents";
 
 	    foreach (QString const& folder, availableFolders)
 	    {
 	        if ( QDir(folder).exists() ) {
-	            m_persistance.saveValueFor("output", folder, false);
+	            m_persistance.setFlag("output", folder);
 	            break;
 	        }
 	    }
@@ -120,8 +119,17 @@ void ApplicationUI::onMessageLoadProgress(int current, int total) {
 }
 
 
-void ApplicationUI::onExportCompleted() {
-	m_persistance.showToast( tr("Export complete"), "images/menu/ic_export.png" );
+void ApplicationUI::onExportCompleted(int success, int failed)
+{
+    LOGGER( QString("%1; %2").arg(success).arg(failed) );
+
+    if (success > 0 && failed == 0) { // no failures
+        m_persistance.showToast( tr("Successfully exported %n conversations.", "", success), "images/toast/ic_exported.png" );
+    } else if (success > 0 && failed > 0) {
+        m_persistance.showToast( tr("%1 conversations exported, %2 conversations failed to export.").arg(success).arg(failed), "images/toast/ic_warning.png" );
+    } else {
+        m_persistance.showToast( tr("%n conversations failed to export.", "", failed), "images/toast/ic_warning.png" );
+    }
 }
 
 
@@ -129,11 +137,20 @@ void ApplicationUI::exportSMS(QStringList const& conversationIds, qint64 account
 {
     LOGGER(conversationIds << accountId << outputFormat);
 
-	ExportSMS* sms = new ExportSMS(conversationIds, accountId);
-	sms->setFormat( static_cast<OutputFormat::Type>(outputFormat) );
-	connect( sms, SIGNAL( exportCompleted() ), this, SLOT( onExportCompleted() ) );
-	connect( sms, SIGNAL( loadProgress(int, int, QString const&) ), this, SIGNAL( loadProgress(int, int, QString const&) ) );
+    ExportParams ep;
+    ep.accountId = accountId;
+    ep.keys = conversationIds;
+    ep.deviceTime = m_persistance.getValueFor("serverTimestamp").toInt() != 1;
+    ep.format = static_cast<OutputFormat::Type>(outputFormat);
+    ep.latestFirst = m_persistance.getValueFor("latestFirst").toInt() == 1;
+    ep.overwrite = m_persistance.getValueFor("duplicateAction").toInt() == 1;
+    ep.userName = m_persistance.getValueFor("userName").toString();
+    ep.supportMMS = m_persistance.contains("exporter_mms");
+    ep.outputPath = m_persistance.getFlag("output").toString();
 
+	ExportSMS* sms = new ExportSMS(ep);
+	connect( sms, SIGNAL( exportCompleted(int, int) ), this, SLOT( onExportCompleted(int, int) ) );
+	connect( sms, SIGNAL( loadProgress(int, int, QString const&) ), this, SIGNAL( loadProgress(int, int, QString const&) ) );
 	connect( bb::cascades::Application::instance(), SIGNAL( aboutToQuit() ), sms, SLOT( cancel() ) );
 
 	IOUtils::startThread(sms);

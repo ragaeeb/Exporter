@@ -8,8 +8,8 @@ Page
     id: rootPage
     property variant accountId
     property variant contact
-    property int timeSetting
     property string userName
+    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     titleBar: TitleBar {
         id: tb
@@ -18,15 +18,8 @@ Page
     onActionMenuVisualStateChanged: {
         if (actionMenuVisualState == ActionMenuVisualState.VisibleFull)
         {
-            
-            /*
-            tutorial.execOverFlow( "selectRange", qsTr("You can use the '%1' feature from the menu to pick start and end points. Once you have your selection you can choose 'Share' and pick Exporter from the Share menu."), copyAction );
-            tutorial.execOverFlow( "addShortcutHome", qsTr("To quickly access this schedule again, tap on the '%1' action at the bottom to pin it to your homescreen."), addShortcutAction );
-            tutorial.execOverFlow( "call", qsTr("You can easily call the appropriate schedule hotline by tapping on the '%1' button from the menu."), call );
-            tutorial.execOverFlow( "refresh", qsTr("You can refresh this list again by tapping on the '%1' action from the menu!"), refreshAction );
-            
-            tutorialText = qsTr("You can easily copy only certain converastions and messages and share them with your contacts! Simply select the appropriate bubbles by tapping on them, and then either choose 'Share' to share socially, or choose the 'Copy' action from the menu to copy it to your clipboard so you can paste it.");
-            */
+            tutorial.execOverFlow( "selectRange", qsTr("You can use the '%1' feature from the menu to pick start and end points. Once you have your selection you can choose 'Share' and pick Exporter from the Share menu."), rangeSelector.rangeSelectAction );
+            tutorial.execOverFlow( "copySelected", qsTr("You can use the '%1' feature from the menu to copy the selected messages to your clipboard."), copyAction );
 
             reporter.record("ConversationViewMenuShown");
         }
@@ -41,7 +34,6 @@ Page
     onContactChanged:
     {
         userName = persist.getValueFor("userName");
-        timeSetting = persist.getValueFor("timeFormat");
 
         definition.source = "ProgressDialog.qml";
         var progress = definition.createObject();
@@ -50,9 +42,9 @@ Page
         app.getMessagesFor(contact.conversationId, accountId);
     }
     
-    function onSettingChanged(key)
+    function onSettingChanged(newValue, key)
     {
-        if (key == "latestFirst" || key == "timeFormat" || key == "userName" || key == "serverTimestamp") {
+        if ( contact && (key == "latestFirst" || key == "userName" || key == "serverTimestamp") ) {
             contactChanged(contact);
         }
     }
@@ -78,7 +70,34 @@ Page
         return result
     }
     
-    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+    function onMessagesImported(results)
+    {
+        theDataModel.clear();
+        reporter.record("MessagesLoaded", results.length);
+        
+        if (results.length > 0) {
+            theDataModel.append(results);
+            tb.title = contact.name.length > 0 ? contact.name : contact.number;
+        } else {
+            tb.title = qsTr("No messages found") + Retranslate.onLanguageChanged
+        }
+        
+        tutorial.execActionBar( "saveAll", qsTr("To save this entire conversation, use the '%1' action at the bottom to save all the messages in one shot!").arg(saveAll.title) );
+        tutorial.execActionBar( "selectAllMessages", qsTr("If you want to select all the messages to copy them to the clipboard or share them, use the '%1' action.").arg(selectAll.title), "l" );
+    }
+    
+    onCreationCompleted: {
+        persist.registerForSetting(rootPage, "latestFirst");
+        persist.registerForSetting(rootPage, "userName", false, false);
+        persist.registerForSetting(rootPage, "serverTimestamp", false, false);
+        app.messagesImported.connect(onMessagesImported);
+
+        addAction(rangeSelector.rangeSelectAction);        
+        sld.appendItem( "CSV", persist.contains("exporter_csv") );
+        sld.appendItem( "TXT", true, true );
+        
+        deviceUtils.attachTopBottomKeys(rootPage, listView);
+    }
     
     actions: [
         ActionItem {
@@ -89,8 +108,8 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: SelectAllConversationTriggered");
-                
                 listView.selectAll();
+                reporter.record("SelectAllConversationTriggered");
             }
         },
 
@@ -105,6 +124,7 @@ Page
                 
                 var result = concatenate();
                 persist.copyToClipboard(result);
+                reporter.record("CopyConversationTriggered");
             }
         },
         
@@ -117,21 +137,21 @@ Page
             onTriggered: {
                 console.log("UserEvent: SaveAllTriggered");
                 sld.show();
+                reporter.record("SaveAllTriggered");
             }
             
             attachedObjects: [
                 FilePicker {
+                    id: filePicker
                     property variant conversationIds
                     property int format
-                    
-                    id: filePicker
                     mode: FilePickerMode.SaverMultiple
                     title : qsTr("Select Folder") + Retranslate.onLanguageChanged
                     filter: ["*.txt"]
 
                     onFileSelected : {
                         var result = selectedFiles[0];
-                        persist.saveValueFor("output", result, false);
+                        persist.setFlag("output", result);
                         
                         console.log("UserEvent: ConversationSelectFolderSelected", result);
                         
@@ -140,6 +160,9 @@ Page
                         progress.open();
                         
                         app.exportSMS(contact.conversationId, accountId, format);
+                        reporter.record("OutputFolder", result);
+                        reporter.record("ExportFormat", format);
+                        reporter.record("AccountId", accountId.toString());
                     }
                 }
             ]
@@ -150,6 +173,7 @@ Page
 		    id: iai
             ActionBar.placement: ActionBarPlacement.OnBar
             enabled: false
+            imageSource: "images/menu/ic_share.png"
 		    title: qsTr("Share") + Retranslate.onLanguageChanged
 		    
 		    onEnabledChanged: {
@@ -168,6 +192,8 @@ Page
                 
                 persist.showBlockingToast( qsTr("Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.\n\nUse the Range Selector if the message gets truncated."), qsTr("OK") );
                 iai.data = persist.convertToUtf8( concatenate() );
+                
+                reporter.record("ShareActionTriggered");
             }
         }
     ]
@@ -185,6 +211,8 @@ Page
             property alias backgroundOutgoing: backOutgoing
 	        objectName: "listView"
 	        scrollRole: ScrollRole.Main
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
 
             attachedObjects: [
 		        ImagePaintDefinition {
@@ -272,10 +300,9 @@ Page
 		    onTriggered: {
                 console.log("UserEvent: MessageTapped");
 		        toggleSelection(indexPath);
+		        
+                tutorial.execCentered( "tapMessage", qsTr("Tap on the message again to deselect it.") );
 		    }
-		
-		    horizontalAlignment: HorizontalAlignment.Fill
-		    verticalAlignment: VerticalAlignment.Fill
 		
 		    layoutProperties: StackLayoutProperties {
 		        spaceQuota: 1
@@ -301,37 +328,10 @@ Page
                 if (value == SystemUiResult.ConfirmButtonSelection)
                 {
                     filePicker.format = selectedIndices[0];
-                    filePicker.directories = [ persist.getValueFor("output"), "/accounts/1000/shared/documents"]
+                    filePicker.directories = [ persist.getFlag("output"), "/accounts/1000/shared/documents"]
                     filePicker.open();
                 }
             }
         }
     ]
-    
-    function onMessagesImported(results)
-    {
-        theDataModel.clear();
-        
-        if (results.length > 0) {
-            theDataModel.append(results);
-            tb.title = contact.name.length > 0 ? contact.name : contact.number;
-        } else {
-            tb.title = qsTr("No messages found") + Retranslate.onLanguageChanged
-        }
-        
-        tutorial.execActionBar( "saveAll", qsTr("To save this entire conversation, use the '%1' action at the bottom to save all the messages in one shot!").arg(saveAll.title) );
-        tutorial.execActionBar( "selectAllMessages", qsTr("If you want to select all the messages to copy them to the clipboard or share them, use the '%1' action.").arg(selectAll.title), "l" );
-    }
-    
-    onCreationCompleted: {
-        persist.settingChanged.connect(onSettingChanged);
-        addAction(rangeSelector.rangeSelectAction);
-        
-        app.messagesImported.connect(onMessagesImported);
-        
-        sld.appendItem( "CSV", persist.contains("exporter_csv") );
-        sld.appendItem( "TXT", true, true );
-        
-        deviceUtils.attachTopBottomKeys(rootPage, listView);
-    }
 }
