@@ -3,6 +3,7 @@
 
 #include "InvokeHelper.h"
 #include "LazySceneCover.h"
+#include "Offloader.h"
 #include "PaymentHelper.h"
 #include "Persistance.h"
 
@@ -26,6 +27,7 @@ class ApplicationUI : public QObject
     LazySceneCover m_cover;
     PaymentHelper m_payment;
     InvokeHelper m_invoke;
+    Offloader m_offloader;
 
     void initRoot(QString const& qml="main.qml");
 
