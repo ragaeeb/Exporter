@@ -321,7 +321,7 @@ NavigationPane
                     
                     onSelectionChanged: {
                         var n = selectionList().length;
-                        multiSelectHandler.status = qsTr("%1 conversations selected").arg(n);
+                        multiSelectHandler.status = qsTr("%n conversations selected", "", n);
                         multiExportCsvAction.enabled = multiExportAction.enabled = n > 0;
                     }
                     
