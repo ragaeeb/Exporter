@@ -236,7 +236,7 @@ Page
             
             function render(data)
             {
-                var time = Qt.formatDateTime(data.time, "MMM d/yy, hh:mm:ss");
+                var time = offloader.renderStandardTime(data.time);
                 var name = data.inbound ? data.sender : userName;
                 var text = data.text;
                 

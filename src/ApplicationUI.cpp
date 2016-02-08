@@ -46,6 +46,7 @@ void ApplicationUI::initRoot(QString const& qmlSource)
 {
     QMap<QString, QObject*> context;
     context.insert("payment", &m_payment);
+    context.insert("offloader", &m_offloader);
 
     m_invoke.init(qmlSource, context, this);
 
