@@ -190,8 +190,13 @@ Page
             onTriggered: {
                 console.log("UserEvent: ShareActionTriggered");
                 
-                persist.showBlockingToast( qsTr("Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.\n\nUse the Range Selector if the message gets truncated."), qsTr("OK") );
-                iai.data = persist.convertToUtf8( concatenate() );
+                var c = concatenate();
+                
+                if (c.length > 2000) {
+                    persist.showBlockingDialog( qsTr("BBM"), qsTr("Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.\n\nUse the Range Selector if the message gets truncated."), qsTr("OK"), "" );
+                }
+                
+                iai.data = persist.convertToUtf8(c);
                 
                 reporter.record("ShareActionTriggered");
             }
