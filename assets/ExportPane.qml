@@ -96,8 +96,6 @@ NavigationPane
 
                         tutorialToast.init(tutorialText, icon, title);
                         
-                        tutorial.execSwipe( "exportTxt", qsTr("These are a list of all the conversations, press-and-hold on one and from the menu choose 'Select More' and then 'Export TXT' to save it. You can also tap on the conversation itself and save only parts of it if you wish."), HorizontalAlignment.Center, VerticalAlignment.Center, "d" );
-                        tutorial.execActionBar( "selectAll", qsTr("You can tap the Select All button at the bottom of the screen to quickly export all your conversations!"), "x" );
                         tutorial.execBelowTitleBar( "dropDown", qsTr("Use the dropdown at the top to switch between your mailboxes.") );
                     }
                     
@@ -124,7 +122,7 @@ NavigationPane
                     {
                         if ( format == OutputFormat.CSV && !persist.contains("exporter_csv") ) {
                             persist.showToast( qsTr("This is a purchasable feature. You can buy it for just $0.99!"), "images/ic_good.png" );
-                            app.requestPurchase( "exporter_csv", qsTr("CSV Export") );
+                            payment.requestPurchase( "exporter_csv", qsTr("CSV Export") );
                         } else {
                             filePicker.directories = [ persist.getFlag("output"), "/accounts/1000/shared/documents"]
                             filePicker.conversationIds = conversationIds;
@@ -153,6 +151,12 @@ NavigationPane
                         selectAllAction.enabled = conversations.length > 0;
                         emptyDelegate.delegateActive = conversations.length == 0;
                         listView.visible = conversations.length > 0;
+                        
+                        if (listView.visible)
+                        {
+                            tutorial.execSwipe( "exportTxt", qsTr("These are a list of all the conversations, press-and-hold on one and from the menu choose 'Select More' and then 'Export TXT' to save it. You can also tap on the conversation itself and save only parts of it if you wish."), HorizontalAlignment.Center, VerticalAlignment.Center, "d" );
+                            tutorial.execActionBar( "selectAll", qsTr("You can tap the '%1' button at the bottom of the screen to quickly export all your conversations!").arg(selectAllAction.title), "x" );
+                        }
                     }
                     
                     onCreationCompleted: {
@@ -212,7 +216,7 @@ NavigationPane
                                         {
                                             tutorial.execOverFlow("exportSingleTxt", qsTr("Use the '%1' action to save this conversation as a plain-text document."), exportAction);
                                             tutorial.execOverFlow("exportSingleCsv", qsTr("Use the '%1' action to save this conversation as a comma-separated document."), exportCSV);
-                                            tutorial.exec("selectMoreConvos", qsTr("Use the 'Select More' action to select more conversations."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, tutorialDelegate.du(2), 0, 0, control.ListItem.view.multiSelectAction.imageSource.toString());
+                                            tutorial.exec("selectMoreConvos", qsTr("Use the 'Select More' action to select more conversations."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, tutorial.du(2), 0, 0, control.ListItem.view.multiSelectAction.imageSource.toString());
                                             
                                             reporter.record("LongPressConversation");
                                         }
@@ -304,8 +308,8 @@ NavigationPane
                         
                         onActiveChanged: {
                             if (active) {
-                                tutorial.execActionBar("multiExportTxt", qsTr("Use the '%1' action if you want to save the selected conversations as plain-text documents.").arg(multiExportAction.title), "l");
-                                tutorial.execActionBar("multiCsvTxt", qsTr("Use the '%1' action if you want to save the selected conversations as comma-separated-values.").arg(multiExportCsvAction.title), "r");
+                                tutorial.execActionBar("multiExportTxt", qsTr("Use the '%1' action if you want to save the selected conversations as plain-text documents.").arg(multiExportAction.title), "l", true);
+                                tutorial.execActionBar("multiCsvTxt", qsTr("Use the '%1' action if you want to save the selected conversations as comma-separated-values.").arg(multiExportCsvAction.title), "r", true);
                                 tutorial.execActionBar("cancelMultiSelect", qsTr("Use the 'Cancel' action if you want to clear all the selections."), "b");
                             } else {
                                 listView.clearSelection();
