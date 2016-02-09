@@ -9,8 +9,8 @@
 #include "Persistance.h"
 #include "PimUtil.h"
 
-#define QML_SURAH_PAGE "SurahPage.qml"
-#define TARGET_AYAT_PICKER "com.canadainc.Quran10.ayat.picker"
+#define QML_SAVE_PAGE "InvokedPage.qml"
+#define TARGET_AYAT_PICKER "com.canadainc.Exporter.save"
 
 namespace exportui {
 
@@ -45,7 +45,7 @@ QString InvokeHelper::invoked(bb::system::InvokeRequest const& request)
     QString qml = targetToQML.value(target);
 
     if ( qml.isNull() ) {
-        qml = QML_SURAH_PAGE;
+        qml = QML_SAVE_PAGE;
     }
 
     m_request = request;

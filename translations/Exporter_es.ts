@@ -237,6 +237,11 @@ The great thing is that the app gives you access to nearly all your accounts to 
         <source>OK</source>
         <translation>Aceptar</translation>
     </message>
+    <message>
+        <location filename="../assets/InvokedPage.qml" line="35"/>
+        <source>Success</source>
+        <translation>Operación correcta</translation>
+    </message>
 </context>
 <context>
     <name>NotificationToast</name>
@@ -450,17 +455,17 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="64"/>
+        <location filename="../src/ApplicationUI.cpp" line="66"/>
         <source>You</source>
         <translation>Usted</translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="119"/>
+        <location filename="../src/ApplicationUI.cpp" line="122"/>
         <source>Loading...</source>
         <translation>Cargando...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ApplicationUI.cpp" line="128"/>
+        <location filename="../src/ApplicationUI.cpp" line="131"/>
         <source>Successfully exported %n conversations.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -468,12 +473,12 @@ Tap the first message, then tap the last message and all of the ones in between 
         </translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="130"/>
+        <location filename="../src/ApplicationUI.cpp" line="133"/>
         <source>%1 conversations exported, %2 conversations failed to export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ApplicationUI.cpp" line="132"/>
+        <location filename="../src/ApplicationUI.cpp" line="135"/>
         <source>%n conversations failed to export.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
