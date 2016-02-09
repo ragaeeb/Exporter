@@ -11,6 +11,7 @@
 #include "Logger.h"
 #include "MessageImporter.h"
 #include "PimUtil.h"
+#include "SharedConstants.h"
 #include "ThreadUtils.h"
 
 namespace exportui {
@@ -171,8 +172,8 @@ void ApplicationUI::loadAccounts()
 }
 
 
-bool ApplicationUI::hasContactsAccess() {
-    return PimUtil::hasContactsAccess();
+bool ApplicationUI::noContactsAccess() {
+    return NO_CONTACTS_ACCESS;
 }
 
 
