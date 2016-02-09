@@ -32,7 +32,7 @@ Page
                 console.log("UserEvent: InvokedFileSelected", result);
                 app.saveTextData(result, data);
                 
-                persist.showBlockingDialog( qsTr("Successfully saved file: %1").arg(result), qsTr("OK"), "" );
+                persist.showBlockingDialog( qsTr("Success"), qsTr("Successfully saved file: %1").arg(result), qsTr("OK"), "" );
                 reporter.record( "SuccessfulSave", result );
                 
                 finished();

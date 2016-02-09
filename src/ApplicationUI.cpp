@@ -33,6 +33,7 @@ ApplicationUI::ApplicationUI(InvokeManager* i) :
             break;
 
         case ApplicationStartupMode::InvokeCard:
+            connect( i, SIGNAL( cardPooled(bb::system::CardDoneMessage const&) ), QCoreApplication::instance(), SLOT( quit() ) );
         case ApplicationStartupMode::InvokeApplication:
             connect( i, SIGNAL( invoked(bb::system::InvokeRequest const&) ), this, SLOT( invoked(bb::system::InvokeRequest const&) ) );
             break;
@@ -83,6 +84,7 @@ void ApplicationUI::lazyInit()
 
 	AppLogFetcher::create( &m_persistance, &ThreadUtils::compressFiles, this );
 	m_invoke.lazyInit();
+	m_invoke.process();
 
 	emit lazyInitComplete();
 }
