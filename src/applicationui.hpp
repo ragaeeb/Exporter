@@ -56,7 +56,7 @@ public:
     Q_INVOKABLE void getConversationsFor(qint64 accountId);
     Q_INVOKABLE void exportSMS(QStringList const& conversationIds, qint64 accountId, int outputFormat);
     Q_INVOKABLE void saveTextData(QString const& file, QString const& data);
-    Q_INVOKABLE bool hasContactsAccess();
+    Q_INVOKABLE bool noContactsAccess();
 };
 
 }

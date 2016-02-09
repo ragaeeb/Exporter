@@ -360,7 +360,7 @@ NavigationPane
                         allIcons.push("images/toast/no_shared_folder.png");
                     }
                     
-                    if ( !app.hasContactsAccess() ) {
+                    if ( app.noContactsAccess() ) {
                         allMessages.push("Warning: It seems like the app does not have access to your contacts. This permission is needed for the app to access your address book so we can properly display the names of the contacts in the output files. If you leave this permission off, some features may not work properly. Select OK to launch the Application Permissions screen where you can turn these settings on.");
                         allIcons.push("images/toast/no_contacts_access.png");
                     }
