@@ -59,29 +59,34 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="193"/>
+        <location filename="../assets/ConversationView.qml" line="196"/>
         <source>Note that BBM has a maximum limit for the length of text that can be inputted into the message field. So if your conversation is too big it may not paste properly.
 
 Use the Range Selector if the message gets truncated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="193"/>
+        <location filename="../assets/ConversationView.qml" line="196"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="304"/>
+        <location filename="../assets/ConversationView.qml" line="196"/>
+        <source>BBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ConversationView.qml" line="309"/>
         <source>Tap on the message again to deselect it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="321"/>
+        <location filename="../assets/ConversationView.qml" line="326"/>
         <source>Choose Output Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ConversationView.qml" line="322"/>
+        <location filename="../assets/ConversationView.qml" line="327"/>
         <source>Output Format</source>
         <translation type="unfinished"></translation>
     </message>
@@ -114,84 +119,84 @@ Use the Range Selector if the message gets truncated.</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="99"/>
+        <location filename="../assets/ExportPane.qml" line="157"/>
         <source>These are a list of all the conversations, press-and-hold on one and from the menu choose &apos;Select More&apos; and then &apos;Export TXT&apos; to save it. You can also tap on the conversation itself and save only parts of it if you wish.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="100"/>
-        <source>You can tap the Select All button at the bottom of the screen to quickly export all your conversations!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/ExportPane.qml" line="101"/>
+        <location filename="../assets/ExportPane.qml" line="99"/>
         <source>Use the dropdown at the top to switch between your mailboxes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="126"/>
+        <location filename="../assets/ExportPane.qml" line="124"/>
         <source>This is a purchasable feature. You can buy it for just $0.99!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="127"/>
+        <location filename="../assets/ExportPane.qml" line="125"/>
         <source>CSV Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="213"/>
+        <location filename="../assets/ExportPane.qml" line="158"/>
+        <source>You can tap the &apos;%1&apos; button at the bottom of the screen to quickly export all your conversations!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ExportPane.qml" line="217"/>
         <source>Use the &apos;%1&apos; action to save this conversation as a plain-text document.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="214"/>
+        <location filename="../assets/ExportPane.qml" line="218"/>
         <source>Use the &apos;%1&apos; action to save this conversation as a comma-separated document.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="215"/>
+        <location filename="../assets/ExportPane.qml" line="219"/>
         <source>Use the &apos;Select More&apos; action to select more conversations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="226"/>
+        <location filename="../assets/ExportPane.qml" line="230"/>
         <source>%1 messages</source>
         <translation>%1 nachrichten</translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="231"/>
-        <location filename="../assets/ExportPane.qml" line="276"/>
+        <location filename="../assets/ExportPane.qml" line="235"/>
+        <location filename="../assets/ExportPane.qml" line="280"/>
         <source>Export TXT</source>
         <translation>Exportieren TXT</translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="245"/>
-        <location filename="../assets/ExportPane.qml" line="292"/>
+        <location filename="../assets/ExportPane.qml" line="249"/>
+        <location filename="../assets/ExportPane.qml" line="296"/>
         <source>Export CSV</source>
         <translation>Exportieren CSV</translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="307"/>
+        <location filename="../assets/ExportPane.qml" line="311"/>
         <source>Use the &apos;%1&apos; action if you want to save the selected conversations as plain-text documents.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="308"/>
+        <location filename="../assets/ExportPane.qml" line="312"/>
         <source>Use the &apos;%1&apos; action if you want to save the selected conversations as comma-separated-values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="309"/>
+        <location filename="../assets/ExportPane.qml" line="313"/>
         <source>Use the &apos;Cancel&apos; action if you want to clear all the selections.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="315"/>
+        <location filename="../assets/ExportPane.qml" line="319"/>
         <source>None selected</source>
         <translation>Nichts ausgewählt</translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/ExportPane.qml" line="324"/>
+        <location filename="../assets/ExportPane.qml" line="328"/>
         <source>%n conversations selected</source>
         <translation>
             <numerusform>%n Element ausgewählt</numerusform>
@@ -199,7 +204,7 @@ Use the Range Selector if the message gets truncated.</source>
         </translation>
     </message>
     <message>
-        <location filename="../assets/ExportPane.qml" line="390"/>
+        <location filename="../assets/ExportPane.qml" line="394"/>
         <source>Select Folder</source>
         <translation>Ordner</translation>
     </message>
