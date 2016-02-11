@@ -14,6 +14,7 @@ TabbedPane
         onFinished: {
             if (clean) {
                 tutorial.execAppMenu();
+                tutorial.promptVideo("https://www.youtube.com/watch?v=_sSZJPBwlnc")
             }
             
             if (exportControl.object) {
