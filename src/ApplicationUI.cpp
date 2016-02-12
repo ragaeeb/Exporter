@@ -63,6 +63,8 @@ void ApplicationUI::invoked(bb::system::InvokeRequest const& request) {
 
 void ApplicationUI::lazyInit()
 {
+    disconnect( this, SIGNAL( initialize() ), this, SLOT( lazyInit() ) ); // in case we get invoked again
+
 	INIT_SETTING( "userName", tr("You") );
 	INIT_SETTING("duplicateAction", 0);
 	INIT_SETTING("doubleSpace", 0);
