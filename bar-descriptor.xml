@@ -39,7 +39,7 @@
 
     <!-- Fourth digit segment of the package version. First three segments are taken from the 
          <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
-    <buildId>0</buildId>
+    <buildId>1</buildId>
     <packageLocale>ar,fr,de,id,ru,es,th,tr</packageLocale>
                  
     <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
@@ -102,7 +102,6 @@
     <asset path="../canadainc/assets/AccountsDropDown.qml">assets/AccountsDropDown.qml</asset>
     <asset path="../canadainc/assets/BugReportPage.qml">assets/BugReportPage.qml</asset>
     <asset path="../canadainc/assets/CanadaIncMenu.qml">assets/CanadaIncMenu.qml</asset>
-    <asset path="../canadainc/assets/CanadaIncUtils.qml">assets/CanadaIncUtils.qml</asset>
     <asset path="../canadainc/assets/ClassicBackDelegate.qml">assets/ClassicBackDelegate.qml</asset>
     <asset path="../canadainc/assets/EmptyDelegate.qml">assets/EmptyDelegate.qml</asset>
     <asset path="../canadainc/assets/FullScreenDialog.qml">assets/FullScreenDialog.qml</asset>

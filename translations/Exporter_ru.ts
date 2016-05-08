@@ -461,17 +461,17 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>exportui::ApplicationUI</name>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="66"/>
+        <location filename="../src/ApplicationUI.cpp" line="68"/>
         <source>You</source>
         <translation>Вы</translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="122"/>
+        <location filename="../src/ApplicationUI.cpp" line="124"/>
         <source>Loading...</source>
         <translation>Загрузка...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ApplicationUI.cpp" line="131"/>
+        <location filename="../src/ApplicationUI.cpp" line="133"/>
         <source>Successfully exported %n conversations.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -480,12 +480,12 @@ Tap the first message, then tap the last message and all of the ones in between 
         </translation>
     </message>
     <message>
-        <location filename="../src/ApplicationUI.cpp" line="133"/>
+        <location filename="../src/ApplicationUI.cpp" line="135"/>
         <source>%1 conversations exported, %2 conversations failed to export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ApplicationUI.cpp" line="135"/>
+        <location filename="../src/ApplicationUI.cpp" line="137"/>
         <source>%n conversations failed to export.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -538,22 +538,22 @@ Tap the first message, then tap the last message and all of the ones in between 
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="22"/>
+        <location filename="../assets/main.qml" line="23"/>
         <source>In the &apos;%1&apos; tab you can select one or more conversations that you wish to view or save.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="23"/>
+        <location filename="../assets/main.qml" line="24"/>
         <source>In the &apos;%1&apos; tab you can purchase additional features to maximize the app&apos;s functionality.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="31"/>
+        <location filename="../assets/main.qml" line="32"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="48"/>
+        <location filename="../assets/main.qml" line="49"/>
         <source>Purchase</source>
         <translation>Купить</translation>
     </message>
